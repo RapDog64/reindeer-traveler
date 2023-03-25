@@ -5,7 +5,7 @@ plugins {
 
 }
 
-group = 'com.rangiffler'
+group = 'org.rangiffler'
 version '0.0.1-SNAPSHOT'
 
 repositories {
