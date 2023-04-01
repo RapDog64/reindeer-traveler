@@ -11,8 +11,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class PhotoService {
 
-  private final UserService userService = new UserService();
+  private final UserService userService;
   private final CountryService countryService = new CountryService();
+
+  public PhotoService(UserService userService) {
+    this.userService = userService;
+  }
 
   List<PhotoJson> mainUserPhotoList = new ArrayList<>();
 

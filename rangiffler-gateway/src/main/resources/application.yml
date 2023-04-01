@@ -15,5 +15,56 @@ logging:
     org.springframework.security: DEBUG
     org.springframework.security.oauth2: DEBUG
 
+
+---
+spring:
+  config:
+    activate:
+      on-profile: 'local'
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: 'http://127.0.0.1:9000'
+
+grpc:
+  client:
+    grpcCurrencyClient:
+      address: 'static://localhost:8092'
+      negotiationType: PLAINTEXT
+
+rangiffler-geo:
+  base-uri: 'http://127.0.0.1:8091'
+rangiffler-userdata:
+  base-uri: 'http://127.0.0.1:8089'
+rangiffler-photo:
+  base-uri: 'http://127.0.0.1:8093'
 rangiffler-front:
   base-uri: 'http://127.0.0.1:3001'
+
+---
+spring:
+  config:
+    activate:
+      on-profile: 'docker'
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: 'http://rangiffler-auth:9000'
+
+grpc:
+  client:
+    grpcCurrencyClient:
+      address: 'static://rangiffler-geo:8092'
+      negotiationType: PLAINTEXT
+
+rangiffler-geo:
+  base-uri: 'http:/rangiffler-geo:8091'
+rangiffler-userdata:
+  base-uri: 'http://rangiffler-userdata:8089'
+rangiffler-photo:
+  base-uri: 'http://rangiffler-photo:8093'
+rangiffler-front:
+  base-uri: 'http://rangiffler-frontend'
+---

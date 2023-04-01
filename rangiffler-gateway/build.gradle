@@ -13,12 +13,19 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation "org.springframework:spring-webflux"
-    implementation "org.springframework.boot:spring-boot-starter-validation"
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation(
+            "org.springframework.boot:spring-boot-starter-web",
+            "org.springframework:spring-webflux",
+            "org.springframework.boot:spring-boot-starter-oauth2-resource-server",
+            "org.springframework.boot:spring-boot-starter-security",
+            "org.springframework.boot:spring-boot-starter-validation",
+//            "org.springframework.cloud:spring-cloud-starter-feign:1.4.7.RELEASE"
+            "org.springframework.cloud:spring-cloud-starter-openfeign:4.0.2"
+    )
+
+
+    testImplementation "org.junit.jupiter:junit-jupiter:5.9.2"
+
     compileOnly 'org.projectlombok:lombok:1.18.26'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
