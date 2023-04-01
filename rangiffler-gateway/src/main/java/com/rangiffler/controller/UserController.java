@@ -1,15 +1,15 @@
 package com.rangiffler.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import com.rangiffler.model.UserJson;
 import com.rangiffler.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 public class UserController {
@@ -21,49 +21,23 @@ public class UserController {
     this.userService = userService;
   }
 
+
   @GetMapping("/users")
-  public List<UserJson> getAllUsers() {
+  public List<UserJson> getAllUsers(@AuthenticationPrincipal Jwt principal) {
     return userService.getAllUsers();
   }
 
   @GetMapping("/currentUser")
-  public UserJson getCurrentUser() {
-    return userService.getCurrentUser();
+  public UserJson getCurrentUser(@AuthenticationPrincipal Jwt principal) {
+    String usernameFromJWT = principal.getClaim("sub");
+    return userService.getCurrentUser(usernameFromJWT);
   }
 
-  @PatchMapping("/currentUser")
-  public UserJson updateCurrentUser(@RequestBody UserJson user) {
-    return userService.updateCurrentUser(user);
+  @PutMapping("/updateUserInfo")
+  public UserJson updateCurrentUser(@AuthenticationPrincipal Jwt principal,
+                                    @RequestBody UserJson user) {
+    String usernameFromJWT = principal.getClaim("sub");
+    user.setUsername(usernameFromJWT);
+    return userService.updateCurrentUser2(user);
   }
-
-  @GetMapping("/friends")
-  public List<UserJson> getFriendsByUserId() {
-    return userService.getFriends();
-  }
-
-  @GetMapping("invitations")
-  public List<UserJson> getInvitations() {
-    return userService.getInvitations();
-  }
-
-  @PostMapping("users/invite/")
-  public UserJson sendInvitation(@RequestBody UserJson user) {
-    return userService.sendInvitation(user);
-  }
-
-  @PostMapping("friends/remove")
-  public UserJson removeFriendFromUser(@RequestBody UserJson friend) {
-    return userService.removeUserFromFriends(friend);
-  }
-
-  @PostMapping("friends/submit")
-  public UserJson submitFriend(@RequestBody UserJson friend) {
-    return userService.acceptInvitation(friend);
-  }
-
-  @PostMapping("friends/decline")
-  public UserJson declineFriend(@RequestBody UserJson friend) {
-    return userService.declineInvitation(friend);
-  }
-
 }

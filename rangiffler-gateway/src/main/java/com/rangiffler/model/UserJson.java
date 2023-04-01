@@ -1,10 +1,15 @@
 package com.rangiffler.model;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.UUID;
+
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
+
+import static com.rangiffler.config.RangifflerGatewayConfig.MAX_PHOTO_SIZE;
 
 @Data
 @Builder
@@ -17,15 +22,17 @@ public class UserJson {
   private String username;
 
   @JsonProperty("firstName")
-  private String firstName;
+  private String firstname;
 
   @JsonProperty("lastName")
-  private String lastLame;
+  private String lastname;
 
-  @JsonProperty("avatar")
-  private String avatar;
+  @JsonProperty("photo")
+  @Size(max = MAX_PHOTO_SIZE)
+  private String photo;
 
-  @JsonProperty("friendStatus")
+  @JsonProperty("friendState")
+  @JsonInclude(JsonInclude.Include.NON_NULL)
   private FriendStatus friendStatus;
 }
 
