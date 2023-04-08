@@ -19,9 +19,6 @@ public interface FriendServiceClient {
     @GetMapping("/friends")
     List<UserJson> getFriends(@RequestParam String username, @RequestParam boolean includePending);
 
-    @GetMapping("/invitations")
-    List<UserJson> getInvitations(@RequestParam String username);
-
     @PostMapping("/acceptInvitation")
     List<UserJson>  acceptInvitation(@RequestParam String username, @RequestBody FriendJson invitation) ;
 

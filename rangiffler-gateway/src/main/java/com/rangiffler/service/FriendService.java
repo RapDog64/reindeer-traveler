@@ -18,9 +18,6 @@ public class FriendService {
         this.friendService = friendService;
     }
 
-    public List<UserJson> getInvitations(String username) {
-        return friendService.getInvitations(username);
-    }
 
     public List<UserJson> declineInvitation(String username, FriendJson friendInvitation) {
         return friendService.declineInvitation(username, friendInvitation);

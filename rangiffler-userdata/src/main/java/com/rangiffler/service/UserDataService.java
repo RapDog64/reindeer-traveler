@@ -17,9 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.*;
 
 @Component
 public class UserDataService {
@@ -58,6 +55,10 @@ public class UserDataService {
             List<FriendsEntity> sendInvites = user.getFriends();
             List<FriendsEntity> receivedInvites = user.getInvites();
 
+            if (sendInvites.isEmpty() || receivedInvites.isEmpty()) {
+                result.put(user.getId(), UserJson.fromEntity(user, FriendState.NOT_FRIEND));
+            }
+
             if (!sendInvites.isEmpty() || !receivedInvites.isEmpty()) {
                 Optional<FriendsEntity> inviteToMe = sendInvites.stream()
                         .filter(i -> i.getFriend().getUsername().equals(username))
@@ -87,14 +88,6 @@ public class UserDataService {
         return new ArrayList<>(result.values());
     }
 
-
-//    public List<UserJson> receivePeopleAround(@Nonnull String username) {
-//        return userRepository.findAll()
-//                .stream()
-//                .map(UserJson::fromEntity)
-//                .collect(toList());
-//    }
-
     public List<UserJson> friends(@Nonnull String username, boolean includePending) {
         return userRepository.findByUsername(username)
                 .getFriends()
@@ -106,16 +99,7 @@ public class UserDataService {
                 .toList();
     }
 
-    public List<UserJson> invitations(@Nonnull String username) {
-        return userRepository.findByUsername(username)
-                .getInvites()
-                .stream()
-                .filter(FriendsEntity::isPending)
-                .map(fe -> UserJson.fromEntity(fe.getUser(), FriendState.INVITATION_RECEIVED))
-                .toList();
-    }
-
-    public void addFriend(@Nonnull String username, @Nonnull FriendJson friend) {
+    public void sendFriendshipInvitation(@Nonnull String username, @Nonnull FriendJson friend) {
         UserEntity currentUser = userRepository.findByUsername(username);
         currentUser.addFriends(true, userRepository.findByUsername(friend.getUsername()));
         userRepository.save(currentUser);

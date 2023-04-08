@@ -7,7 +7,6 @@ import com.rangiffler.service.UserDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,11 +32,6 @@ public class FriendsController {
         return userService.friends(username, includePending);
     }
 
-    @GetMapping("/invitations")
-    public List<UserJson> invitations(@RequestParam String username) {
-        return userService.invitations(username);
-    }
-
     @PostMapping("/acceptInvitation")
     public List<UserJson> acceptInvitation(@RequestParam String username, @RequestBody FriendJson invitation) {
         return userService.acceptInvitation(username, invitation);
@@ -48,9 +42,9 @@ public class FriendsController {
         return userService.declineInvitation(username, invitation);
     }
 
-    @PostMapping("/addFriend")
-    public void addFriend(@RequestParam String username, @RequestBody FriendJson friend) {
-        userService.addFriend(username, friend);
+    @PostMapping("users/invite/")
+    public void sendFriendshipInvitation(@RequestParam String username, @RequestBody FriendJson friend) {
+        userService.sendFriendshipInvitation(username, friend);
     }
 
     @PostMapping("friends/remove")
