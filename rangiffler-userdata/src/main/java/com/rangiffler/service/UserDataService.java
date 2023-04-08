@@ -6,17 +6,11 @@ import com.rangiffler.data.repository.UserRepository;
 import com.rangiffler.model.FriendJson;
 import com.rangiffler.model.FriendState;
 import com.rangiffler.model.UserJson;
-import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 public class UserDataService {
@@ -28,7 +22,7 @@ public class UserDataService {
         this.userRepository = userRepository;
     }
 
-    public UserJson update(@Nonnull UserJson user) {
+    public UserJson update(UserJson user) {
         UserEntity userEntity = userRepository.findByUsername(user.getUserName());
         userEntity.setFirstname(user.getFirstname());
         userEntity.setLastname(user.getLastname());
@@ -38,7 +32,7 @@ public class UserDataService {
         return UserJson.fromEntity(saved);
     }
 
-    public UserJson getCurrentUserOrCreateIfAbsent(@Nonnull String username) {
+    public UserJson getCurrentUserOrCreateIfAbsent(String username) {
         UserEntity userDataEntity = userRepository.findByUsername(username);
         if (userDataEntity == null) {
             userDataEntity = new UserEntity();
@@ -49,23 +43,23 @@ public class UserDataService {
         }
     }
 
-    public List<UserJson> receivePeopleAround(@Nonnull String username) {
+    public List<UserJson> receivePeopleAround(String username) {
         Map<UUID, UserJson> result = new HashMap<>();
         for (UserEntity user : userRepository.findByUsernameNot(username)) {
             List<FriendsEntity> sendInvites = user.getFriends();
             List<FriendsEntity> receivedInvites = user.getInvites();
 
-            if (sendInvites.isEmpty() || receivedInvites.isEmpty()) {
+            if (sendInvites.isEmpty() && receivedInvites.isEmpty()) {
                 result.put(user.getId(), UserJson.fromEntity(user, FriendState.NOT_FRIEND));
             }
 
             if (!sendInvites.isEmpty() || !receivedInvites.isEmpty()) {
                 Optional<FriendsEntity> inviteToMe = sendInvites.stream()
-                        .filter(i -> i.getFriend().getUsername().equals(username))
+                        .filter(invite -> invite.getFriend().getUsername().equals(username))
                         .findFirst();
 
                 Optional<FriendsEntity> inviteFromMe = receivedInvites.stream()
-                        .filter(i -> i.getUser().getUsername().equals(username))
+                        .filter(invite -> invite.getUser().getUsername().equals(username))
                         .findFirst();
 
                 if (inviteToMe.isPresent()) {
@@ -88,30 +82,30 @@ public class UserDataService {
         return new ArrayList<>(result.values());
     }
 
-    public List<UserJson> friends(@Nonnull String username, boolean includePending) {
+    public List<UserJson> friends(String username, boolean includePending) {
         return userRepository.findByUsername(username)
                 .getFriends()
                 .stream()
-                .filter(fe -> includePending || !fe.isPending())
-                .map(fe -> UserJson.fromEntity(fe.getFriend(), fe.isPending()
+                .filter(friend -> includePending || !friend.isPending())
+                .map(friend -> UserJson.fromEntity(friend.getFriend(), friend.isPending()
                         ? FriendState.INVITATION_SENT
                         : FriendState.FRIEND))
                 .toList();
     }
 
-    public void sendFriendshipInvitation(@Nonnull String username, @Nonnull FriendJson friend) {
+    public void sendFriendshipInvitation(String username, FriendJson friend) {
         UserEntity currentUser = userRepository.findByUsername(username);
         currentUser.addFriends(true, userRepository.findByUsername(friend.getUsername()));
         userRepository.save(currentUser);
     }
 
-    public List<UserJson> acceptInvitation(@Nonnull String username, @Nonnull FriendJson invitation) {
+    public List<UserJson> acceptInvitation(String username, FriendJson invitation) {
         UserEntity currentUser = userRepository.findByUsername(username);
         UserEntity inviteUser = userRepository.findByUsername(invitation.getUsername());
 
         FriendsEntity invite = currentUser.getInvites()
                 .stream()
-                .filter(fe -> fe.getUser().equals(inviteUser))
+                .filter(friend -> friend.getUser().equals(inviteUser))
                 .findFirst()
                 .orElseThrow();
 
@@ -122,13 +116,13 @@ public class UserDataService {
         return currentUser
                 .getFriends()
                 .stream()
-                .map(fe -> UserJson.fromEntity(fe.getFriend(), fe.isPending()
+                .map(friend -> UserJson.fromEntity(friend.getFriend(), friend.isPending()
                         ? FriendState.INVITATION_SENT
                         : FriendState.FRIEND))
                 .toList();
     }
 
-    public List<UserJson> declineInvitation(@Nonnull String username, @Nonnull FriendJson invitation) {
+    public List<UserJson> declineInvitation(String username, FriendJson invitation) {
         UserEntity currentUser = userRepository.findByUsername(username);
         UserEntity friendToDecline = userRepository.findByUsername(invitation.getUsername());
         currentUser.removeInvites(friendToDecline);
@@ -137,11 +131,11 @@ public class UserDataService {
         return currentUser.getInvites()
                 .stream()
                 .filter(FriendsEntity::isPending)
-                .map(fe -> UserJson.fromEntity(fe.getUser(), FriendState.INVITATION_RECEIVED))
+                .map(friendsEntity -> UserJson.fromEntity(friendsEntity.getUser(), FriendState.INVITATION_RECEIVED))
                 .toList();
     }
 
-    public List<UserJson> removeFriend(@Nonnull String username, @Nonnull String friendUsername) {
+    public List<UserJson> removeFriend(String username, String friendUsername) {
         UserEntity currentUser = userRepository.findByUsername(username);
         UserEntity friendToRemove = userRepository.findByUsername(friendUsername);
         currentUser.removeFriends(friendToRemove);
@@ -150,7 +144,7 @@ public class UserDataService {
         return currentUser
                 .getFriends()
                 .stream()
-                .map(fe -> UserJson.fromEntity(fe.getFriend(), fe.isPending()
+                .map(friend -> UserJson.fromEntity(friend.getFriend(), friend.isPending()
                         ? FriendState.INVITATION_SENT
                         : FriendState.FRIEND))
                 .toList();
