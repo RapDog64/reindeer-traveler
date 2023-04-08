@@ -1,7 +1,6 @@
 package com.rangiffler.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import com.rangiffler.model.UserJson;
 import com.rangiffler.service.UserService;
@@ -23,8 +22,9 @@ public class UserController {
 
 
   @GetMapping("/users")
-  public List<UserJson> getAllUsers(@AuthenticationPrincipal Jwt principal) {
-    return userService.getAllUsers();
+  public List<UserJson> receivePeopleAround(@AuthenticationPrincipal Jwt principal) {
+    String usernameFromJWT = principal.getClaim("sub");
+    return userService.receivePeopleAround(usernameFromJWT);
   }
 
   @GetMapping("/currentUser")
@@ -38,6 +38,6 @@ public class UserController {
                                     @RequestBody UserJson user) {
     String usernameFromJWT = principal.getClaim("sub");
     user.setUsername(usernameFromJWT);
-    return userService.updateCurrentUser2(user);
+    return userService.updateUserInfo(user);
   }
 }

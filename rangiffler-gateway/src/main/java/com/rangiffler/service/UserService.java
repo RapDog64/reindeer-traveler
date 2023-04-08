@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Component
 public class UserService {
@@ -67,15 +66,15 @@ public class UserService {
     ));
 
 
-    public List<UserJson> getAllUsers() {
-        return allUsers;
+    public List<UserJson> receivePeopleAround(String username) {
+        return userService.receivePeopleAround(username);
     }
 
     public UserJson getCurrentUser(String username) {
         return userService.currentUser(username);
     }
 
-    public UserJson updateCurrentUser2(UserJson user) {
+    public UserJson updateUserInfo(UserJson user) {
         return userService.updateUserInfo(user);
     }
 

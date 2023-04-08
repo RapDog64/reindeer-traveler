@@ -3,12 +3,15 @@ package com.rangiffler.controller;
 
 import com.rangiffler.model.FriendJson;
 import com.rangiffler.model.UserJson;
-import com.rangiffler.service.UserService;
 import com.rangiffler.service.configuration.FriendServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -18,50 +21,37 @@ public class FriendsController {
     private final FriendServiceClient friendService;
 
     @Autowired
-    public FriendsController(UserService userService, FriendServiceClient friendService) {
+    public FriendsController(FriendServiceClient friendService) {
         this.friendService = friendService;
     }
 
     @GetMapping("/friends")
-    public List<UserJson> getFriendsByUserId(@AuthenticationPrincipal Jwt principal,
-                                             @RequestParam boolean includePending) {
-        String usernameFromAuth = principal.getClaim("sub");
-        return friendService.getFriends(usernameFromAuth, includePending);
-    }
-
-    @GetMapping("/invitations")
-    public List<UserJson> getInvitations(@AuthenticationPrincipal Jwt principal) {
-        String usernameFromAuth = principal.getClaim("sub");
-        return friendService.getInvitations(usernameFromAuth);
+    public List<UserJson> getFriendsByUserId(@AuthenticationPrincipal Jwt principal, @RequestParam boolean includePending) {
+        String usernameFromJWT = principal.getClaim("sub");
+        return friendService.getFriends(usernameFromJWT, includePending);
     }
 
     @PostMapping("users/invite/")
-    public UserJson sendInvitation(@AuthenticationPrincipal Jwt principal,
-                                   @RequestBody FriendJson user) {
+    public UserJson sendInvitation(@AuthenticationPrincipal Jwt principal, @RequestBody UserJson user) {
         String usernameFromAuth = principal.getClaim("sub");
-
-        return null;
-//        return friendService.getInvitations(usernameFromAuth);
+        return friendService.sendInvitation(usernameFromAuth, user);
     }
 
     @PostMapping("friends/remove")
-    public List<UserJson> removeFriendFromUser(@AuthenticationPrincipal Jwt principal,
-                                               @RequestParam String friendUsername) {
-        String usernameFromAuth = principal.getClaim("sub");
-        return friendService.removeFriend(usernameFromAuth, friendUsername);
+    public List<UserJson> removeFriendFromUser(@AuthenticationPrincipal Jwt principal, @RequestBody FriendJson friend) {
+        String usernameFromJWT = principal.getClaim("sub");
+        return friendService.removeFriend(usernameFromJWT, friend.getUsername());
     }
 
     @PostMapping("friends/submit")
-    public List<UserJson> submitFriend(@AuthenticationPrincipal Jwt principal,
-                                       @RequestBody FriendJson friend) {
-        String usernameFromAuth = principal.getClaim("sub");
-        return friendService.acceptInvitation(usernameFromAuth, friend);
+    public List<UserJson> submitFriend(@AuthenticationPrincipal Jwt principal, @RequestBody FriendJson friend) {
+        String usernameFromJWT = principal.getClaim("sub");
+        return friendService.acceptInvitation(usernameFromJWT, friend);
     }
 
     @PostMapping("friends/decline")
-    public List<UserJson> declineFriend(@AuthenticationPrincipal Jwt principal,
-                                        @RequestBody FriendJson friend) {
-        String usernameFromAuth = principal.getClaim("sub");
-        return friendService.declineInvitation(usernameFromAuth, friend);
+    public List<UserJson> declineFriend(@AuthenticationPrincipal Jwt principal, @RequestBody FriendJson friend) {
+        String usernameFromJWT = principal.getClaim("sub");
+        return friendService.declineInvitation(usernameFromJWT, friend);
     }
 }

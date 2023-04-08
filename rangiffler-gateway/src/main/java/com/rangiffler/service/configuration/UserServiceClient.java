@@ -18,6 +18,6 @@ public interface UserServiceClient {
     UserJson updateUserInfo(@RequestBody UserJson user);
 
     @GetMapping(value = "/allUsers", consumes = MediaType.APPLICATION_JSON_VALUE)
-    List<UserJson> allUsers(@RequestParam String username);
+    List<UserJson> receivePeopleAround(@RequestParam String username);
 
 }
