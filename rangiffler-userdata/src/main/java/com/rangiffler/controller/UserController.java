@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/allUsers")
-    public List<UserJson> allUsers(@RequestParam String username) {
-        return userService.allUsers(username);
+    public List<UserJson> receivePeopleAround(@RequestParam String username) {
+        return userService.receivePeopleAround(username);
     }
 }

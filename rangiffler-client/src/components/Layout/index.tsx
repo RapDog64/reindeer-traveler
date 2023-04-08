@@ -71,7 +71,7 @@ export const Layout = () => {
           }
         });
 
-    apiClient().get("/friends")
+    apiClient().get("/friends?includePending=false")
       .then((res) => {
         setFriendsData(res.data);
       });

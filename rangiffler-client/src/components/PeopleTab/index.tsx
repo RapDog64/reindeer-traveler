@@ -16,7 +16,7 @@ import React, { FC, useContext, useEffect, useState } from "react";
 import {useOutletContext} from "react-router-dom";
 import {apiClient} from "../../api/apiClient";
 import { AlertMessageContext } from "../../context/AlertMessageContext/index";
-import {User} from "../../types/types";
+import {friendState, User} from "../../types/types";
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import PersonOffIcon from '@mui/icons-material/PersonOff';
@@ -99,8 +99,8 @@ export const PeopleTab: FC = () => {
   };
 
   const getUserControls = (user: User) => {
-    const friendStatus = user.friendStatus;
-    switch (friendStatus) {
+    const friendState = user.friendState;
+    switch (friendState) {
       case "NOT_FRIEND":
         return (
             <Tooltip title="Add friend">
@@ -143,7 +143,7 @@ export const PeopleTab: FC = () => {
         <Table stickyHeader aria-label="all people table">
           <TableHead>
             <TableRow>
-              <TableCell></TableCell>
+              <TableCell>Avatar</TableCell>
               <TableCell>Username</TableCell>
               <TableCell>Name</TableCell>
               <TableCell></TableCell>

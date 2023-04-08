@@ -4,7 +4,7 @@ export type User = {
   firstName: string,
   lastName: string,
   avatar: string,
-  friendStatus: string,
+  friendState: friendState,
 }
 
 export type ApiCountry = {
@@ -26,4 +26,4 @@ export type Photo = {
   description?: string,
 }
 
-export type FriendStatus = "FRIEND" | "NOT_FRIEND" | "INVITATION_SENT" | "INVITATION_RECEIVED"
+export type friendState = "FRIEND" | "NOT_FRIEND" | "INVITATION_SENT" | "INVITATION_RECEIVED"

@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 @Component
 public class UserDataService {
@@ -49,7 +52,7 @@ public class UserDataService {
         }
     }
 
-    public List<UserJson> allUsers(@Nonnull String username) {
+    public List<UserJson> receivePeopleAround(@Nonnull String username) {
         Map<UUID, UserJson> result = new HashMap<>();
         for (UserEntity user : userRepository.findByUsernameNot(username)) {
             List<FriendsEntity> sendInvites = user.getFriends();
@@ -67,13 +70,13 @@ public class UserDataService {
                 if (inviteToMe.isPresent()) {
                     FriendsEntity invite = inviteToMe.get();
                     result.put(user.getId(), UserJson.fromEntity(user, invite.isPending()
-                            ? FriendState.INVITE_RECEIVED
+                            ? FriendState.INVITATION_RECEIVED
                             : FriendState.FRIEND));
                 }
                 if (inviteFromMe.isPresent()) {
                     FriendsEntity invite = inviteFromMe.get();
                     result.put(user.getId(), UserJson.fromEntity(user, invite.isPending()
-                            ? FriendState.INVITE_SENT
+                            ? FriendState.INVITATION_SENT
                             : FriendState.FRIEND));
                 }
             }
@@ -84,13 +87,21 @@ public class UserDataService {
         return new ArrayList<>(result.values());
     }
 
+
+//    public List<UserJson> receivePeopleAround(@Nonnull String username) {
+//        return userRepository.findAll()
+//                .stream()
+//                .map(UserJson::fromEntity)
+//                .collect(toList());
+//    }
+
     public List<UserJson> friends(@Nonnull String username, boolean includePending) {
         return userRepository.findByUsername(username)
                 .getFriends()
                 .stream()
                 .filter(fe -> includePending || !fe.isPending())
                 .map(fe -> UserJson.fromEntity(fe.getFriend(), fe.isPending()
-                        ? FriendState.INVITE_SENT
+                        ? FriendState.INVITATION_SENT
                         : FriendState.FRIEND))
                 .toList();
     }
@@ -100,7 +111,7 @@ public class UserDataService {
                 .getInvites()
                 .stream()
                 .filter(FriendsEntity::isPending)
-                .map(fe -> UserJson.fromEntity(fe.getUser(), FriendState.INVITE_RECEIVED))
+                .map(fe -> UserJson.fromEntity(fe.getUser(), FriendState.INVITATION_RECEIVED))
                 .toList();
     }
 
@@ -128,7 +139,7 @@ public class UserDataService {
                 .getFriends()
                 .stream()
                 .map(fe -> UserJson.fromEntity(fe.getFriend(), fe.isPending()
-                        ? FriendState.INVITE_SENT
+                        ? FriendState.INVITATION_SENT
                         : FriendState.FRIEND))
                 .toList();
     }
@@ -142,7 +153,7 @@ public class UserDataService {
         return currentUser.getInvites()
                 .stream()
                 .filter(FriendsEntity::isPending)
-                .map(fe -> UserJson.fromEntity(fe.getUser(), FriendState.INVITE_RECEIVED))
+                .map(fe -> UserJson.fromEntity(fe.getUser(), FriendState.INVITATION_RECEIVED))
                 .toList();
     }
 
@@ -156,7 +167,7 @@ public class UserDataService {
                 .getFriends()
                 .stream()
                 .map(fe -> UserJson.fromEntity(fe.getFriend(), fe.isPending()
-                        ? FriendState.INVITE_SENT
+                        ? FriendState.INVITATION_SENT
                         : FriendState.FRIEND))
                 .toList();
     }

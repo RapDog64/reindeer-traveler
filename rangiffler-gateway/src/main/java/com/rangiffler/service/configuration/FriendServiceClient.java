@@ -3,6 +3,8 @@ package com.rangiffler.service.configuration;
 import com.rangiffler.model.FriendJson;
 import com.rangiffler.model.UserJson;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +31,9 @@ public interface FriendServiceClient {
     @PostMapping("/addFriend")
     void addFriend(@RequestParam String username, @RequestBody FriendJson friend);
 
-    @DeleteMapping("/removeFriend")
-    List<UserJson>  removeFriend(@RequestParam String username, @RequestParam String friendUsername);
+    @PostMapping("friends/remove")
+    List<UserJson> removeFriend(@RequestParam String username, @RequestParam String friendUsername);
+
+    @PostMapping("users/invite/")
+    UserJson sendInvitation(@RequestParam String username, @RequestBody UserJson user);
 }
