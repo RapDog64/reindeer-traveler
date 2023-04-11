@@ -3,12 +3,17 @@ package com.rangiffler.service;
 import java.util.List;
 import java.util.UUID;
 import com.rangiffler.model.CountryJson;
+import com.rangiffler.service.configuration.CountryServiceClient;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class CountryService {
 
-  private final List<CountryJson> countries = List.of(
+  private final CountryServiceClient countryService;
+
+  public final List<CountryJson> countries = List.of(
       CountryJson.builder()
           .id(UUID.randomUUID())
           .code("ru")
@@ -61,7 +66,7 @@ public class CountryService {
           .build());
 
   public List<CountryJson> getAllCountries() {
-    return countries;
+    return countryService.getAllCountries();
   }
 
   public CountryJson getCountryByCode(String code) {

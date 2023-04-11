@@ -8,7 +8,7 @@ export type User = {
 }
 
 export type ApiCountry = {
-  id: number,
+  id: string,
   code: string,
   name: string,
 };

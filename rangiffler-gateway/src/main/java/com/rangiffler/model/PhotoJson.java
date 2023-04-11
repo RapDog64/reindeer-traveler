@@ -23,4 +23,5 @@ public class PhotoJson {
 
   @JsonProperty("username")
   private String username;
+
 }
