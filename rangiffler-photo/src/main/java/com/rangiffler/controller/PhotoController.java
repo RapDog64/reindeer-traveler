@@ -1,6 +1,7 @@
 package com.rangiffler.controller;
 
 import com.rangiffler.model.PhotoJson;
+import com.rangiffler.model.PhotoServiceJson;
 import com.rangiffler.service.PhotoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,7 +22,7 @@ public class PhotoController {
     private final PhotoService photoService;
 
     @GetMapping("/photos")
-    public List<PhotoJson> getPhotosForUser(@RequestParam String username) {
+    public List<PhotoServiceJson> getPhotosForUser(@RequestParam String username) {
         return photoService.getAllUserPhotos(username);
     }
 
@@ -31,8 +32,8 @@ public class PhotoController {
     }
 
     @PostMapping("/photos")
-    public PhotoJson addPhoto(@RequestBody PhotoJson photoJson) {
-        return photoService.addPhoto(photoJson);
+    public void addPhoto(@RequestBody PhotoJson photoJson) {
+        photoService.addPhoto(photoJson);
     }
 
     @PutMapping("/photos/{id}")

@@ -1,7 +1,9 @@
 package com.rangiffler.service;
 
+import com.rangiffler.data.PhotoEntity;
 import com.rangiffler.data.repository.PhotoRepository;
 import com.rangiffler.model.PhotoJson;
+import com.rangiffler.model.PhotoServiceJson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +18,10 @@ public class PhotoService {
 
     private final PhotoRepository photoRepository;
 
-    public List<PhotoJson> getAllUserPhotos(String username) {
+    public List<PhotoServiceJson> getAllUserPhotos(String username) {
         return photoRepository.findAllByUsername(username)
                 .stream()
-                .map(PhotoJson::fromEntity)
+                .map(PhotoServiceJson::fromEntity)
                 .collect(toList());
     }
 
@@ -28,8 +30,9 @@ public class PhotoService {
         return null;
     }
 
-    public PhotoJson addPhoto(PhotoJson photoJson) {
-        return null;
+    public void addPhoto(PhotoJson photoJson) {
+        PhotoEntity photoEntity = PhotoJson.toPhotoEntity(photoJson);
+        photoRepository.save(photoEntity);
     }
 
 

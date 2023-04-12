@@ -34,8 +34,7 @@ public class UserController {
   }
 
   @PutMapping("/updateUserInfo")
-  public UserJson updateCurrentUser(@AuthenticationPrincipal Jwt principal,
-                                    @RequestBody UserJson user) {
+  public UserJson updateCurrentUser(@AuthenticationPrincipal Jwt principal, @RequestBody UserJson user) {
     String usernameFromJWT = principal.getClaim("sub");
     user.setUsername(usernameFromJWT);
     return userService.updateUserInfo(user);

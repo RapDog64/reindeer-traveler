@@ -27,7 +27,7 @@ public class UserJson {
   @JsonProperty("lastName")
   private String lastname;
 
-  @JsonProperty("photo")
+  @JsonProperty("avatar")
   @Size(max = MAX_PHOTO_SIZE)
   private String photo;
 

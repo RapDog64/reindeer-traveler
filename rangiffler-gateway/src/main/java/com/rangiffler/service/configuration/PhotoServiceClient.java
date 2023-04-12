@@ -1,6 +1,7 @@
 package com.rangiffler.service.configuration;
 
 import com.rangiffler.model.PhotoJson;
+import com.rangiffler.model.PhotoServiceJson;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +12,13 @@ import java.util.UUID;
 public interface PhotoServiceClient {
 
     @GetMapping("/photos")
-    List<PhotoJson> getPhotosForUser(@RequestParam String username);
+    List<PhotoJson> getPhotos(@RequestParam String username);
+
+    @GetMapping("/photos")
+    List<PhotoServiceJson> getPhotosForUser(@RequestParam String username);
 
     @GetMapping("/friends/photos")
-    List<PhotoJson> getAllFriendsPhotos();
+    List<PhotoJson> getAllFriendsPhotos(@RequestParam String username);
 
     @PostMapping("/photos")
     PhotoJson addPhoto(@RequestBody PhotoJson photoJson);
@@ -24,4 +28,5 @@ public interface PhotoServiceClient {
 
     @DeleteMapping("/photos")
     void deletePhoto(@RequestParam UUID photoId);
+
 }
