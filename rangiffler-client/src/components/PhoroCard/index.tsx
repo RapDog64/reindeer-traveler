@@ -86,7 +86,7 @@ export const PhotoCard: FC<PhotoCardInterface> = ({photo, onClose, initSubmitPop
 
   const handleEditPhotoClick = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    apiClient().patch(`/photos/${photo?.id}`, {
+    apiClient().put(`/photos/${photo?.id}`, {
       id: photoData.id,
       photo: photoData.src,
       description: photoData?.description,
