@@ -26,8 +26,5 @@ public class PhotoControllerAdvice {
         return new ResponseEntity<>(invalidUsernameException.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-//    @ExceptionHandler(RecordNotFoundException.class)
-//    public ResponseEntity<Object> recordNotFoundException(RecordNotFoundException recordNotFoundException) {
-//        return new ResponseEntity<>(recordNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
-//    }
+
 }
