@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.rangiffler'
-version '0.0.1-SNAPSHOT'
+version '1.0.0'
 
 repositories {
     mavenCentral()
@@ -22,10 +22,7 @@ dependencies {
             "org.springframework.boot:spring-boot-starter-validation",
             "org.springframework.cloud:spring-cloud-starter-openfeign:4.0.2"
     )
-
-
     testImplementation "org.junit.jupiter:junit-jupiter:5.9.2"
-
     compileOnly 'org.projectlombok:lombok:1.18.26'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
