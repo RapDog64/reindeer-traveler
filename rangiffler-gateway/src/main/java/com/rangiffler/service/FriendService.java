@@ -4,11 +4,11 @@ import com.rangiffler.model.FriendJson;
 import com.rangiffler.model.UserJson;
 import com.rangiffler.service.configuration.FriendServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class FriendService {
 
     private final FriendServiceClient friendService;
@@ -33,11 +33,8 @@ public class FriendService {
         return friendService.getFriends(username, includePending);
     }
 
-    public UserJson sendInvitation(UserJson user) {
-//        UserJson userJson = allUsers.stream().filter(u -> u.getId().equals(user.getId())).findFirst()
-//                .orElseThrow();
-//        userJson.setFriendStatus(FriendStatus.INVITATION_SENT);
-        return null;
+    public UserJson sendInvitation(String username, UserJson user) {
+        return friendService.sendInvitation(username, user);
     }
 
     public List<UserJson> acceptInvitation(String username, FriendJson friend) {

@@ -24,9 +24,9 @@ public interface PhotoServiceClient {
     PhotoJson addPhoto(@RequestBody PhotoJson photoJson);
 
     @PutMapping("/photos/{id}")
-    PhotoJson editPhoto(@RequestBody PhotoJson photoJson);
+    PhotoServiceJson editPhoto(@RequestBody PhotoJson photoJson, @PathVariable UUID id);
 
-    @DeleteMapping("/photos")
-    void deletePhoto(@RequestParam UUID photoId);
+    @DeleteMapping("/photos/{id}")
+    void deletePhoto(@PathVariable UUID id);
 
 }
