@@ -6,26 +6,23 @@ plugins {
 }
 
 group = 'com.rangiffler'
-version '0.0.1-SNAPSHOT'
+version '1.0.0'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    implementation project(':rangiffler-common')
     implementation(
             "org.springframework.boot:spring-boot-starter-web",
             "org.springframework:spring-webflux",
             "org.springframework.boot:spring-boot-starter-oauth2-resource-server",
             "org.springframework.boot:spring-boot-starter-security",
             "org.springframework.boot:spring-boot-starter-validation",
-//            "org.springframework.cloud:spring-cloud-starter-feign:1.4.7.RELEASE"
             "org.springframework.cloud:spring-cloud-starter-openfeign:4.0.2"
     )
-
-
     testImplementation "org.junit.jupiter:junit-jupiter:5.9.2"
-
     compileOnly 'org.projectlombok:lombok:1.18.26'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 }

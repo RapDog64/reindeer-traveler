@@ -2,11 +2,14 @@ package com.rangiffler.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.UUID;
+
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
+@AllArgsConstructor
 public class PhotoJson {
 
   @JsonProperty("id")
@@ -23,4 +26,7 @@ public class PhotoJson {
 
   @JsonProperty("username")
   private String username;
+
+  public PhotoJson() {
+  }
 }

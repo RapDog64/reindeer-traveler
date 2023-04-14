@@ -17,7 +17,7 @@ public class UserJson {
     private String firstname;
     @JsonProperty("lastName")
     private String lastname;
-    @JsonProperty("photo")
+    @JsonProperty("avatar")
     private String photo;
     @JsonProperty("friendState")
     @JsonInclude(JsonInclude.Include.NON_NULL)

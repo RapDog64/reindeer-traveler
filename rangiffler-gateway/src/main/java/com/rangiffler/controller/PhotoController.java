@@ -6,6 +6,8 @@ import java.util.UUID;
 import com.rangiffler.model.PhotoJson;
 import com.rangiffler.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PhotoController {
 
-
   private final PhotoService photoService;
 
   @Autowired
@@ -25,19 +26,22 @@ public class PhotoController {
     this.photoService = photoService;
   }
 
-
   @GetMapping("/photos")
-  public List<PhotoJson> getPhotosForUser() {
-    return photoService.getAllUserPhotos();
+  public List<PhotoJson> getPhotosForUser(@AuthenticationPrincipal Jwt principal) {
+    String usernameFromJWT = principal.getClaim("sub");
+    return photoService.getAllUserPhotos(usernameFromJWT);
   }
 
   @GetMapping("/friends/photos")
-  public List<PhotoJson> getAllFriendsPhotos() {
-    return photoService.getAllFriendsPhotos();
+  public List<PhotoJson> getAllFriendsPhotos(@AuthenticationPrincipal Jwt principal) {
+    String usernameFromJWT = principal.getClaim("sub");
+    return photoService.getAllFriendsPhotos(usernameFromJWT);
   }
 
   @PostMapping("/photos")
-  public PhotoJson addPhoto(@RequestBody PhotoJson photoJson) {
+  public PhotoJson addPhoto(@AuthenticationPrincipal Jwt principal, @RequestBody PhotoJson photoJson) {
+    String usernameFromJWT = principal.getClaim("sub");
+    photoJson.setUsername(usernameFromJWT);
     return photoService.addPhoto(photoJson);
   }
 
