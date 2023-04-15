@@ -33,7 +33,7 @@ public class CountryService {
         Optional.ofNullable(id)
                 .orElseThrow(() -> new InvalidCountryIdException(INVALID_COUNTRY_ID));
         CountryEntity entity = countryRepository.findById(id)
-                .orElseThrow(() -> new CountryNotFoundException(COUNTY_NOT_FOUND));
+                .orElseThrow(() -> new CountryNotFoundException(String.format(COUNTY_NOT_FOUND, id)));
         return CountryJson.fromEntity(entity);
     }
 }
