@@ -19,5 +19,5 @@ public @interface ApiLogin {
 
     String password() default "";
 
-    GenerateUser nifflerUser() default @GenerateUser(handleAnnotation = false);
+    GenerateUser user() default @GenerateUser(handleAnnotation = false);
 }

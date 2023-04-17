@@ -1,11 +1,11 @@
-package com.rangiffler.api.manager;
+package com.rangiffler.api.handler;
 
 import com.rangiffler.utility.LoginUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SessionStorageHolder {
+public class SessionStorageHandler {
 
     private static final String CODE_VERIFIER_KEY = "codeVerifier";
     private static final String CODE_CHALLENGE_KEY = "codeChallenge";
@@ -14,13 +14,13 @@ public class SessionStorageHolder {
 
     private final Map<String, String> sessionStorage;
 
-    private static final ThreadLocal<SessionStorageHolder> INSTANCE = ThreadLocal.withInitial(SessionStorageHolder::new);
+    private static final ThreadLocal<SessionStorageHandler> INSTANCE = ThreadLocal.withInitial(SessionStorageHandler::new);
 
-    private SessionStorageHolder() {
+    private SessionStorageHandler() {
         sessionStorage = new HashMap<>();
     }
 
-    public static SessionStorageHolder getInstance() {
+    public static SessionStorageHandler getInstance() {
         return INSTANCE.get();
     }
 

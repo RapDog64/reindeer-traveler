@@ -1,22 +1,22 @@
-package com.rangiffler.api.manager;
+package com.rangiffler.api.handler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CookieHolder {
+public class CookieHandler {
     private static final String COOKIE_KEY = "Cookie";
 
     private final Map<String, List<String>> cookieStorage;
 
-    private static final ThreadLocal<CookieHolder> INSTANCE = ThreadLocal.withInitial(CookieHolder::new);
+    private static final ThreadLocal<CookieHandler> INSTANCE = ThreadLocal.withInitial(CookieHandler::new);
 
-    private CookieHolder() {
+    private CookieHandler() {
         cookieStorage = new HashMap<>(Map.of(COOKIE_KEY, new ArrayList<>()));
     }
 
-    public static CookieHolder getInstance() {
+    public static CookieHandler getInstance() {
         return INSTANCE.get();
     }
 

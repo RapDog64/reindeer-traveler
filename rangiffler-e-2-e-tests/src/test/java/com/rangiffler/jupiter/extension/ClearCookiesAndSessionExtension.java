@@ -1,7 +1,7 @@
 package com.rangiffler.jupiter.extension;
 
-import com.rangiffler.api.manager.CookieHolder;
-import com.rangiffler.api.manager.SessionStorageHolder;
+import com.rangiffler.api.handler.CookieHandler;
+import com.rangiffler.api.handler.SessionStorageHandler;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
@@ -9,7 +9,7 @@ public class ClearCookiesAndSessionExtension implements AfterTestExecutionCallba
 
     @Override
     public void afterTestExecution(final ExtensionContext context) throws Exception {
-        CookieHolder.getInstance().flushAll();
-        SessionStorageHolder.getInstance().flushAll();
+        CookieHandler.getInstance().flushAll();
+        SessionStorageHandler.getInstance().flushAll();
     }
 }
