@@ -13,7 +13,13 @@ public class MainPage extends BasePage<MainPage> {
 
     public static final String URL = AppConfig.config.frontUrl();
     private final SelenideElement logoutButton = $("[data-testid='LogoutIcon']");
-    protected final Header header = new Header();
+    private final Header header = new Header();
+
+
+    @Step("Navigate to the header panel")
+    public Header getHeader() {
+        return header;
+    }
 
     @Override
     public MainPage waitForPageLoaded() {

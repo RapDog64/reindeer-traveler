@@ -71,7 +71,8 @@ export const Header: FC<HeaderInterface> = ({
           <Stack direction='row' spacing={3}>
             <Button onClick={handleAddPhotoClick}
                     variant="contained"
-                    startIcon={<AddCircleOutlineIcon/>}>Add photo</Button>
+                    startIcon={<AddCircleOutlineIcon/>}
+                    test-id="add-travel">Add photo</Button>
             <Stack direction="row" spacing={2}>
               <Avatar sx={{
                 width: 48,
@@ -81,6 +82,7 @@ export const Header: FC<HeaderInterface> = ({
                       src={user?.avatar}
                       alt={user?.username}
                       onClick={handleAvatarClick}
+                      test-id="user-profile-btn"
               />
               <Stack direction='row'
                      spacing={0.5}
@@ -90,7 +92,7 @@ export const Header: FC<HeaderInterface> = ({
                      }}
               >
                 <ListItemIcon>
-                  <Tooltip title="Your visited countries">
+                  <Tooltip title="Your visited countries" test-id="all-countries">
                     <Stack direction="row" gap={1}>
                       <PublicIcon/> {getVisitedCountriesCount()}
                     </Stack>
@@ -104,7 +106,7 @@ export const Header: FC<HeaderInterface> = ({
                   </Tooltip>
                 </ListItemIcon>
                 <ListItemIcon>
-                  <Tooltip title="Your friends">
+                  <Tooltip title="Your friends" test-id="friends-icon">
                     <Stack direction="row" gap={1} onClick={handleFriendsIconClick}
                            sx={{cursor: "pointer"}}>
                       <GroupIcon/> {friends?.length}
@@ -112,7 +114,7 @@ export const Header: FC<HeaderInterface> = ({
                   </Tooltip>
                 </ListItemIcon>
                 <ListItemIcon>
-                  <Tooltip title="Logout">
+                  <Tooltip title="Logout" test-id="logout-btn">
                     <Stack direction="row" gap={1}
                            sx={{cursor: "pointer"}}>
                       <LogoutIcon onClick={handleLogout}/>

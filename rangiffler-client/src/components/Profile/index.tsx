@@ -157,6 +157,7 @@ export const Profile: FC<ProfileInterface> = ({onClose}) => {
                             label="First name"
                             size="small"
                             name="firstName"
+                            test-id="firstname"
                             value={profileData?.firstName}
                             helperText={fieldErrors["firstName"]}
                             error={fieldErrors["firstName"] !== null}
@@ -178,6 +179,7 @@ export const Profile: FC<ProfileInterface> = ({onClose}) => {
                             label="Last name"
                             size="small"
                             name="lastName"
+                            test-id="lastname"
                             value={profileData?.lastName}
                             helperText={fieldErrors["lastName"]}
                             error={fieldErrors["lastName"] !== null}

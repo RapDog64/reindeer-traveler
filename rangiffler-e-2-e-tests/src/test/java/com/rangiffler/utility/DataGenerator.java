@@ -14,11 +14,11 @@ public class DataGenerator {
         return faker.bothify("????####");
     }
 
-    public static String generateRandomName() {
+    public static String generateRandomFirstname() {
         return faker.name().firstName();
     }
 
-    public static String generateRandomSurname() {
+    public static String generateRandomLastname() {
         return faker.name().lastName();
     }
 
