@@ -36,6 +36,7 @@ public class StartPage extends BasePage<StartPage> {
         return this;
     }
 
+    @Step("Check that form title is '{0}'")
     public StartPage checkFormTitle(String title) {
         formTitle.shouldHave(text(title));
         return this;

@@ -25,6 +25,7 @@ public class LogoutTest extends BaseWebTest {
         Selenide.open(MainPage.URL, MainPage.class)
                 .verifyApplicationName("Rangiffler")
                 .doLogout()
+                .waitForPageLoaded()
                 .checkFormTitle("Be like Rangiffler");
     }
 }
