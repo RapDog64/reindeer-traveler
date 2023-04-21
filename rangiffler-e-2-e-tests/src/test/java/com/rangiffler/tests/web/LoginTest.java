@@ -31,7 +31,7 @@ public class LoginTest extends BaseWebTest {
                 .doLogin()
                 .fillLoginPage(user.getUsername(), user.getPassword())
                 .submit(new MainPage())
-                .waitForPageLoaded();
+                .verifyApplicationName("Rangiffler");
     }
 
 
@@ -39,7 +39,7 @@ public class LoginTest extends BaseWebTest {
     @AllureId("500005")
     @DisplayName("WEB: If the username/password is entered incorrectly, the user remains unauthorized")
     @Tag("WEB")
-    @GenerateUser()
+    @GenerateUser
     void userShouldStayOnLoginPageAfterLoginWithBadCredentials(@User(selector = METHOD) UserJson user) {
         LoginPage loginPage = Selenide.open(StartPage.URL, StartPage.class)
                 .doLogin()

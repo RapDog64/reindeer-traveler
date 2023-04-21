@@ -1,5 +1,11 @@
 package com.rangiffler.tests.web;
 
+import com.codeborne.selenide.Selenide;
+import com.rangiffler.jupiter.annotation.ApiLogin;
+import com.rangiffler.jupiter.annotation.GenerateUser;
+import com.rangiffler.jupiter.annotation.User;
+import com.rangiffler.model.UserJson;
+import com.rangiffler.page.MainPage;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Epic;
 import org.junit.jupiter.api.DisplayName;
@@ -11,9 +17,14 @@ import org.junit.jupiter.api.Test;
 public class LogoutTest extends BaseWebTest {
 
     @Test
-    @DisplayName("WEB: Amount of the user's friends at the header panel should be the same as in the user friend list")
+    @DisplayName("WEB: Usr is able to log out")
     @Tag("WEB")
     @AllureId("500011")
-    void shouldDisplaySameAmountOfFriendIn() {
+    @ApiLogin(user = @GenerateUser)
+    void shouldDisplaySameAmountOfFriendIn(@User UserJson user) {
+        Selenide.open(MainPage.URL, MainPage.class)
+                .verifyApplicationName("Rangiffler")
+                .doLogout()
+                .checkFormTitle("Be like Rangiffler");
     }
 }
