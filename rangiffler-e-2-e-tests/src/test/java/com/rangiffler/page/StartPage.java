@@ -10,7 +10,7 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class StartPage extends BasePage<StartPage> {
 
-    public static final String URL = AppConfig.config.frontUrl();
+    public static final String URL = "/";
     private final SelenideElement loginButton = $("a[href*='redirect']");
     private final SelenideElement registerButton = $("a[href*='register']");
     private final SelenideElement formTitle = $("div > h1");

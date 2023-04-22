@@ -16,7 +16,7 @@ public class RegisterPage  extends BasePage<RegisterPage> {
     private final SelenideElement errorContainer = $(".form__error");
 
     @Step("Fill register page with credentials: username: {0}, password: {1}, submit password: {2}")
-    public RegisterPage fillRegisterPage(String login, String password, String passwordSubmit) {
+    public RegisterPage fillRegisterForm(String login, String password, String passwordSubmit) {
         setUsername(login);
         setPassword(password);
         setPasswordSubmit(passwordSubmit);
@@ -42,8 +42,13 @@ public class RegisterPage  extends BasePage<RegisterPage> {
     }
 
     @Step("Submit register")
-    public LoginPage successSubmit() {
+    public RegisterPage successSubmit() {
         submitButton.click();
+        return this;
+    }
+
+    @Step("Press 'Sign In' button")
+    public LoginPage proceedLoginLink() {
         proceedLoginLink.click();
         return new LoginPage();
     }

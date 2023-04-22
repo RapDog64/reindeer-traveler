@@ -1,6 +1,5 @@
 package com.rangiffler.tests.web;
 
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.rangiffler.jupiter.annotation.ApiLogin;
 import com.rangiffler.jupiter.annotation.GenerateUser;
@@ -15,7 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import static com.rangiffler.page.component.PanelAttribute.*;
+import static com.rangiffler.page.component.PanelAttribute.USER_PROFILE;
 
 @Epic("[WEB][rangiffler-frontend]: User Profile")
 @DisplayName("[WEB][rangiffler-frontend]: User Profile")
