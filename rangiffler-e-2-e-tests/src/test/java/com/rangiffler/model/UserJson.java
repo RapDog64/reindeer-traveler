@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rangiffler.model.enums.FriendState;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -25,6 +27,24 @@ public class UserJson {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private FriendState friendState;
 
+    private transient List<UserJson> friendsJsons = new ArrayList<>();
+    private transient List<UserJson> invitationsJsons = new ArrayList<>();
+
+    public List<UserJson> getFriendsList() {
+        return friendsJsons;
+    }
+
+    public void setFriendsJsons(List<UserJson> friendsJsons) {
+        this.friendsJsons = friendsJsons;
+    }
+
+    public List<UserJson> getInvitationsJsons() {
+        return invitationsJsons;
+    }
+
+    public void setInvitationsJsons(List<UserJson> invitationsJsons) {
+        this.invitationsJsons = invitationsJsons;
+    }
 
     public UserJson() {
     }

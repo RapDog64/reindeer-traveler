@@ -3,10 +3,11 @@ package com.rangiffler.jupiter.extension;
 import com.rangiffler.api.service.AuthenticationClient;
 import com.rangiffler.api.service.UserdataClient;
 import com.rangiffler.jupiter.annotation.ApiLogin;
+import com.rangiffler.jupiter.annotation.Friends;
 import com.rangiffler.jupiter.annotation.GenerateUser;
 import com.rangiffler.jupiter.annotation.User;
+import com.rangiffler.model.FriendJson;
 import com.rangiffler.model.UserJson;
-import com.rangiffler.utility.DataGenerator;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -19,6 +20,9 @@ import retrofit2.Response;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import static com.rangiffler.utility.DataGenerator.generateRandomPassword;
+import static com.rangiffler.utility.DataGenerator.generateRandomUsername;
 
 public class CreateUserExtension implements BeforeEachCallback, ParameterResolver {
 
@@ -40,20 +44,21 @@ public class CreateUserExtension implements BeforeEachCallback, ParameterResolve
             String username = generateUser.username();
             String password = generateUser.password();
             if ("".equals(username)) {
-                username = DataGenerator.generateRandomUsername();
+                username = generateRandomUsername();
             }
             if ("".equals(password)) {
-                password = DataGenerator.generateRandomPassword();
+                password = generateRandomPassword();
             }
             UserJson userJson = apiRegister(username, password);
 
+            createFriendsIfPresent(generateUser, userJson);
 //            createTravelsIfPresent(generateUser, userJson);
-//            createFriendsIfPresent(generateUser, userJson);
 //            createInvitationsIfPresent(generateUser, userJson);
 
             context.getStore(entry.getKey().getNamespace()).put(testId, userJson);
         }
     }
+
 
     @Override
     public boolean supportsParameter(final ParameterContext parameterContext,
@@ -68,6 +73,22 @@ public class CreateUserExtension implements BeforeEachCallback, ParameterResolve
         final String testId = getTestId(extensionContext);
         User annotation = parameterContext.getParameter().getAnnotation(User.class);
         return extensionContext.getStore(annotation.selector().getNamespace()).get(testId, UserJson.class);
+    }
+
+    private void createFriendsIfPresent(GenerateUser generateUser, UserJson createdUser) throws Exception {
+        Friends friends = generateUser.friends();
+        if (friends.handleAnnotation() && friends.count() > 0) {
+            for (int i = 0; i < friends.count(); i++) {
+                UserJson friend = apiRegister(generateRandomUsername(), generateRandomPassword());
+                FriendJson addFriend = new FriendJson();
+                FriendJson invitation = new FriendJson();
+                addFriend.setUsername(friend.getUsername());
+                invitation.setUsername(createdUser.getUsername());
+                userdataClient.addFriend(createdUser.getUsername(), addFriend);
+                userdataClient.acceptInvitation(friend.getUsername(), invitation);
+                createdUser.getFriendsList().add(friend);
+            }
+        }
     }
 
 

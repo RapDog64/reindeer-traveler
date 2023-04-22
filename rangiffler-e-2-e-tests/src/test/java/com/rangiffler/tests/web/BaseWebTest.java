@@ -15,7 +15,7 @@ public class BaseWebTest {
     static void beforeAll() {
         Configuration.baseUrl = AppConfig.config.frontUrl();
         Configuration.browserSize = "1920x1080";
-        Configuration.headless = true;
+//        Configuration.headless = true;
     }
 
     @BeforeEach

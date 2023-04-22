@@ -37,11 +37,10 @@ public class UserdataClient extends RestService {
                 .body();
     }
 
-    @Step("Send REST POST('/users/invite/') request to userdata service")
-    public UserJson addFriend(String username, FriendJson friend) throws Exception {
-        return userdataApi.addFriend(username, friend)
-                .execute()
-                .body();
+    @Step("Send REST POST('/users/invite') request to userdata service")
+    public void addFriend(String username, FriendJson friend) throws Exception {
+        userdataApi.addFriend(username, friend)
+                .execute();
     }
 
     @Step("Send REST POST('/acceptInvitation') request to userdata service")

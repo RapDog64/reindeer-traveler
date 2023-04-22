@@ -1,7 +1,6 @@
 package com.rangiffler.page;
 
 import com.codeborne.selenide.SelenideElement;
-import com.rangiffler.config.AppConfig;
 import com.rangiffler.page.component.Header;
 import io.qameta.allure.Step;
 
@@ -11,7 +10,7 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class MainPage extends BasePage<MainPage> {
 
-    public static final String URL = AppConfig.config.frontUrl();
+    public static final String URL = "";
     private final SelenideElement logoutButton = $("[data-testid='LogoutIcon']");
     private final Header header = new Header();
 

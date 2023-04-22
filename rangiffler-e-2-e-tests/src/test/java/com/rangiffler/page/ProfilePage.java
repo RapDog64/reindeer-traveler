@@ -1,6 +1,5 @@
 package com.rangiffler.page;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
@@ -9,8 +8,8 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class ProfilePage extends BasePage<ProfilePage> {
 
-    private final SelenideElement firstnameInput = $(byTestId("firstname")).$("input");
-    private final SelenideElement lastnameInput = $(byTestId("lastname")).$("input");
+    private final SelenideElement firstnameInput = $(testId("firstname")).$("input");
+    private final SelenideElement lastnameInput = $(testId("lastname")).$("input");
     private final SelenideElement saveBtn = $("[type='submit']");
 
     @Override

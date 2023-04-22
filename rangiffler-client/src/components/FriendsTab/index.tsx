@@ -59,7 +59,7 @@ export const FriendsTab: FC = () => {
   return (
       <>
         <Grid container direction='row' columns={2} spacing={2}>
-          <Grid item style={{margin: "0 auto"}}>
+          <Grid test-id="friends-list" item style={{margin: "0 auto"}}>
             <Map data={data} handleCountryClick={handleCountryClick} photoFilter={photoFilter}
                  handleWholeWorldClick={() => setPhotoFilter(null)}/>
           </Grid>
