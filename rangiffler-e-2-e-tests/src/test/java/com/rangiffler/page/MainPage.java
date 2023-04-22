@@ -2,6 +2,7 @@ package com.rangiffler.page;
 
 import com.codeborne.selenide.SelenideElement;
 import com.rangiffler.page.component.Header;
+import com.rangiffler.page.component.TabItem;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.text;
@@ -36,5 +37,16 @@ public class MainPage extends BasePage<MainPage> {
     public StartPage doLogout() {
         logoutButton.click();
         return new StartPage();
+    }
+
+    public MainPage navigateToTabs() {
+        return this;
+    }
+
+
+    @Step("Open '{0}' tab")
+    public <T extends BasePage> T openTab(TabItem tab, T expectedPage) {
+        $(testId(tab.name)).click();
+        return expectedPage;
     }
 }

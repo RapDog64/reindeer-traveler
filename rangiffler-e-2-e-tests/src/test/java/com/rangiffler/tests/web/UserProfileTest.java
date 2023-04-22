@@ -29,7 +29,7 @@ public class UserProfileTest extends BaseWebTest {
         final String firstname = DataGenerator.generateRandomFirstname();
         final String lastname = DataGenerator.generateRandomLastname();
 
-        Selenide.open(MainPage.URL, MainPage.class)
+        Selenide.open("", MainPage.class)
                 .getHeader()
                 .clickOn(USER_PROFILE, new ProfilePage())
                 .typeFirstname(firstname)

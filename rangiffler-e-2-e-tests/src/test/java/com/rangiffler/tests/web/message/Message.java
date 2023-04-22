@@ -1,4 +1,4 @@
-package com.rangiffler.tests.web.error;
+package com.rangiffler.tests.web.message;
 
 public interface Message {
     String BAD_CREDENTIALS = "Bad credentials";

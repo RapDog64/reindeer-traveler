@@ -14,7 +14,7 @@ public class EditTravelTest extends BaseWebTest {
     @Test
     @DisplayName("WEB: user is able to edit his travel")
     @Tag("WEB")
-    @AllureId("500015")
+    @AllureId("500017")
     void shouldEditTravel() {
     }
 }

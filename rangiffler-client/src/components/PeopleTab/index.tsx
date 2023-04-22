@@ -140,7 +140,7 @@ export const PeopleTab: FC = () => {
 
   return (
       <TableContainer component={Paper} sx={{maxHeight: "80vh"}}>
-        <Table stickyHeader aria-label="all people table">
+        <Table stickyHeader aria-label="all people table" test-id="all-people-table">
           <TableHead>
             <TableRow>
               <TableCell>Avatar</TableCell>
@@ -159,11 +159,12 @@ export const PeopleTab: FC = () => {
                     <Avatar sx={{width: 48, height: 48}}
                             src={user.avatar}
                             alt={user.username}
+                            test-id="person-avatar"
                     />
                   </TableCell>
-                  <TableCell>{user.username}</TableCell>
-                  <TableCell>{user.firstName} {user.lastName}</TableCell>
-                  <TableCell>{getUserControls(user)}</TableCell>
+                  <TableCell test-id="person-username">{user.username}</TableCell>
+                  <TableCell test-id="person-full-name">{user.firstName} {user.lastName}</TableCell>
+                  <TableCell test-id="person-add">{getUserControls(user)}</TableCell>
                 </TableRow>
             ))}
           </TableBody>

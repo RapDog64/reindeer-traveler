@@ -22,7 +22,7 @@ public class LogoutTest extends BaseWebTest {
     @AllureId("500011")
     @ApiLogin(user = @GenerateUser)
     void shouldDisplaySameAmountOfFriendIn(@User UserJson user) {
-        Selenide.open(MainPage.URL, MainPage.class)
+        Selenide.open("", MainPage.class)
                 .verifyApplicationName("Rangiffler")
                 .doLogout()
                 .waitForPageLoaded()
