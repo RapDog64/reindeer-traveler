@@ -31,6 +31,6 @@ public interface FriendServiceClient {
     @PostMapping("friends/remove")
     List<UserJson> removeFriend(@RequestParam String username, @RequestParam String friendUsername);
 
-    @PostMapping("users/invite/")
+    @PostMapping("/users/invite")
     UserJson sendInvitation(@RequestParam String username, @RequestBody UserJson user);
 }

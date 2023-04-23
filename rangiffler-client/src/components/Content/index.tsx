@@ -23,14 +23,17 @@ export const Content: FC = () => {
             >
               <Tab label="Your travels"
                    value="main"
+                   test-id="your-travels"
               />
               <Tab
                   label="Friends travels"
                   value="friends"
+                  test-id="friends-travels"
               />
               <Tab
                   label="People Around"
                   value="all"
+                  test-id="people-around"
               />
             </TabList>
           </Box>

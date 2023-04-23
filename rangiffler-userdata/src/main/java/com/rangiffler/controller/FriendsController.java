@@ -42,7 +42,7 @@ public class FriendsController {
         return userService.declineInvitation(username, invitation);
     }
 
-    @PostMapping("users/invite/")
+    @PostMapping("/users/invite")
     public void sendFriendshipInvitation(@RequestParam String username, @RequestBody FriendJson friend) {
         userService.sendFriendshipInvitation(username, friend);
     }

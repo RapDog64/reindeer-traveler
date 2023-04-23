@@ -50,7 +50,7 @@ export const FriendsPopup: FC<FriendsPopupInterface> = ({friends, onClose, handl
               justifyContent: "flex-end",
             }}>
               <IconButton size='small' onClick={onClose}>
-                <CloseIcon/>
+                <CloseIcon test-id="close-icon"/>
               </IconButton>
             </CardActions>
             <CardContent sx={{
@@ -59,10 +59,11 @@ export const FriendsPopup: FC<FriendsPopupInterface> = ({friends, onClose, handl
             }}>
               <TableContainer component={Paper} sx={{maxHeight: "50vh", overflow: "scroll"}}>
                 {friends?.length > 0 ? (
-                        <Table stickyHeader aria-label="friends table">
-                          <TableBody>
+                        <Table stickyHeader aria-label="friends table" test-id="friends-table">
+                          <TableBody test-id="friends-list">
                             {friends.map(user => (
                                 <TableRow
+                                    test-id="friend-card"
                                     key={user.username}
                                     sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                 >
@@ -72,10 +73,10 @@ export const FriendsPopup: FC<FriendsPopupInterface> = ({friends, onClose, handl
                                             alt={user.username}
                                     />
                                   </TableCell>
-                                  <TableCell>{user.username}</TableCell>
+                                  <TableCell test-id="friend-name">{user.username}</TableCell>
                                   <TableCell>
                                     <Tooltip title="Remove friend">
-                                      <IconButton size="small" onClick={() => handleRemoveFriend(user)}>
+                                      <IconButton size="small" test-id="friend-remove" onClick={() => handleRemoveFriend(user)}>
                                         <PersonRemoveAlt1Icon/>
                                       </IconButton>
                                     </Tooltip>
@@ -85,7 +86,7 @@ export const FriendsPopup: FC<FriendsPopupInterface> = ({friends, onClose, handl
                           </TableBody>
                         </Table>) :
                     (
-                        <Stack sx={{margin: "16px auto", width: "200px", textAlign: "center"}}>
+                        <Stack test-id="empty-friends-list" sx={{margin: "16px auto", width: "200px", textAlign: "center"}}>
                           No friends yet
                         </Stack>
                     )}
