@@ -23,12 +23,12 @@ public class PeopleAroundComponent extends BasePage<PeopleAroundComponent> {
         return this;
     }
 
+    @Step("Check that page is loaded")
     @Override
     public PeopleAroundComponent waitForPageLoaded() {
          $(testId(TabItem.PEOPLE_AROUND.name)).shouldBe(visible);
          return this;
     }
-
 
     @Step("Search for user '{0}'")
     private SelenideElement findUser(String username) {

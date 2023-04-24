@@ -9,12 +9,15 @@ import com.rangiffler.page.MainPage;
 import com.rangiffler.page.StartPage;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static com.rangiffler.jupiter.extension.CreateUserExtension.Selector.METHOD;
 import static com.rangiffler.tests.web.message.Message.BAD_CREDENTIALS;
+import static io.qameta.allure.SeverityLevel.BLOCKER;
+import static io.qameta.allure.SeverityLevel.CRITICAL;
 
 
 @Epic("[WEB][rangiffler-frontend]: Authorization")
@@ -25,9 +28,10 @@ public class LoginTest extends BaseWebTest {
     @AllureId("500006")
     @DisplayName("WEB: The main page should be displayed after logging in as a registered user")
     @Tag("WEB")
+    @Severity(BLOCKER)
     @GenerateUser
     void mainPageShouldBeDisplayedAfterSuccessLogin(@User(selector = METHOD) UserJson user) {
-        Selenide.open(StartPage.URL, StartPage.class)
+        Selenide.open("", StartPage.class)
                 .doLogin()
                 .fillLoginPage(user.getUsername(), user.getPassword())
                 .submit(new MainPage())
@@ -39,9 +43,10 @@ public class LoginTest extends BaseWebTest {
     @AllureId("500005")
     @DisplayName("WEB: If the username/password is entered incorrectly, the user remains unauthorized")
     @Tag("WEB")
+    @Severity(CRITICAL)
     @GenerateUser
     void userShouldStayOnLoginPageAfterLoginWithBadCredentials(@User(selector = METHOD) UserJson user) {
-        LoginPage loginPage = Selenide.open(StartPage.URL, StartPage.class)
+        LoginPage loginPage = Selenide.open("", StartPage.class)
                 .doLogin()
                 .fillLoginPage(user.getUsername(), "incorrect" + user.getPassword());
 

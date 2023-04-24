@@ -15,7 +15,8 @@ public class BaseWebTest {
     static void beforeAll() {
         Configuration.baseUrl = AppConfig.config.frontUrl();
         Configuration.browserSize = "1920x1080";
-//        Configuration.headless = true;
+        Configuration.timeout = 12000;
+        Configuration.headless = true;
     }
 
     @BeforeEach

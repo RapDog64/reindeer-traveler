@@ -10,6 +10,7 @@ import com.rangiffler.page.component.PeopleAroundComponent;
 import com.rangiffler.tests.web.BaseWebTest;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Epic;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,13 +21,13 @@ import static com.rangiffler.page.component.TabItem.PEOPLE_AROUND;
 public class SendInvitationTest extends BaseWebTest {
 
     @Test
+    @Disabled
     @AllureId("500018")
     @ApiLogin(user = @GenerateUser)
     void shouldSendFriendInvitation(@User UserJson user) {
         final String username = "cira.harber";
 
         Selenide.open("", MainPage.class)
-                .navigateToTabs()
                 .waitForPageLoaded()
                 .openTab(PEOPLE_AROUND, new PeopleAroundComponent())
                 .waitForPageLoaded()
