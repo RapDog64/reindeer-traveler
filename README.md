@@ -67,7 +67,7 @@ create database "rangiffler-auth" with owner postgres;
 [Documentation](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 Recommended version Node.js - 18.13.0 (LTS)
 
-# Run Ranigffler locally в IDE:
+# Run Ranigffler locally in your IDE
 
 #### 1. Change directory to rangiffler-client
 
@@ -111,7 +111,7 @@ MacBook-Pro rangiffler % cd rangiffler-client
 ```posh
 ./gradlew clean test
 ```
-**By default, it starts 4 threads; however, it can be changed in the ```posh junit-platform.properties``` file.**
+**By default, it starts 4 threads; however, it can be changed in the ```junit-platform.properties``` file.**
 
 ```posh
 junit.jupiter.execution.parallel.config.fixed.parallelism={threads}
@@ -125,8 +125,10 @@ junit.jupiter.execution.parallel.config.fixed.max-pool-size={threads}
 ./gradlew allereServe
 ```
 
-### Allure report examples
+### Allure report example #1
 ![Allure](./images/Screenshot_1.png)
+
+### Allure report example #2
 
 ![Allure2](./images/Screenshot_2.png)
 
