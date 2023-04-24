@@ -11,7 +11,6 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class MainPage extends BasePage<MainPage> {
 
-    public static final String URL = "";
     private final SelenideElement logoutButton = $("[data-testid='LogoutIcon']");
     private final Header header = new Header();
 
@@ -38,11 +37,6 @@ public class MainPage extends BasePage<MainPage> {
         logoutButton.click();
         return new StartPage();
     }
-
-    public MainPage navigateToTabs() {
-        return this;
-    }
-
 
     @Step("Open '{0}' tab")
     public <T extends BasePage> T openTab(TabItem tab, T expectedPage) {
