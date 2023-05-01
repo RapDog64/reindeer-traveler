@@ -1,15 +1,21 @@
 package com.rangiffler.jupiter.extension;
 
 import com.rangiffler.api.service.AuthenticationClient;
+import com.rangiffler.api.service.CountryClient;
+import com.rangiffler.api.service.PhotoClient;
 import com.rangiffler.api.service.UserdataClient;
 import com.rangiffler.jupiter.annotation.ApiLogin;
 import com.rangiffler.jupiter.annotation.Friends;
 import com.rangiffler.jupiter.annotation.GenerateUser;
 import com.rangiffler.jupiter.annotation.IncomeInvitations;
 import com.rangiffler.jupiter.annotation.OutcomeInvitations;
+import com.rangiffler.jupiter.annotation.Travels;
 import com.rangiffler.jupiter.annotation.User;
+import com.rangiffler.model.CountryJson;
 import com.rangiffler.model.FriendJson;
+import com.rangiffler.model.PhotoJson;
 import com.rangiffler.model.UserJson;
+import com.rangiffler.model.enums.Country;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -19,10 +25,14 @@ import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 import retrofit2.Response;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
+import static com.rangiffler.jupiter.extension.ReceiveAllCountriesExtension.ALL_COUNTRIES;
+import static com.rangiffler.utility.DataGenerator.generatePhoto;
 import static com.rangiffler.utility.DataGenerator.generateRandomPassword;
 import static com.rangiffler.utility.DataGenerator.generateRandomUsername;
 
@@ -30,6 +40,8 @@ public class CreateUserExtension implements BeforeEachCallback, ParameterResolve
 
     private final AuthenticationClient authClient = new AuthenticationClient();
     private final UserdataClient userdataClient = new UserdataClient();
+    private final CountryClient countryClient = new CountryClient();
+    private final PhotoClient photoClient = new PhotoClient();
 
     public static final ExtensionContext.Namespace
             ON_METHOD_USERS_NAMESPACE = ExtensionContext.Namespace.create(CreateUserExtension.class, Selector.METHOD),
@@ -54,14 +66,13 @@ public class CreateUserExtension implements BeforeEachCallback, ParameterResolve
             UserJson userJson = apiRegister(username, password);
 
             createFriendsIfPresent(generateUser, userJson);
-//            createTravelsIfPresent(generateUser, userJson);
+            createTravelsIfPresent(generateUser, userJson);
             createIncomeInvitationsIfPresent(generateUser, userJson);
             createOutcomeInvitationsIfPresent(generateUser, userJson);
 
             context.getStore(entry.getKey().getNamespace()).put(testId, userJson);
         }
     }
-
 
     @Override
     public boolean supportsParameter(final ParameterContext parameterContext,
@@ -76,6 +87,25 @@ public class CreateUserExtension implements BeforeEachCallback, ParameterResolve
         final String testId = getTestId(extensionContext);
         User annotation = parameterContext.getParameter().getAnnotation(User.class);
         return extensionContext.getStore(annotation.selector().getNamespace()).get(testId, UserJson.class);
+    }
+
+    private void createTravelsIfPresent(GenerateUser generateUser, UserJson userJson) throws IOException {
+        Travels travels = generateUser.travels();
+        if (travels.handleAnnotation() && travels.count() > 0) {
+            for (int i = 0; i < travels.count(); i++) {
+                CountryJson country = getCountry(travels.country());
+                PhotoJson photoJson = generatePhoto(country, userJson.getUsername());
+                photoClient.addPhoto(photoJson);
+            }
+        }
+    }
+
+    private CountryJson getCountry(Country country) throws IOException {
+        CountryJson selectedCountry = ALL_COUNTRIES.stream()
+                .filter(countryJson -> countryJson.getCode().equals(country.code))
+                .findFirst()
+                .orElseThrow();
+        return countryClient.findCountry(selectedCountry.getId());
     }
 
     private void createFriendsIfPresent(GenerateUser generateUser, UserJson createdUser) throws Exception {
