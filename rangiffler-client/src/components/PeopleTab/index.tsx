@@ -16,7 +16,7 @@ import React, { FC, useContext, useEffect, useState } from "react";
 import {useOutletContext} from "react-router-dom";
 import {apiClient} from "../../api/apiClient";
 import { AlertMessageContext } from "../../context/AlertMessageContext/index";
-import {friendState, User} from "../../types/types";
+import {User} from "../../types/types";
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import PersonOffIcon from '@mui/icons-material/PersonOff';

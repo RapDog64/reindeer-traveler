@@ -43,8 +43,8 @@ export const AlertMessageProvider = ({children}: AlertMessageProviderInterface) 
     );
 
     return (
-        <AlertMessageContext.Provider value={alertContextValue}>
-            {children}
-        </AlertMessageContext.Provider>
+      <AlertMessageContext.Provider value={alertContextValue}>
+          {children}
+      </AlertMessageContext.Provider>
     );
 }
