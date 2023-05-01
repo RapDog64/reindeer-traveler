@@ -5,6 +5,8 @@ import com.rangiffler.api.service.UserdataClient;
 import com.rangiffler.jupiter.annotation.ApiLogin;
 import com.rangiffler.jupiter.annotation.Friends;
 import com.rangiffler.jupiter.annotation.GenerateUser;
+import com.rangiffler.jupiter.annotation.IncomeInvitations;
+import com.rangiffler.jupiter.annotation.OutcomeInvitations;
 import com.rangiffler.jupiter.annotation.User;
 import com.rangiffler.model.FriendJson;
 import com.rangiffler.model.UserJson;
@@ -53,7 +55,8 @@ public class CreateUserExtension implements BeforeEachCallback, ParameterResolve
 
             createFriendsIfPresent(generateUser, userJson);
 //            createTravelsIfPresent(generateUser, userJson);
-//            createInvitationsIfPresent(generateUser, userJson);
+            createIncomeInvitationsIfPresent(generateUser, userJson);
+            createOutcomeInvitationsIfPresent(generateUser, userJson);
 
             context.getStore(entry.getKey().getNamespace()).put(testId, userJson);
         }
@@ -87,6 +90,32 @@ public class CreateUserExtension implements BeforeEachCallback, ParameterResolve
                 userdataClient.addFriend(createdUser.getUsername(), addFriend);
                 userdataClient.acceptInvitation(friend.getUsername(), invitation);
                 createdUser.getFriendsList().add(friend);
+            }
+        }
+    }
+
+    private void createIncomeInvitationsIfPresent(GenerateUser generateUser, UserJson createdUser) throws Exception {
+        IncomeInvitations invitations = generateUser.incomeInvitations();
+        if (invitations.handleAnnotation() && invitations.count() > 0) {
+            for (int i = 0; i < invitations.count(); i++) {
+                UserJson invitation = apiRegister(generateRandomUsername(), generateRandomPassword());
+                FriendJson addFriend = new FriendJson();
+                addFriend.setUsername(createdUser.getUsername());
+                userdataClient.addFriend(invitation.getUsername(), addFriend);
+                createdUser.getInvitationsJsons().add(invitation);
+            }
+        }
+    }
+
+    private void createOutcomeInvitationsIfPresent(GenerateUser generateUser, UserJson createdUser) throws Exception {
+        OutcomeInvitations invitations = generateUser.outcomeInvitations();
+        if (invitations.handleAnnotation() && invitations.count() > 0) {
+            for (int i = 0; i < invitations.count(); i++) {
+                UserJson friend = apiRegister(generateRandomUsername(), generateRandomPassword());
+                FriendJson addFriend = new FriendJson();
+                addFriend.setUsername(friend.getUsername());
+                userdataClient.addFriend(createdUser.getUsername(), addFriend);
+                createdUser.getInvitationsJsons().add(friend);
             }
         }
     }

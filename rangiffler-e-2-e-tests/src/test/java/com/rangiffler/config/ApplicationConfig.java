@@ -37,7 +37,7 @@ public interface ApplicationConfig extends Config {
     String userdataUrl();
 
     @Key("database.url")
-//    @DefaultValue("")
-    String databaseAddress();
+    @DefaultValue("127.0.0.1:5432")
+    String getDatabaseUri();
 
 }

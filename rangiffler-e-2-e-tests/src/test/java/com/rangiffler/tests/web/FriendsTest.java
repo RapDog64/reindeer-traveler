@@ -24,11 +24,11 @@ import static io.qameta.allure.SeverityLevel.TRIVIAL;
 public class FriendsTest extends BaseWebTest {
 
     @Test
-    @DisplayName("WEB: User should see the list of his friends")
     @Tag("WEB")
     @AllureId("500007")
     @Severity(CRITICAL)
     @ApiLogin(user = @GenerateUser(friends = @Friends(count = 3)))
+    @DisplayName("WEB: User should see the list of his friends")
     void userShouldSeeTListOfFriends(@User UserJson user) {
         Selenide.open("", MainPage.class)
                 .getHeader()
@@ -39,11 +39,11 @@ public class FriendsTest extends BaseWebTest {
     }
 
     @Test
-    @DisplayName("WEB: User should see an empty list of friends if the user does not any.")
     @Tag("WEB")
-    @AllureId("500008")
     @Severity(CRITICAL)
+    @AllureId("500008")
     @ApiLogin(user = @GenerateUser)
+    @DisplayName("WEB: User should see an empty list of friends if the user does not any.")
     void userShouldSeeEmptyListOfFriends(@User UserJson user) {
         Selenide.open("", MainPage.class)
                 .getHeader()
