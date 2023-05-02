@@ -29,7 +29,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 
 import static com.rangiffler.jupiter.extension.ReceiveAllCountriesExtension.ALL_COUNTRIES;
 import static com.rangiffler.utility.DataGenerator.generatePhoto;

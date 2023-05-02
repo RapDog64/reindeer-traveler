@@ -9,17 +9,12 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
+import java.util.Base64;
 
 public class DataGenerator {
 
     private static final Faker faker = new Faker();
-
-    private static final ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+    private static final String IMAGE_BASE64_PREFIX = "data:image/jpeg;base64,";
 
     public static String generateRandomUsername() {
         return faker.name().username();
@@ -37,26 +32,24 @@ public class DataGenerator {
         return faker.name().lastName();
     }
 
-
     public static String generateRandomSentence(int wordsCount) {
         return faker.lorem().sentence(wordsCount);
     }
 
     public static PhotoJson generatePhoto(CountryJson country, String username) {
-        byte[] imageBytes = getImageBytes("src/test/resources/photos/berlin.jpeg");
         return PhotoJson.builder()
                 .username(username)
                 .description(generateRandomSentence(5))
                 .countryJson(country)
-                .photo(new String(imageBytes, StandardCharsets.UTF_8))
+                .photo(IMAGE_BASE64_PREFIX + getImageBytes("src/test/resources/photos/berlin.jpeg"))
                 .build();
     }
 
     @SneakyThrows
-    private static byte[] getImageBytes(String path) {
+    private static String getImageBytes(String path) {
         BufferedImage bImage = ImageIO.read(new File(path));
         var bos = new ByteArrayOutputStream();
         ImageIO.write(bImage, "jpeg", bos);
-        return bos.toByteArray();
+        return Base64.getEncoder().encodeToString(bos.toByteArray());
     }
 }

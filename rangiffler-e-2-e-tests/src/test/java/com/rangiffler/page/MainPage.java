@@ -11,7 +11,7 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class MainPage extends BasePage<MainPage> {
 
-    private final SelenideElement logoutButton = $("[data-testid='LogoutIcon']");
+    private final SelenideElement logoutButton = $(dataTestId("LogoutIcon"));
     private final Header header = new Header();
 
 
@@ -21,6 +21,7 @@ public class MainPage extends BasePage<MainPage> {
     }
 
     @Override
+    @Step("Wait for page loaded")
     public MainPage waitForPageLoaded() {
         header.getHeader().should(visible).$("div > h1").shouldHave(text("Rangiffler"));
         return this;

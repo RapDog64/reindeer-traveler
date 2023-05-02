@@ -18,7 +18,6 @@ public class PeopleAroundComponent extends BasePage<PeopleAroundComponent> {
 
     private final ElementsCollection usernames = $$(testId("person-username"));
     private final SelenideElement confirmDeclineBtn = $("button[type='submit']");
-    private final SelenideElement alertMessage = $("div[role='alert']");
 
     @Override
     @Step("Check that page is loaded")
@@ -40,7 +39,7 @@ public class PeopleAroundComponent extends BasePage<PeopleAroundComponent> {
 
     @Step("Verify the invitation message is displayed")
     public PeopleAroundComponent verifyInvitationSent(String username) {
-        alertMessage.shouldHave(text(String.format(INVITATION_SENT_MESSAGE, username)));
+        super.verifyMessage(String.format(INVITATION_SENT_MESSAGE, username));
         return this;
     }
 
@@ -52,13 +51,13 @@ public class PeopleAroundComponent extends BasePage<PeopleAroundComponent> {
 
     @Step("Verify the friend invitation has been accepted")
     public PeopleAroundComponent verifyFriendInvitationAccepted(String username) {
-        alertMessage.shouldHave(text(String.format(ACCEPT_FRIEND_INVITATION_MESSAGE, username)));
+        super.verifyMessage(String.format(ACCEPT_FRIEND_INVITATION_MESSAGE, username));
         return this;
     }
 
     @Step("Verify the friend invitation has been declined")
     public PeopleAroundComponent verifyFriendInvitationDeclined(String username) {
-        alertMessage.shouldHave(text(String.format(DECLINE_FRIEND_INVITATION_MESSAGE, username)));
+        super.verifyMessage(String.format(DECLINE_FRIEND_INVITATION_MESSAGE, username));
         return this;
     }
 

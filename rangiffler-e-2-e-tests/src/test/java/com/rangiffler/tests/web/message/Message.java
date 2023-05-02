@@ -7,9 +7,13 @@ public interface Message {
     String ALLOWED_PASSWORD_ERROR_MSG = "Allowed password length should be from 3 to 12 characters";
     String USER_ALREADY_REGISTERED = "Username `%s` already exists";
 
-    String NO_FRIENDS_YET = "No friends yet";
 
+    String NO_FRIENDS_YET = "No friends yet";
     String INVITATION_SENT_MESSAGE = "Invitation to user %s is sent";
     String DECLINE_FRIEND_INVITATION_MESSAGE = "You declined invitation from user %s";
     String ACCEPT_FRIEND_INVITATION_MESSAGE = "User %s added to your friends";
+
+
+
+    String PHOTO_DELETED = "Photo deleted";
 }
