@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.rangiffler.jupiter.extension.ReceiveAllCountriesExtension.ALL_COUNTRIES;
+import static com.rangiffler.jupiter.extension.BeforeSuiteExtension.ALL_COUNTRIES;
 import static com.rangiffler.utility.DataGenerator.generatePhoto;
 import static com.rangiffler.utility.DataGenerator.generateRandomPassword;
 import static com.rangiffler.utility.DataGenerator.generateRandomUsername;

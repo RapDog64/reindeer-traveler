@@ -25,9 +25,13 @@ public class CountryClient extends RestService {
     }
 
     @Step("Send REST GET('/countries}') request to geo service")
-    public List<CountryJson> getAllCountries() throws IOException {
-        return countryClient.getAllCountries()
-                .execute()
-                .body();
+    public List<CountryJson> getAllCountries() {
+        try {
+            return countryClient.getAllCountries()
+                    .execute()
+                    .body();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
