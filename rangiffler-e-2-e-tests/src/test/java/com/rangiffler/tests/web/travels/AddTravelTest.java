@@ -29,7 +29,7 @@ import static io.qameta.allure.SeverityLevel.NORMAL;
 public class AddTravelTest extends BaseWebTest {
 
     @Test
-    @Disabled("Need to finish the test")
+    @Disabled("[RAN-2345] Broken the upload photo functionality")
     @DisplayName("WEB: User is able to add a new travel")
     @Tag("WEB")
     @Severity(BLOCKER)

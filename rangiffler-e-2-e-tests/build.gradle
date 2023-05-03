@@ -3,7 +3,7 @@ buildscript {
         protobufVersion = '3.21.12'
         grpcVersion = '1.52.1'
         allureVersion = '2.21.0'
-        selenideVersion = '6.13.0'
+        selenideVersion = '6.13.1'
     }
 }
 

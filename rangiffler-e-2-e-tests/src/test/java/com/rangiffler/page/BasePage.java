@@ -9,13 +9,13 @@ public abstract class BasePage<T extends BasePage> {
 
     private final SelenideElement alertMessage = $("div[role='alert']");
 
-    public abstract T waitForPageLoaded();
+    protected abstract T waitForPageLoaded();
 
-    public static String testId(String value) {
+    protected static String testId(String value) {
         return String.format("[test-id='%s']", value);
     }
 
-    public static String dataTestId(String value) {
+    protected static String dataTestId(String value) {
         return String.format("[data-testid='%s']", value);
     }
 
