@@ -15,7 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import static com.rangiffler.page.component.PanelAttribute.USER_PROFILE;
+import static com.rangiffler.page.component.HeaderItem.USER_PROFILE;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 
 @Epic("[WEB][rangiffler-frontend]: User Profile")

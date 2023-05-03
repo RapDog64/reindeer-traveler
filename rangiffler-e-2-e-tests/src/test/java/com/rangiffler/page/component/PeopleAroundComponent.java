@@ -14,7 +14,7 @@ import static com.rangiffler.tests.web.message.Message.ACCEPT_FRIEND_INVITATION_
 import static com.rangiffler.tests.web.message.Message.DECLINE_FRIEND_INVITATION_MESSAGE;
 import static com.rangiffler.tests.web.message.Message.INVITATION_SENT_MESSAGE;
 
-public class PeopleAroundComponent extends BasePage<PeopleAroundComponent> {
+public class PeopleAroundComponent extends BaseComponent<PeopleAroundComponent> {
 
     private final ElementsCollection usernames = $$(testId("person-username"));
     private final SelenideElement confirmDeclineBtn = $("button[type='submit']");

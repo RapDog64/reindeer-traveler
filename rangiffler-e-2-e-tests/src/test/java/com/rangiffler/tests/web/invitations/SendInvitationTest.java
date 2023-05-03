@@ -29,14 +29,13 @@ public class SendInvitationTest extends BaseWebTest {
     @Test
     @AllureId("500018")
     @ApiLogin(user = @GenerateUser)
+    @DisplayName("User should be able to send a friend invitation to another user")
     void shouldSendFriendInvitation(@User UserJson user) {
-        final String username = testUser.getUsername();
-
         Selenide.open("", MainPage.class)
                 .waitForPageLoaded()
                 .openTab(PEOPLE_AROUND, new PeopleAroundComponent())
                 .waitForPageLoaded()
-                .sendInvitation(username)
-                .verifyInvitationSent(username);
+                .sendInvitation(testUser.getUsername())
+                .verifyInvitationSent(testUser.getUsername());
     }
 }

@@ -8,7 +8,7 @@ import com.rangiffler.jupiter.annotation.User;
 import com.rangiffler.model.UserJson;
 import com.rangiffler.page.FriendPage;
 import com.rangiffler.page.MainPage;
-import com.rangiffler.page.component.PanelAttribute;
+import com.rangiffler.page.component.HeaderItem;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
@@ -33,7 +33,7 @@ public class FriendsTest extends BaseWebTest {
         Selenide.open("", MainPage.class)
                 .getHeader()
                 .waitForPageLoaded()
-                .clickOn(PanelAttribute.FRIENDS, new FriendPage())
+                .clickOn(HeaderItem.FRIENDS, new FriendPage())
                 .waitForPageLoaded()
                 .verifyFriendList(user.getFriendsList().size());
     }
@@ -48,7 +48,7 @@ public class FriendsTest extends BaseWebTest {
         Selenide.open("", MainPage.class)
                 .getHeader()
                 .waitForPageLoaded()
-                .clickOn(PanelAttribute.FRIENDS, new FriendPage())
+                .clickOn(HeaderItem.FRIENDS, new FriendPage())
                 .waitForPageLoaded()
                 .verifyFriendListIsEmpty();
     }

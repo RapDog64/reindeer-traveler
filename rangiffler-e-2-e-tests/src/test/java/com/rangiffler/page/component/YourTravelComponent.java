@@ -3,32 +3,26 @@ package com.rangiffler.page.component;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.rangiffler.model.enums.Country;
-import com.rangiffler.page.BasePage;
 import io.qameta.allure.Step;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
 
 import static com.codeborne.selenide.CollectionCondition.size;
-import static com.codeborne.selenide.Condition.attribute;
+import static com.codeborne.selenide.Condition.disabled;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static com.rangiffler.page.component.TabItem.YOUR_TRAVELS;
-import static org.openqa.selenium.By.ByCssSelector.cssSelector;
 
-public class YourTravelComponent extends BasePage<YourTravelComponent> {
+public class YourTravelComponent extends BaseComponent<YourTravelComponent> {
 
-    private final ElementsCollection countryList = $$("ul > li");
     private final ElementsCollection travels = $$("div > ul > li");
     private final SelenideElement closeIcon = $(dataTestId("CloseIcon"));
     private final SelenideElement editIconBtn = $(dataTestId("EditIcon"));
-    private final SelenideElement confirmRemoveBtn = $("button[type='submit']");
+    private final SelenideElement confirmBtn = $("button[type='submit']");
     private final SelenideElement countryText = $(dataTestId("PlaceIcon")).parent();
-    private final SelenideElement travelDescriptionTextArea = $("div > textarea");
+
     private final SelenideElement deleteCartIcon = $(dataTestId("DeleteOutlineIcon")).parent();
-    private final SelenideElement openDropDownBtn = $(dataTestId("ArrowDropDownIcon")).parent();
+
 
     @Override
     @Step("Check that page is loaded")
@@ -51,7 +45,7 @@ public class YourTravelComponent extends BasePage<YourTravelComponent> {
 
     @Step("Confirm removing the card")
     public YourTravelComponent confirmRemoving() {
-        confirmRemoveBtn.click();
+        confirmBtn.click();
         return this;
     }
 
@@ -74,24 +68,10 @@ public class YourTravelComponent extends BasePage<YourTravelComponent> {
         return this;
     }
 
-    @Step("Fill {0.name} and description: {1}")
-    public YourTravelComponent fillTravelCard(Country country, String description) {
-        selectCountry(country);
-        clear("div > textarea");
-        travelDescriptionTextArea.setValue(description);
-        return this;
-    }
-
-    @Step("Select {0.name}")
-    public YourTravelComponent selectCountry(Country country) {
-        openDropDownBtn.click();
-        countryList.find(attribute("data-value", country.code)).click();
-        return this;
-    }
 
     @Step("Save travel card")
     public YourTravelComponent saveTravelCard() {
-        confirmRemoveBtn.click();
+        confirmBtn.click();
         return this;
     }
 
@@ -102,11 +82,9 @@ public class YourTravelComponent extends BasePage<YourTravelComponent> {
         return this;
     }
 
-
-    @Step("Remove old description")
-    private void clear(String selector) {
-        WebElement element = getWebDriver().findElement(cssSelector(selector));
-        element.sendKeys(Keys.COMMAND + "A");
-        element.sendKeys(Keys.DELETE);
+    @Step("Verify the 'Save' button is disabled")
+    public AddTravelForm verifySaveButtonIsDisabled() {
+        confirmBtn.shouldBe(disabled.because("The user has not upload photo"));
+        return new AddTravelForm();
     }
 }
