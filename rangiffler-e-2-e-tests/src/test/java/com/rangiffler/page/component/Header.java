@@ -10,7 +10,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
-public class Header extends BasePage<Header> {
+public class Header extends BaseComponent<Header> {
 
     private final SelenideElement header = $("header");
     private final SelenideElement amountOfFriends = $(testId("friends-icon"));
@@ -20,7 +20,7 @@ public class Header extends BasePage<Header> {
     }
 
     @Step("Click on '{0}'")
-    public <T extends BasePage> T clickOn(PanelAttribute attribute, T expectedPage) {
+    public <T extends BasePage> T clickOn(HeaderItem attribute, T expectedPage) {
         $(testId(attribute.name)).click();
         return expectedPage;
     }

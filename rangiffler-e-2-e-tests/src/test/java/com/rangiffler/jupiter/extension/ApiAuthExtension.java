@@ -28,7 +28,7 @@ public class ApiAuthExtension implements BeforeEachCallback {
     public static final ExtensionContext.Namespace AUTH_EXTENSION_NAMESPACE
             = ExtensionContext.Namespace.create(ApiAuthExtension.class);
 
-    @Step("Login to niffler using api")
+    @Step("Login to rangiffler using api")
     @Override
     public void beforeEach(ExtensionContext context) throws Exception {
         ApiLogin apiLoginAnnotation = context.getRequiredTestMethod().getAnnotation(ApiLogin.class);

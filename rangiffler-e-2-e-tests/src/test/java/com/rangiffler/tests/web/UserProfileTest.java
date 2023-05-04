@@ -11,11 +11,12 @@ import com.rangiffler.utility.DataGenerator;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import static com.rangiffler.page.component.PanelAttribute.USER_PROFILE;
+import static com.rangiffler.page.component.HeaderItem.USER_PROFILE;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 
 @Epic("[WEB][rangiffler-frontend]: User Profile")
@@ -43,5 +44,24 @@ public class UserProfileTest extends BaseWebTest {
                 .clickOn(USER_PROFILE, new ProfilePage())
                 .waitForPageLoaded()
                 .validateUserProfile(firstname, lastname);
+    }
+
+    @Test
+    @Disabled("[RAN-2345] Broken the upload photo functionality")
+    @DisplayName("WEB: User should be able to update his profile avatar")
+    @Tag("WEB")
+    @AllureId("500021")
+    @Severity(BLOCKER)
+    @ApiLogin(user = @GenerateUser)
+    void shouldUpdateUserAvatar(@User UserJson user) {
+        Selenide.open("", MainPage.class)
+                .getHeader()
+                .clickOn(USER_PROFILE, new ProfilePage())
+                .uploadAvatar("photos/ava.jpeg")
+                .save()
+                .waitForPageLoaded()
+                .getHeader()
+                .clickOn(USER_PROFILE, new ProfilePage())
+                .waitForPageLoaded();
     }
 }

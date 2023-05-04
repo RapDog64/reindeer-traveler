@@ -1,5 +1,6 @@
 package com.rangiffler.data;
 
+import com.rangiffler.config.AppConfig;
 import org.apache.commons.lang3.StringUtils;
 
 public enum DataBase {
@@ -13,11 +14,8 @@ public enum DataBase {
         this.url = url;
     }
 
-//    private static final Config CFG = Config.getConfig();
-
     public String getUrl() {
-//        return String.format(url, CFG.databaseAddress());
-        return null;
+        return String.format(url, AppConfig.config.getDatabaseUri());
     }
 
     public String getUrlForP6Spy() {

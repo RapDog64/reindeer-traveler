@@ -44,4 +44,10 @@ public class ProfilePage extends BasePage<ProfilePage> {
         firstnameInput.shouldHave(value(firstname));
         lastnameInput.shouldHave(value(lastname));
     }
+
+    @Step("Upload a avatar")
+    public ProfilePage uploadAvatar(String pathToAvatar) {
+        $(".visually-hidden[type=file]").uploadFromClasspath(pathToAvatar);
+        return this;
+    }
 }

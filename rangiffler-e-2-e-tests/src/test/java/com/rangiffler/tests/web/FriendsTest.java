@@ -8,7 +8,7 @@ import com.rangiffler.jupiter.annotation.User;
 import com.rangiffler.model.UserJson;
 import com.rangiffler.page.FriendPage;
 import com.rangiffler.page.MainPage;
-import com.rangiffler.page.component.PanelAttribute;
+import com.rangiffler.page.component.HeaderItem;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
@@ -24,31 +24,31 @@ import static io.qameta.allure.SeverityLevel.TRIVIAL;
 public class FriendsTest extends BaseWebTest {
 
     @Test
-    @DisplayName("WEB: User should see the list of his friends")
     @Tag("WEB")
     @AllureId("500007")
     @Severity(CRITICAL)
     @ApiLogin(user = @GenerateUser(friends = @Friends(count = 3)))
+    @DisplayName("WEB: User should see the list of his friends")
     void userShouldSeeTListOfFriends(@User UserJson user) {
         Selenide.open("", MainPage.class)
                 .getHeader()
                 .waitForPageLoaded()
-                .clickOn(PanelAttribute.FRIENDS, new FriendPage())
+                .clickOn(HeaderItem.FRIENDS, new FriendPage())
                 .waitForPageLoaded()
                 .verifyFriendList(user.getFriendsList().size());
     }
 
     @Test
-    @DisplayName("WEB: User should see an empty list of friends if the user does not any.")
     @Tag("WEB")
-    @AllureId("500008")
     @Severity(CRITICAL)
+    @AllureId("500008")
     @ApiLogin(user = @GenerateUser)
+    @DisplayName("WEB: User should see an empty list of friends if the user does not any.")
     void userShouldSeeEmptyListOfFriends(@User UserJson user) {
         Selenide.open("", MainPage.class)
                 .getHeader()
                 .waitForPageLoaded()
-                .clickOn(PanelAttribute.FRIENDS, new FriendPage())
+                .clickOn(HeaderItem.FRIENDS, new FriendPage())
                 .waitForPageLoaded()
                 .verifyFriendListIsEmpty();
     }
