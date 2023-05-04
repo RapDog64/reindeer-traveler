@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient(name = "rangiffler-userdata", url = "http://127.0.0.1:8089")
+@FeignClient(name = "rangiffler-userdata", url = "${rangiffler-userdata.base-uri}")
 public interface FriendServiceClient {
 
     @GetMapping("/friends")

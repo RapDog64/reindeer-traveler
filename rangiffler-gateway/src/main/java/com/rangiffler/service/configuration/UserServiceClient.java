@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "rangiffler-frienddata", url = "http://127.0.0.1:8089")
+@FeignClient(name = "rangiffler-frienddata", url = "${rangiffler-userdata.base-uri}")
 public interface UserServiceClient {
 
     @GetMapping(value = "/currentUser", consumes = MediaType.APPLICATION_JSON_VALUE)

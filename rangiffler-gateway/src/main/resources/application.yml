@@ -34,11 +34,11 @@ grpc:
       negotiationType: PLAINTEXT
 
 rangiffler-geo:
-  base-uri: 'http://127.0.0.1:8091'
+  base-uri: 'http://127.0.0.1:8088'
 rangiffler-userdata:
   base-uri: 'http://127.0.0.1:8089'
 rangiffler-photo:
-  base-uri: 'http://127.0.0.1:8093'
+  base-uri: 'http://127.0.0.1:8086'
 rangiffler-front:
   base-uri: 'http://127.0.0.1:3001'
 
@@ -60,11 +60,11 @@ grpc:
       negotiationType: PLAINTEXT
 
 rangiffler-geo:
-  base-uri: 'http:/rangiffler-geo:8091'
+  base-uri: 'http:/rangiffler-geo:8088'
 rangiffler-userdata:
   base-uri: 'http://rangiffler-userdata:8089'
 rangiffler-photo:
-  base-uri: 'http://rangiffler-photo:8093'
+  base-uri: 'http://rangiffler-photo:8086'
 rangiffler-front:
   base-uri: 'http://rangiffler-frontend'
 ---

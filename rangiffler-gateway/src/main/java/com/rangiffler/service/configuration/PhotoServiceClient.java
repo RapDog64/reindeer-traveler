@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@FeignClient(name = "rangiffler-photo", url = "http://127.0.0.1:8086")
+@FeignClient(name = "rangiffler-photo", url = "${rangiffler-photo.base-uri}")
 public interface PhotoServiceClient {
 
     @GetMapping("/photos")
