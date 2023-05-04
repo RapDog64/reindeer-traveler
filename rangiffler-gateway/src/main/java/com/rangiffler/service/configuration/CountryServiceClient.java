@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 import java.util.UUID;
 
-@FeignClient(name = "rangiffler-geo", url = "http://127.0.0.1:8088")
+@FeignClient(name = "rangiffler-geo", url = "${rangiffler-geo.base-uri}")
 public interface CountryServiceClient {
 
     @GetMapping("/countries")
