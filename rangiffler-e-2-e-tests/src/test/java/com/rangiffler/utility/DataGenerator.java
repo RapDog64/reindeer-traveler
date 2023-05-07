@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Base64;
+import java.util.UUID;
 
 public class DataGenerator {
 
@@ -38,6 +39,16 @@ public class DataGenerator {
 
     public static PhotoJson generatePhoto(CountryJson country, String username) {
         return PhotoJson.builder()
+                .username(username)
+                .description(generateRandomSentence(5))
+                .countryJson(country)
+                .photo(IMAGE_BASE64_PREFIX + getImageBytes("src/test/resources/photos/berlin.jpeg"))
+                .build();
+    }
+
+    public static PhotoJson generatePhoto(UUID id, CountryJson country, String username) {
+        return PhotoJson.builder()
+                .id(id)
                 .username(username)
                 .description(generateRandomSentence(5))
                 .countryJson(country)

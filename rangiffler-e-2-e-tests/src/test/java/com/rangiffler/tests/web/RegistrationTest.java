@@ -17,9 +17,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static com.rangiffler.jupiter.extension.CreateUserExtension.Selector;
-import static com.rangiffler.tests.web.message.Message.ALLOWED_PASSWORD_ERROR_MSG;
-import static com.rangiffler.tests.web.message.Message.PASSWORDS_SHOULD_BE_EQUAL;
-import static com.rangiffler.tests.web.message.Message.USER_ALREADY_REGISTERED;
+import static com.rangiffler.tests.message.Message.ALLOWED_PASSWORD_ERROR_MSG;
+import static com.rangiffler.tests.message.Message.PASSWORDS_SHOULD_BE_EQUAL;
+import static com.rangiffler.tests.message.Message.USER_ALREADY_REGISTERED;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;

@@ -9,7 +9,7 @@ import com.rangiffler.model.UserJson;
 import com.rangiffler.page.MainPage;
 import com.rangiffler.page.component.YourTravelComponent;
 import com.rangiffler.tests.web.BaseWebTest;
-import com.rangiffler.tests.web.message.Message;
+import com.rangiffler.tests.message.Message;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
