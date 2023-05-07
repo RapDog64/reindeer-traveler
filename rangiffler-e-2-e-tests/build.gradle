@@ -4,6 +4,12 @@ buildscript {
         grpcVersion = '1.52.1'
         allureVersion = '2.21.0'
         selenideVersion = '6.13.1'
+        springJDBCVersion = '6.0.8'
+        ownerVersion = '1.0.12'
+        javaFakerVersion = '1.0.2'
+        retrofitVersion = '2.9.0'
+        jupiterVersion = '5.9.2'
+        hibernateVersion = '6.1.7.Final'
     }
 }
 
@@ -33,21 +39,21 @@ allure {
 
 dependencies {
     testImplementation(
-            "org.junit.jupiter:junit-jupiter:5.9.2",
+            "org.junit.jupiter:junit-jupiter:${jupiterVersion}",
             "commons-io:commons-io:2.11.0",
-            "com.squareup.retrofit2:retrofit:2.9.0",
-            "com.squareup.retrofit2:converter-jackson:2.9.0",
+            "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+            "com.squareup.retrofit2:converter-jackson:${retrofitVersion}",
             "com.squareup.okhttp3:logging-interceptor:3.14.9",
-            "org.springframework:spring-jdbc:6.0.4",
+            "org.springframework:spring-jdbc:${springJDBCVersion}",
             "org.postgresql:postgresql:42.5.3",
             "p6spy:p6spy:3.9.1",
-            "org.hibernate:hibernate-core:6.1.7.Final",
-            "io.qameta.allure:allure-attachments:2.21.0",
+            "org.hibernate:hibernate-core:${hibernateVersion}",
+            "io.qameta.allure:allure-attachments:${allureVersion}",
             "com.github.vertical-blank:sql-formatter:2.0.3",
             "io.qameta.allure:allure-okhttp3:${allureVersion}",
             "io.qameta.allure:allure-selenide:${allureVersion}",
             "com.codeborne:selenide:${selenideVersion}",
-            "com.github.javafaker:javafaker:1.0.2",
+            "com.github.javafaker:javafaker:" + javaFakerVersion,
             "com.google.code.findbugs:jsr305:3.0.2",
             "io.grpc:grpc-protobuf:${grpcVersion}",
             "io.grpc:grpc-stub:${grpcVersion}",
@@ -55,7 +61,7 @@ dependencies {
             "com.google.protobuf:protobuf-java:${protobufVersion}",
             "io.qameta.allure:allure-grpc:${allureVersion}",
             "com.sun.xml.messaging.saaj:saaj-impl:3.0.0",
-            "org.aeonbits.owner:owner:1.0.12"
+            "org.aeonbits.owner:owner:${ownerVersion}"
 
     )
     testImplementation("io.qameta.allure:allure-junit5:${allureVersion}") {
