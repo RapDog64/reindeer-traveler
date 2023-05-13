@@ -5,6 +5,7 @@ import com.rangiffler.jupiter.annotation.GenerateUser;
 import com.rangiffler.jupiter.annotation.ReceiverCountry;
 import com.rangiffler.jupiter.annotation.Travels;
 import com.rangiffler.jupiter.annotation.User;
+import com.rangiffler.jupiter.extension.ReceiverCountryTestInstancePostProcessor;
 import com.rangiffler.model.CountryJson;
 import com.rangiffler.model.PhotoJson;
 import com.rangiffler.model.PhotoServiceJson;
@@ -16,6 +17,7 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -34,6 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Epic("[API][rangiffler-photo]: Travel photo")
 @DisplayName("[API][rangiffler-photo]: Edit Travel photo")
+@ExtendWith({ReceiverCountryTestInstancePostProcessor.class})
 public class EditTravelPhotoTest extends BaseRestTest {
 
     @ReceiverCountry(country = GERMANY)

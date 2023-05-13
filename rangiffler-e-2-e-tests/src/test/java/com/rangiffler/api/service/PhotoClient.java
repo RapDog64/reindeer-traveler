@@ -35,14 +35,21 @@ public class PhotoClient extends RestService {
 
     @Step("Send REST PUT('/photos/{id}') request to photo service")
     public Response<PhotoServiceJson> editPhoto(UUID id, PhotoJson photo) throws IOException {
-       return photoService.editPhoto(id, photo)
+       return photoService.editTravelPhoto(id, photo)
                 .execute();
     }
 
 
     @Step("Send REST PUT('/photos/{id}') request to photo service")
     public Response<PhotoServiceJson> editPhoto(UUID id, String body) throws IOException {
-       return photoService.editPhoto(id, body)
+       return photoService.editTravelPhoto(id, body)
                 .execute();
     }
+
+    @Step("Send REST DELETE('/photos/{id}') request to photo service")
+    public Response<Void>  deleteTravelPhoto(UUID id) throws IOException {
+        return photoService.deleteTravelPhoto(id)
+                .execute();
+    }
+
 }

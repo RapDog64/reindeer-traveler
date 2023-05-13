@@ -4,6 +4,7 @@ import com.rangiffler.model.PhotoJson;
 import com.rangiffler.model.PhotoServiceJson;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -22,8 +23,12 @@ public interface PhotoService {
     Call<List<PhotoServiceJson>> getPhotosForUser(@Query("username") String username);
 
     @PUT("/photos/{id}")
-    Call<PhotoServiceJson> editPhoto(@Path("id") UUID id, @Body PhotoJson photoJson);
+    Call<PhotoServiceJson> editTravelPhoto(@Path("id") UUID id, @Body PhotoJson photoJson);
 
     @PUT("/photos/{id}")
-    Call<PhotoServiceJson> editPhoto(@Path("id") UUID id, @Body String photoJson);
+    Call<PhotoServiceJson> editTravelPhoto(@Path("id") UUID id, @Body String photoJson);
+
+
+    @DELETE("/photos/{id}")
+    Call<Void> deleteTravelPhoto(@Path("id") UUID id);
 }

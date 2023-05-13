@@ -17,6 +17,4 @@ public interface Message {
     String PHOTO_DELETED = "Photo deleted";
     String DIFFERENT_IDS_PROVIDED = "Photo id in url %s is different from Photo id in body %s";
     String PHOTO_NOT_FOUND = "Photo with id %s is not found.";
-
-
 }

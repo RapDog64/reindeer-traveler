@@ -4,6 +4,7 @@ import com.rangiffler.api.service.CountryClient;
 import com.rangiffler.jupiter.annotation.GenerateUser;
 import com.rangiffler.jupiter.annotation.ReceiverCountry;
 import com.rangiffler.jupiter.annotation.User;
+import com.rangiffler.jupiter.extension.ReceiverCountryTestInstancePostProcessor;
 import com.rangiffler.model.CountryJson;
 import com.rangiffler.model.UserJson;
 import io.qameta.allure.AllureId;
@@ -12,6 +13,7 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Epic("[API][rangiffler-geo]: Receive countries")
 @DisplayName("[API][rangiffler-geo]: Get countries")
+@ExtendWith({ReceiverCountryTestInstancePostProcessor.class})
 public class GetCountriesTest extends BaseRestTest {
 
     private final CountryClient countryService = new CountryClient();
