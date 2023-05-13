@@ -1,4 +1,4 @@
-package com.rangiffler.tests.web.message;
+package com.rangiffler.tests.message;
 
 public interface Message {
 
@@ -14,6 +14,7 @@ public interface Message {
     String ACCEPT_FRIEND_INVITATION_MESSAGE = "User %s added to your friends";
 
 
-
     String PHOTO_DELETED = "Photo deleted";
+    String DIFFERENT_IDS_PROVIDED = "Photo id in url %s is different from Photo id in body %s";
+    String PHOTO_NOT_FOUND = "Photo with id %s is not found.";
 }

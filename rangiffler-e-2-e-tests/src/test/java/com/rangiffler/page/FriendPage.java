@@ -3,7 +3,7 @@ package com.rangiffler.page;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.rangiffler.model.UserJson;
-import com.rangiffler.tests.web.message.Message;
+import com.rangiffler.tests.message.Message;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.CollectionCondition.size;

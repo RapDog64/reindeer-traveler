@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static com.rangiffler.jupiter.extension.CreateUserExtension.Selector.METHOD;
-import static com.rangiffler.tests.web.message.Message.BAD_CREDENTIALS;
+import static com.rangiffler.tests.message.Message.BAD_CREDENTIALS;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 

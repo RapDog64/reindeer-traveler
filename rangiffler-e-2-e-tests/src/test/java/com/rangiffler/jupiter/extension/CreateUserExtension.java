@@ -104,7 +104,7 @@ public class CreateUserExtension implements BeforeEachCallback, ParameterResolve
                 .filter(countryJson -> countryJson.getCode().equals(country.code))
                 .findFirst()
                 .orElseThrow();
-        return countryClient.findCountry(selectedCountry.getId());
+        return countryClient.findCountryById(selectedCountry.getId());
     }
 
     private void createFriendsIfPresent(GenerateUser generateUser, UserJson createdUser) throws Exception {
