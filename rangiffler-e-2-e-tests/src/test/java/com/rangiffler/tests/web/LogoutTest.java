@@ -1,6 +1,5 @@
 package com.rangiffler.tests.web;
 
-import com.codeborne.selenide.Selenide;
 import com.rangiffler.jupiter.annotation.ApiLogin;
 import com.rangiffler.jupiter.annotation.GenerateUser;
 import com.rangiffler.jupiter.annotation.User;
@@ -13,6 +12,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import static com.codeborne.selenide.Selenide.open;
+import static io.qameta.allure.Allure.step;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 
 @Epic("[WEB][rangiffler-frontend]: Log out")
@@ -26,7 +27,7 @@ public class LogoutTest extends BaseWebTest {
     @Severity(BLOCKER)
     @ApiLogin(user = @GenerateUser)
     void shouldDisplaySameAmountOfFriendIn(@User UserJson user) {
-        Selenide.open("", MainPage.class)
+        step("Open the browser", () -> open("", MainPage.class))
                 .waitForPageLoaded()
                 .verifyApplicationName("Rangiffler")
                 .doLogout()

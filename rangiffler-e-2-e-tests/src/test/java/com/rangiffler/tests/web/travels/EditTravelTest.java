@@ -1,6 +1,5 @@
 package com.rangiffler.tests.web.travels;
 
-import com.codeborne.selenide.Selenide;
 import com.rangiffler.jupiter.annotation.ApiLogin;
 import com.rangiffler.jupiter.annotation.GenerateUser;
 import com.rangiffler.jupiter.annotation.Travels;
@@ -17,10 +16,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import static com.codeborne.selenide.Selenide.open;
 import static com.rangiffler.model.enums.Country.GERMANY;
 import static com.rangiffler.model.enums.Country.RUSSIA;
 import static com.rangiffler.page.component.TabItem.YOUR_TRAVELS;
 import static com.rangiffler.utility.DataGenerator.generateRandomSentence;
+import static io.qameta.allure.Allure.step;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 
 @Epic("[WEB][rangiffler-frontend]: Travels")
@@ -37,7 +38,7 @@ public class EditTravelTest extends BaseWebTest {
         final Country country = GERMANY;
         final String description = generateRandomSentence(2);
 
-        Selenide.open("", MainPage.class)
+        step("Open the browser", () -> open("", MainPage.class))
                 .waitForPageLoaded()
                 .openTab(YOUR_TRAVELS, new YourTravelComponent())
                 .openTravelCard(RUSSIA)

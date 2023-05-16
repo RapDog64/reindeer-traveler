@@ -1,6 +1,5 @@
 package com.rangiffler.tests.web;
 
-import com.codeborne.selenide.Selenide;
 import com.rangiffler.jupiter.annotation.GenerateUser;
 import com.rangiffler.jupiter.annotation.User;
 import com.rangiffler.model.UserJson;
@@ -16,10 +15,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import static com.codeborne.selenide.Selenide.open;
 import static com.rangiffler.jupiter.extension.CreateUserExtension.Selector;
 import static com.rangiffler.tests.message.Message.ALLOWED_PASSWORD_ERROR_MSG;
 import static com.rangiffler.tests.message.Message.PASSWORDS_SHOULD_BE_EQUAL;
 import static com.rangiffler.tests.message.Message.USER_ALREADY_REGISTERED;
+import static io.qameta.allure.Allure.step;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
@@ -37,7 +38,7 @@ public class RegistrationTest extends BaseWebTest {
         final String username = DataGenerator.generateRandomUsername();
         final String password = DataGenerator.generateRandomPassword();
 
-        Selenide.open("", StartPage.class)
+        step("Open the browser", () -> open("", StartPage.class))
                 .doRegister()
                 .setUsername(username)
                 .setPassword(password)
@@ -60,7 +61,7 @@ public class RegistrationTest extends BaseWebTest {
         final String password = DataGenerator.generateRandomPassword();
         final String confirmationPassword = DataGenerator.generateRandomPassword();
 
-        Selenide.open("", StartPage.class)
+        step("Open the browser", () -> open("", StartPage.class))
                 .doRegister()
                 .fillRegisterForm(username, password, confirmationPassword)
                 .successSubmit()
@@ -76,7 +77,7 @@ public class RegistrationTest extends BaseWebTest {
     void shouldNotRegisterUserIfUsernameAlreadyExist(@User(selector = Selector.METHOD) UserJson user) {
         final String password = DataGenerator.generateRandomPassword();
 
-        Selenide.open("", StartPage.class)
+        step("Open the browser", () -> open("", StartPage.class))
                 .doRegister()
                 .fillRegisterForm(user.getUsername(), password, password)
                 .successSubmit()
@@ -91,7 +92,7 @@ public class RegistrationTest extends BaseWebTest {
     @Severity(MINOR)
     @ParameterizedTest(name = "WEB: Register form should return an error message if password length is {1} characters ")
     void shouldReturnErrorMessageIfPasswordLengthNotInThePasswordRange(String password, String displayName) {
-        Selenide.open("", StartPage.class)
+        step("Open the browser", () -> open("", StartPage.class))
                 .doRegister()
                 .setUsername(DataGenerator.generateRandomUsername())
                 .setPassword(password)

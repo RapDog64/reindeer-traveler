@@ -19,7 +19,7 @@ public class Header extends BaseComponent<Header> {
         return header;
     }
 
-    @Step("Click on '{0}'")
+    @Step("Click on '{0}' button")
     public <T extends BasePage> T clickOn(HeaderItem attribute, T expectedPage) {
         $(testId(attribute.name)).click();
         return expectedPage;

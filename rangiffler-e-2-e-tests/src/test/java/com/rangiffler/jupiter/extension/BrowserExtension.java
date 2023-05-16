@@ -11,6 +11,8 @@ import org.openqa.selenium.TakesScreenshot;
 
 import java.io.ByteArrayInputStream;
 
+import static io.qameta.allure.Allure.step;
+
 public class BrowserExtension implements TestExecutionExceptionHandler, AfterEachCallback {
 
     @Override
@@ -25,8 +27,10 @@ public class BrowserExtension implements TestExecutionExceptionHandler, AfterEac
 
     @Override
     public void afterEach(final ExtensionContext context) throws Exception {
-        if (WebDriverRunner.hasWebDriverStarted()) {
-            Selenide.closeWebDriver();
-        }
+        step("Close the browser", () -> {
+            if (WebDriverRunner.hasWebDriverStarted()) {
+                Selenide.closeWebDriver();
+            }
+        });
     }
 }

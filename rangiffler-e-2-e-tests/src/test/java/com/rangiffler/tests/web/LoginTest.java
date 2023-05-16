@@ -14,8 +14,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import static com.codeborne.selenide.Selenide.open;
 import static com.rangiffler.jupiter.extension.CreateUserExtension.Selector.METHOD;
 import static com.rangiffler.tests.message.Message.BAD_CREDENTIALS;
+import static io.qameta.allure.Allure.step;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 
@@ -31,7 +33,7 @@ public class LoginTest extends BaseWebTest {
     @Severity(BLOCKER)
     @GenerateUser
     void mainPageShouldBeDisplayedAfterSuccessLogin(@User(selector = METHOD) UserJson user) {
-        Selenide.open("", StartPage.class)
+        step("Open the browser", ()-> open("", StartPage.class))
                 .doLogin()
                 .fillLoginPage(user.getUsername(), user.getPassword())
                 .submit(new MainPage())

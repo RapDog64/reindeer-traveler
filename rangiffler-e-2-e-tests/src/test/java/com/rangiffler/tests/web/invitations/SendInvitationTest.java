@@ -1,6 +1,5 @@
 package com.rangiffler.tests.web.invitations;
 
-import com.codeborne.selenide.Selenide;
 import com.rangiffler.jupiter.annotation.ApiLogin;
 import com.rangiffler.jupiter.annotation.GenerateUser;
 import com.rangiffler.jupiter.annotation.InjectUser;
@@ -16,7 +15,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import static com.codeborne.selenide.Selenide.open;
 import static com.rangiffler.page.component.TabItem.PEOPLE_AROUND;
+import static io.qameta.allure.Allure.step;
 
 @Epic("[WEB][rangiffler-frontend]: Invitations")
 @DisplayName("[WEB][rangiffler-frontend]: Invitations")
@@ -31,7 +32,7 @@ public class SendInvitationTest extends BaseWebTest {
     @ApiLogin(user = @GenerateUser)
     @DisplayName("User should be able to send a friend invitation to another user")
     void shouldSendFriendInvitation(@User UserJson user) {
-        Selenide.open("", MainPage.class)
+        step("Open the browser", () -> open("", MainPage.class))
                 .waitForPageLoaded()
                 .openTab(PEOPLE_AROUND, new PeopleAroundComponent())
                 .waitForPageLoaded()

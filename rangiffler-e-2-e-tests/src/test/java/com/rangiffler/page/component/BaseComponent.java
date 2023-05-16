@@ -20,7 +20,7 @@ public abstract class BaseComponent<T extends BaseComponent> extends BasePage {
     private final SelenideElement travelDescriptionTextArea = $("div > textarea");
     private final SelenideElement openDropDownBtn = $(dataTestId("ArrowDropDownIcon")).parent();
 
-    @Step("Fill {0.name} and description: {1}")
+    @Step("Fill country: '{0.name}' and description: '{1}'")
     public YourTravelComponent fillTravelCard(Country country, String description) {
         selectCountry(country);
         clear("div > textarea");
@@ -28,7 +28,7 @@ public abstract class BaseComponent<T extends BaseComponent> extends BasePage {
         return new YourTravelComponent();
     }
 
-    @Step("Select {0.name}")
+    @Step("Select '{0.name}' country")
     public YourTravelComponent selectCountry(Country country) {
         openDropDownBtn.click();
         countryList.find(attribute("data-value", country.code)).click();
