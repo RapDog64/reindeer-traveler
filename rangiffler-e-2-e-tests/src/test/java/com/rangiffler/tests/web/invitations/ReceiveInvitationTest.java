@@ -1,6 +1,5 @@
 package com.rangiffler.tests.web.invitations;
 
-import com.codeborne.selenide.Selenide;
 import com.rangiffler.jupiter.annotation.ApiLogin;
 import com.rangiffler.jupiter.annotation.GenerateUser;
 import com.rangiffler.jupiter.annotation.IncomeInvitations;
@@ -14,7 +13,9 @@ import io.qameta.allure.Epic;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static com.codeborne.selenide.Selenide.open;
 import static com.rangiffler.page.component.TabItem.PEOPLE_AROUND;
+import static io.qameta.allure.Allure.step;
 
 @Epic("[WEB][rangiffler-frontend]: Invitations")
 @DisplayName("[WEB][rangiffler-frontend]: Invitations")
@@ -31,7 +32,7 @@ public class ReceiveInvitationTest extends BaseWebTest {
                 .orElseThrow()
                 .getUsername();
 
-        Selenide.open("", MainPage.class)
+        step("Open the browser", () -> open("", MainPage.class))
                 .waitForPageLoaded()
                 .openTab(PEOPLE_AROUND, new PeopleAroundComponent())
                 .waitForPageLoaded()
@@ -51,7 +52,7 @@ public class ReceiveInvitationTest extends BaseWebTest {
                 .orElseThrow()
                 .getUsername();
 
-        Selenide.open("", MainPage.class)
+        step("Open the browser", () -> open("", MainPage.class))
                 .waitForPageLoaded()
                 .openTab(PEOPLE_AROUND, new PeopleAroundComponent())
                 .waitForPageLoaded()

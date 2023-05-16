@@ -1,6 +1,5 @@
 package com.rangiffler.tests.web;
 
-import com.codeborne.selenide.Selenide;
 import com.rangiffler.jupiter.annotation.ApiLogin;
 import com.rangiffler.jupiter.annotation.Friends;
 import com.rangiffler.jupiter.annotation.GenerateUser;
@@ -16,6 +15,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import static com.codeborne.selenide.Selenide.open;
+import static io.qameta.allure.Allure.step;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.TRIVIAL;
 
@@ -30,7 +31,7 @@ public class FriendsTest extends BaseWebTest {
     @ApiLogin(user = @GenerateUser(friends = @Friends(count = 3)))
     @DisplayName("WEB: User should see the list of his friends")
     void userShouldSeeTListOfFriends(@User UserJson user) {
-        Selenide.open("", MainPage.class)
+        step("Open the browser", () -> open("", MainPage.class))
                 .getHeader()
                 .waitForPageLoaded()
                 .clickOn(HeaderItem.FRIENDS, new FriendPage())
@@ -45,7 +46,7 @@ public class FriendsTest extends BaseWebTest {
     @ApiLogin(user = @GenerateUser)
     @DisplayName("WEB: User should see an empty list of friends if the user does not any.")
     void userShouldSeeEmptyListOfFriends(@User UserJson user) {
-        Selenide.open("", MainPage.class)
+        step("Open the browser", () -> open("", MainPage.class))
                 .getHeader()
                 .waitForPageLoaded()
                 .clickOn(HeaderItem.FRIENDS, new FriendPage())
@@ -60,7 +61,7 @@ public class FriendsTest extends BaseWebTest {
     @Severity(TRIVIAL)
     @ApiLogin(user = @GenerateUser(friends = @Friends(count = 1)))
     void shouldDisplayAmountOfUsersFriendsAtHeaderPanel(@User UserJson user) {
-        Selenide.open("", MainPage.class)
+        step("Open the browser", () -> open("", MainPage.class))
                 .waitForPageLoaded()
                 .getHeader()
                 .waitForPageLoaded()

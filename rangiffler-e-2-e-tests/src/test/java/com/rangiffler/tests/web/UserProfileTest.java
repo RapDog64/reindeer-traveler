@@ -16,7 +16,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import static com.codeborne.selenide.Selenide.open;
 import static com.rangiffler.page.component.HeaderItem.USER_PROFILE;
+import static io.qameta.allure.Allure.step;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 
 @Epic("[WEB][rangiffler-frontend]: User Profile")
@@ -54,7 +56,7 @@ public class UserProfileTest extends BaseWebTest {
     @Severity(BLOCKER)
     @ApiLogin(user = @GenerateUser)
     void shouldUpdateUserAvatar(@User UserJson user) {
-        Selenide.open("", MainPage.class)
+        step("Open the browser", () -> open("", MainPage.class))
                 .getHeader()
                 .clickOn(USER_PROFILE, new ProfilePage())
                 .uploadAvatar("photos/ava.jpeg")

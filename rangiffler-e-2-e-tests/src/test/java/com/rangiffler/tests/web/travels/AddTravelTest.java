@@ -5,11 +5,9 @@ import com.rangiffler.jupiter.annotation.ApiLogin;
 import com.rangiffler.jupiter.annotation.GenerateUser;
 import com.rangiffler.jupiter.annotation.User;
 import com.rangiffler.model.UserJson;
-import com.rangiffler.model.enums.Country;
 import com.rangiffler.page.MainPage;
 import com.rangiffler.page.component.AddTravelForm;
 import com.rangiffler.page.component.HeaderItem;
-import com.rangiffler.page.component.YourTravelComponent;
 import com.rangiffler.tests.web.BaseWebTest;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Epic;
@@ -19,8 +17,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import static com.rangiffler.model.enums.Country.*;
+import static com.codeborne.selenide.Selenide.*;
+import static com.rangiffler.model.enums.Country.RUSSIA;
 import static com.rangiffler.utility.DataGenerator.generateRandomSentence;
+import static io.qameta.allure.Allure.step;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 import static io.qameta.allure.SeverityLevel.NORMAL;
 
@@ -46,7 +46,7 @@ public class AddTravelTest extends BaseWebTest {
     void shouldNotSaveTravelWithoutPhoto(@User UserJson user) {
         final String description = generateRandomSentence(2);
 
-        Selenide.open("", MainPage.class)
+        step("Open the browser", ()-> open("", MainPage.class))
                 .waitForPageLoaded()
                 .getHeader()
                 .clickOn(HeaderItem.ADD_PHOTO, new AddTravelForm())
