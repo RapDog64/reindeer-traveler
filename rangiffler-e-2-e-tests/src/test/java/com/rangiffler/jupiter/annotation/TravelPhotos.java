@@ -9,7 +9,11 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.METHOD})
-public @interface Travels {
+public @interface TravelPhotos {
+
+    String description() default "";
+
+    String imgPath() default "src/test/resources/photos/berlin.jpeg";
 
     Country country() default Country.RUSSIA;
 

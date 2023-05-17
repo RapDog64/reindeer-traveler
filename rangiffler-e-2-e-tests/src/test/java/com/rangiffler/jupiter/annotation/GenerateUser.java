@@ -22,7 +22,7 @@ public @interface GenerateUser {
 
     Friends friends() default @Friends(handleAnnotation = false);
 
-    Travels travels() default @Travels(handleAnnotation = false);
+    TravelPhotos travels() default @TravelPhotos(handleAnnotation = false);
 
     IncomeInvitations incomeInvitations() default @IncomeInvitations(handleAnnotation = false);
 

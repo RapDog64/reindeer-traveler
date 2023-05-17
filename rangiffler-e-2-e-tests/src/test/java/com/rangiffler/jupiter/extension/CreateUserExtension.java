@@ -9,7 +9,7 @@ import com.rangiffler.jupiter.annotation.Friends;
 import com.rangiffler.jupiter.annotation.GenerateUser;
 import com.rangiffler.jupiter.annotation.IncomeInvitations;
 import com.rangiffler.jupiter.annotation.OutcomeInvitations;
-import com.rangiffler.jupiter.annotation.Travels;
+import com.rangiffler.jupiter.annotation.TravelPhotos;
 import com.rangiffler.jupiter.annotation.User;
 import com.rangiffler.model.CountryJson;
 import com.rangiffler.model.FriendJson;
@@ -33,6 +33,7 @@ import java.util.Objects;
 import static com.rangiffler.jupiter.extension.BeforeSuiteExtension.ALL_COUNTRIES;
 import static com.rangiffler.utility.DataGenerator.generatePhoto;
 import static com.rangiffler.utility.DataGenerator.generateRandomPassword;
+import static com.rangiffler.utility.DataGenerator.generateRandomSentence;
 import static com.rangiffler.utility.DataGenerator.generateRandomUsername;
 
 public class CreateUserExtension implements BeforeEachCallback, ParameterResolver {
@@ -49,7 +50,7 @@ public class CreateUserExtension implements BeforeEachCallback, ParameterResolve
 
     @Step("Create user for test")
     @Override
-    public void beforeEach(ExtensionContext context) throws Exception {
+    public void beforeEach(final ExtensionContext context) throws Exception {
         final String testId = getTestId(context);
         Map<Selector, GenerateUser> userAnnotations = extractGenerateUserAnnotations(context);
         for (Map.Entry<Selector, GenerateUser> entry : userAnnotations.entrySet()) {
@@ -65,7 +66,7 @@ public class CreateUserExtension implements BeforeEachCallback, ParameterResolve
             UserJson userJson = apiRegister(username, password);
 
             createFriendsIfPresent(generateUser, userJson);
-            createTravelsIfPresent(generateUser, userJson);
+            createTravelPhotosIfPresent(generateUser, userJson);
             createIncomeInvitationsIfPresent(generateUser, userJson);
             createOutcomeInvitationsIfPresent(generateUser, userJson);
 
@@ -88,12 +89,17 @@ public class CreateUserExtension implements BeforeEachCallback, ParameterResolve
         return extensionContext.getStore(annotation.selector().getNamespace()).get(testId, UserJson.class);
     }
 
-    private void createTravelsIfPresent(GenerateUser generateUser, UserJson userJson) throws IOException {
-        Travels travels = generateUser.travels();
+    private void createTravelPhotosIfPresent(GenerateUser generateUser, UserJson userJson) throws IOException {
+        TravelPhotos travels = generateUser.travels();
         if (travels.handleAnnotation() && travels.count() > 0) {
             for (int i = 0; i < travels.count(); i++) {
+                String description = travels.description();
+                if ("".equals(description)) {
+                    description = generateRandomSentence(5);
+                }
+                String pathToImage = travels.imgPath();
                 CountryJson country = getCountry(travels.country());
-                PhotoJson photoJson = generatePhoto(country, userJson.getUsername());
+                PhotoJson photoJson = generatePhoto(country, userJson.getUsername(), description, pathToImage);
                 photoClient.addPhoto(photoJson);
             }
         }

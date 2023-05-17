@@ -2,7 +2,7 @@ package com.rangiffler.tests.web.travels;
 
 import com.rangiffler.jupiter.annotation.ApiLogin;
 import com.rangiffler.jupiter.annotation.GenerateUser;
-import com.rangiffler.jupiter.annotation.Travels;
+import com.rangiffler.jupiter.annotation.TravelPhotos;
 import com.rangiffler.jupiter.annotation.User;
 import com.rangiffler.model.UserJson;
 import com.rangiffler.model.enums.Country;
@@ -33,7 +33,7 @@ public class EditTravelTest extends BaseWebTest {
     @AllureId("500017")
     @Severity(BLOCKER)
     @DisplayName("WEB: User is able to edit his travel")
-    @ApiLogin(user = @GenerateUser(travels = @Travels(country = RUSSIA, count = 1)))
+    @ApiLogin(user = @GenerateUser(travels = @TravelPhotos(description = "The Russian Federation is the most biggest country", country = RUSSIA, count = 1)))
     void shouldEditTravel(@User UserJson user) {
         final Country country = GERMANY;
         final String description = generateRandomSentence(2);

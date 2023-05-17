@@ -46,6 +46,16 @@ public class DataGenerator {
                 .build();
     }
 
+
+    public static PhotoJson generatePhoto(CountryJson country, String username, String description, String path) {
+        return PhotoJson.builder()
+                .username(username)
+                .description(description)
+                .countryJson(country)
+                .photo(IMAGE_BASE64_PREFIX + getImageBytes(path))
+                .build();
+    }
+
     public static PhotoJson generatePhoto(UUID id, CountryJson country, String username) {
         return PhotoJson.builder()
                 .id(id)

@@ -1,7 +1,7 @@
 package com.rangiffler.tests.api.photo;
 
 import com.rangiffler.jupiter.annotation.GenerateUser;
-import com.rangiffler.jupiter.annotation.Travels;
+import com.rangiffler.jupiter.annotation.TravelPhotos;
 import com.rangiffler.jupiter.annotation.User;
 import com.rangiffler.jupiter.extension.CreateUserExtension.Selector;
 import com.rangiffler.model.PhotoServiceJson;
@@ -35,7 +35,7 @@ public class DeleteTravelPhotoTest extends BaseRestTest {
     @DisplayName("API: Photo service should delete the user's travel photo")
     @Tag("API")
     @Severity(BLOCKER)
-    @GenerateUser(travels = @Travels(country = KAZAKHSTAN, count = 1))
+    @GenerateUser(travels = @TravelPhotos(country = KAZAKHSTAN, count = 1))
     void shouldDeleteTravelPhoto(@User(selector = Selector.METHOD) UserJson user) throws IOException {
         final String username = user.getUsername();
         final PhotoServiceJson currentPhoto = photoService.getPhotosForUser(username).get(0);
