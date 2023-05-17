@@ -46,8 +46,9 @@ public class AddTravelPhotoTest extends BaseRestTest {
         final PhotoJson photo = generatePhoto(kazakhstan, username);
 
         photoService.addPhoto(photo);
-        List<PhotoServiceJson> usersPhotos = photoService.getPhotosForUser(username);
-        PhotoJson uploadedPhoto = PhotoServiceJson.fromPhotoServiceJson(usersPhotos.get(0), kazakhstan);
+
+        final List<PhotoServiceJson> usersPhotos = photoService.getPhotosForUser(username);
+        final PhotoJson uploadedPhoto = PhotoServiceJson.fromPhotoServiceJson(usersPhotos.get(0), kazakhstan);
 
         step("Validated created photo", () -> {
             assertEquals(1, usersPhotos.size());

@@ -2,7 +2,7 @@ package com.rangiffler.tests.web.travels;
 
 import com.rangiffler.jupiter.annotation.ApiLogin;
 import com.rangiffler.jupiter.annotation.GenerateUser;
-import com.rangiffler.jupiter.annotation.Travels;
+import com.rangiffler.jupiter.annotation.TravelPhotos;
 import com.rangiffler.jupiter.annotation.User;
 import com.rangiffler.model.UserJson;
 import com.rangiffler.page.MainPage;
@@ -32,7 +32,7 @@ public class RemoveTravelTest extends BaseWebTest {
     @Tag("WEB")
     @AllureId("500015")
     @Severity(BLOCKER)
-    @ApiLogin(user = @GenerateUser(travels = @Travels(country = GERMANY, count = 1)))
+    @ApiLogin(user = @GenerateUser(travels = @TravelPhotos(imgPath = "src/test/resources/photos/munich.jpeg", country = GERMANY, count = 1)))
     public void shouldRemoveTravel(@User UserJson user) {
         step("Open the browser", () -> open("", MainPage.class))
                 .waitForPageLoaded()
@@ -48,7 +48,7 @@ public class RemoveTravelTest extends BaseWebTest {
     @Tag("WEB")
     @AllureId("500016")
     @Severity(CRITICAL)
-    @ApiLogin(user = @GenerateUser(travels = @Travels(country = GERMANY, count = 1)))
+    @ApiLogin(user = @GenerateUser(travels = @TravelPhotos(country = GERMANY, count = 1)))
     void shouldNotRemoveTravel(@User UserJson user) {
         step("Open the browser", () -> open("", MainPage.class))
                 .waitForPageLoaded()

@@ -4,6 +4,7 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import com.rangiffler.config.AppConfig;
 import com.rangiffler.jupiter.annotation.WebTest;
+import io.qameta.allure.Step;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +21,7 @@ public class BaseWebTest {
     }
 
     @BeforeEach
+    @Step("Add allure selenide listener")
     void addListener() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
                 .screenshots(false)

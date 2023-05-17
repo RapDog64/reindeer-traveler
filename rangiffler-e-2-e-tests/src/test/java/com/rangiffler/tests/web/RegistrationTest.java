@@ -55,7 +55,7 @@ public class RegistrationTest extends BaseWebTest {
     @AllureId("500002")
     @Tag("WEB")
     @Severity(MINOR)
-    @DisplayName("Register form should return an error message if password and confirm password are different")
+    @DisplayName("WEB: Register form should return an error message if password and confirm password are different")
     void shouldReturnErrorMessageIfPasswordAndConfirmPasswordDifferent() {
         final String username = DataGenerator.generateRandomUsername();
         final String password = DataGenerator.generateRandomPassword();
@@ -90,8 +90,8 @@ public class RegistrationTest extends BaseWebTest {
     })
     @AllureId("500004")
     @Severity(MINOR)
-    @ParameterizedTest(name = "WEB: Register form should return an error message if password length is {1} characters ")
-    void shouldReturnErrorMessageIfPasswordLengthNotInThePasswordRange(String password, String displayName) {
+    @ParameterizedTest(name = "WEB: Register form should return an error message if password length is {1} characters")
+    void shouldReturnErrorMessageIfPasswordLengthNotInThePasswordRange(String password, String lengthText) {
         step("Open the browser", () -> open("", StartPage.class))
                 .doRegister()
                 .setUsername(DataGenerator.generateRandomUsername())

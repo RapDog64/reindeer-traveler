@@ -35,7 +35,7 @@ public class UserProfileTest extends BaseWebTest {
         final String firstname = DataGenerator.generateRandomFirstname();
         final String lastname = DataGenerator.generateRandomLastname();
 
-        Selenide.open("", MainPage.class)
+        step("Open the browser", () -> open("", MainPage.class))
                 .getHeader()
                 .clickOn(USER_PROFILE, new ProfilePage())
                 .typeFirstname(firstname)

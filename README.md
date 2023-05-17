@@ -122,7 +122,7 @@ junit.jupiter.execution.parallel.config.fixed.max-pool-size={threads}
 **The result of the tests can be viewed through Allure**
 
 ```posh
-./gradlew allereServe
+./gradlew allureServe
 ```
 
 ### Allure report example #1

@@ -3,7 +3,7 @@ package com.rangiffler.tests.api.photo;
 import com.rangiffler.api.validator.ResponsePhotoValidator;
 import com.rangiffler.jupiter.annotation.GenerateUser;
 import com.rangiffler.jupiter.annotation.ReceiverCountry;
-import com.rangiffler.jupiter.annotation.Travels;
+import com.rangiffler.jupiter.annotation.TravelPhotos;
 import com.rangiffler.jupiter.annotation.User;
 import com.rangiffler.jupiter.extension.ReceiverCountryTestInstancePostProcessor;
 import com.rangiffler.model.CountryJson;
@@ -47,7 +47,7 @@ public class EditTravelPhotoTest extends BaseRestTest {
     @DisplayName("API: Photo service should update the user's travel photo")
     @Tag("API")
     @Severity(BLOCKER)
-    @GenerateUser(travels = @Travels(country = RUSSIA, count = 1))
+    @GenerateUser(travels = @TravelPhotos(country = RUSSIA, count = 1))
     void shouldUpdateTravelPhoto(@User(selector = Selector.METHOD) UserJson user) throws IOException {
         final PhotoServiceJson currentPhoto = photoService.getPhotosForUser(user.getUsername()).get(0);
         PhotoJson newPhoto = generatePhoto(currentPhoto.getId(), germany, user.getUsername());
@@ -64,13 +64,13 @@ public class EditTravelPhotoTest extends BaseRestTest {
     @DisplayName("API: Photo service should return error message about discrepancy between ids")
     @Tag("API")
     @Severity(CRITICAL)
-    @GenerateUser(travels = @Travels(country = RUSSIA, count = 1))
+    @GenerateUser(travels = @TravelPhotos(country = RUSSIA, count = 1))
     void shouldReturnErrorMessage(@User(selector = Selector.METHOD) UserJson user) throws IOException {
         final PhotoServiceJson currentPhoto = photoService.getPhotosForUser(user.getUsername()).get(0);
         final PhotoJson newPhoto = generatePhoto(UUID.randomUUID(), germany, user.getUsername());
         final String expectedMessage = String.format(DIFFERENT_IDS_PROVIDED, currentPhoto.getId(), newPhoto.getId());
 
-        String actualMessage = photoService.editPhoto(currentPhoto.getId(), newPhoto)
+        final String actualMessage = photoService.editPhoto(currentPhoto.getId(), newPhoto)
                 .errorBody()
                 .string()
                 .substring(10, 134);
@@ -84,7 +84,7 @@ public class EditTravelPhotoTest extends BaseRestTest {
     @DisplayName("API: Photo service should return error message 'photo is not found'")
     @Tag("API")
     @Severity(CRITICAL)
-    @GenerateUser(travels = @Travels(country = RUSSIA, count = 1))
+    @GenerateUser(travels = @TravelPhotos(country = RUSSIA, count = 1))
     void shouldReturnErrorPhotoNotFound(@User(selector = Selector.METHOD) UserJson user) throws IOException {
         final UUID id = UUID.randomUUID();
         final PhotoJson newPhoto = generatePhoto(id, germany, user.getUsername());
