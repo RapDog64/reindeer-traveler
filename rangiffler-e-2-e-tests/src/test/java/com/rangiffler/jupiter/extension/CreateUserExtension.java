@@ -48,7 +48,7 @@ public class CreateUserExtension implements BeforeEachCallback, ParameterResolve
             API_LOGIN_USERS_NAMESPACE = ExtensionContext.Namespace.create(CreateUserExtension.class, Selector.NESTED);
 
 
-    @Step("Create user for test")
+    @Step("Create a new user for test")
     @Override
     public void beforeEach(final ExtensionContext context) throws Exception {
         final String testId = getTestId(context);

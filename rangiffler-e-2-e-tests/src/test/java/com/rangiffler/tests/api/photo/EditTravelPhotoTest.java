@@ -70,7 +70,7 @@ public class EditTravelPhotoTest extends BaseRestTest {
         final PhotoJson newPhoto = generatePhoto(UUID.randomUUID(), germany, user.getUsername());
         final String expectedMessage = String.format(DIFFERENT_IDS_PROVIDED, currentPhoto.getId(), newPhoto.getId());
 
-        String actualMessage = photoService.editPhoto(currentPhoto.getId(), newPhoto)
+        final String actualMessage = photoService.editPhoto(currentPhoto.getId(), newPhoto)
                 .errorBody()
                 .string()
                 .substring(10, 134);

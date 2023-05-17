@@ -32,7 +32,7 @@ public class RemoveTravelTest extends BaseWebTest {
     @Tag("WEB")
     @AllureId("500015")
     @Severity(BLOCKER)
-    @ApiLogin(user = @GenerateUser(travels = @TravelPhotos(country = GERMANY, count = 1)))
+    @ApiLogin(user = @GenerateUser(travels = @TravelPhotos(imgPath = "src/test/resources/photos/munich.jpeg", country = GERMANY, count = 1)))
     public void shouldRemoveTravel(@User UserJson user) {
         step("Open the browser", () -> open("", MainPage.class))
                 .waitForPageLoaded()

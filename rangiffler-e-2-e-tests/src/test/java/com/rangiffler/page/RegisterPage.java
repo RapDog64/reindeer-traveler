@@ -63,6 +63,7 @@ public class RegisterPage  extends BasePage<RegisterPage> {
         return this;
     }
 
+    @Step("Verify the error '{0}' is displayed")
     public RegisterPage checkErrorMessage(String errorMessage) {
         errorContainer.shouldHave(text(errorMessage));
         return this;
