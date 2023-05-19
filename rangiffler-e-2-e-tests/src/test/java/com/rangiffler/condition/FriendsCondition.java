@@ -3,7 +3,6 @@ package com.rangiffler.condition;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ex.ElementNotFound;
 import com.codeborne.selenide.impl.CollectionSource;
-import com.rangiffler.model.FriendJson;
 import com.rangiffler.model.UserJson;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -31,12 +30,13 @@ public class FriendsCondition {
 
             @Override
             public boolean test(List<WebElement> elements) {
+                // TODO: finish the condition
                 if (elements.size() != expectedFriends.length) {
                     return false;
                 }
                 for (int i = 0; i < expectedFriends.length; i++) {
                     WebElement row = elements.get(i);
-                    UserJson expectedSpending = expectedFriends[i];
+                    UserJson expectedFriend = expectedFriends[i];
                     List<WebElement> cells = row.findElements(By.cssSelector("td"));
 
                 }

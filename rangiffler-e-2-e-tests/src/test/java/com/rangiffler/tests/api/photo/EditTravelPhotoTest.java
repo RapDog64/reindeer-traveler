@@ -56,7 +56,8 @@ public class EditTravelPhotoTest extends BaseRestTest {
         PhotoJson photoJson = PhotoServiceJson.fromPhotoServiceJson(Objects.requireNonNull(updatePhoto), germany);
 
         step("Verify the photo has been updated", () ->
-                ResponsePhotoValidator.validatePhoto(newPhoto, photoJson));
+                ResponsePhotoValidator.validatePhoto(newPhoto, photoJson)
+        );
     }
 
     @Test
@@ -76,7 +77,8 @@ public class EditTravelPhotoTest extends BaseRestTest {
                 .substring(10, 134);
 
         step("Verify '" + expectedMessage + "' is present", () ->
-                assertEquals(expectedMessage, actualMessage));
+                assertEquals(expectedMessage, actualMessage)
+        );
     }
 
     @Test
@@ -97,6 +99,7 @@ public class EditTravelPhotoTest extends BaseRestTest {
                 .substring(10, 74);
 
         step("Verify '" + expectedMessage + "' is present", () ->
-                assertEquals(expectedMessage, actualMessage));
+                assertEquals(expectedMessage, actualMessage)
+        );
     }
 }

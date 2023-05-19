@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
 @WebTest
-public class BaseWebTest {
+public abstract class BaseWebTest {
 
     @BeforeAll
     static void beforeAll() {

@@ -41,7 +41,7 @@ public class AddTravelPhotoTest extends BaseRestTest {
     @Tag("API")
     @Severity(BLOCKER)
     @GenerateUser
-    void shouldReturnErrorMessage(@User(selector = Selector.METHOD) UserJson user) throws Exception {
+    void shouldAddTravelPhotoForUser(@User(selector = Selector.METHOD) UserJson user) throws Exception {
         final String username = user.getUsername();
         final PhotoJson photo = generatePhoto(kazakhstan, username);
 

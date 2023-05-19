@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.TestInstancePostProcessor;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.List;
 
 public class ReceiverCountryTestInstancePostProcessor implements TestInstancePostProcessor {
 
@@ -16,19 +17,21 @@ public class ReceiverCountryTestInstancePostProcessor implements TestInstancePos
 
     @Override
     public void postProcessTestInstance(Object testInstance, final ExtensionContext context) throws Exception {
-        Field field = Arrays.stream(testInstance.getClass().getDeclaredFields())
+        final List<Field> fields = Arrays.stream(testInstance.getClass().getDeclaredFields())
                 .filter(f -> f.isAnnotationPresent(ReceiverCountry.class))
                 .filter(f -> f.getType() == CountryJson.class)
                 .peek(f -> f.setAccessible(true))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Field with the ReceiverCountry annotation is not present"));
+                .toList();
 
-        final Country country = field.getDeclaredAnnotation(ReceiverCountry.class).country();
-        CountryJson foundCountry = countryService.getAllCountries().stream()
-                .filter(c -> c.getCode().equals(country.code))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Country is not found"));
 
-        field.set(testInstance, foundCountry);
+        for (Field field : fields) {
+            final Country country = field.getDeclaredAnnotation(ReceiverCountry.class).country();
+            final CountryJson foundCountry = countryService.getAllCountries().stream()
+                    .filter(c -> c.getCode().equals(country.code))
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("Country is not found"));
+
+            field.set(testInstance, foundCountry);
+        }
     }
 }
