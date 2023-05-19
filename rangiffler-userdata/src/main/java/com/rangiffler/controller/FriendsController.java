@@ -4,9 +4,9 @@ package com.rangiffler.controller;
 import com.rangiffler.model.FriendJson;
 import com.rangiffler.model.UserJson;
 import com.rangiffler.service.UserDataService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,16 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class FriendsController {
 
     private static final Logger LOG = LoggerFactory.getLogger(FriendsController.class);
 
     private final UserDataService userService;
-
-    @Autowired
-    public FriendsController(UserDataService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping("/friends")
     public List<UserJson> friends(@RequestParam String username, @RequestParam boolean includePending) {
