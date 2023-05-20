@@ -43,11 +43,12 @@ public class PhotoService {
         return null;
     }
 
-    public void addPhoto(PhotoJson photoJson) {
+    public PhotoServiceJson addPhoto(PhotoJson photoJson) {
         Optional.ofNullable(photoJson)
                 .orElseThrow(() -> new InvalidRequestBodyException(INVALID_REQUEST_BODY));
         PhotoEntity photoEntity = PhotoJson.toPhotoEntity(photoJson);
-        photoRepository.save(photoEntity);
+        PhotoEntity entity = photoRepository.save(photoEntity);
+        return PhotoServiceJson.fromEntity(entity);
     }
 
     public void deletePhoto(UUID photoId) {

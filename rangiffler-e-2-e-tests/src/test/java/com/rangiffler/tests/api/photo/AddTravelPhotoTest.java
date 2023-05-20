@@ -1,6 +1,5 @@
 package com.rangiffler.tests.api.photo;
 
-import com.rangiffler.api.validator.ResponsePhotoValidator;
 import com.rangiffler.jupiter.annotation.GenerateUser;
 import com.rangiffler.jupiter.annotation.ReceiverCountry;
 import com.rangiffler.jupiter.annotation.User;
@@ -45,14 +44,14 @@ public class AddTravelPhotoTest extends BaseRestTest {
         final String username = user.getUsername();
         final PhotoJson photo = generatePhoto(kazakhstan, username);
 
-        photoService.addPhoto(photo);
+        final PhotoJson createdPhoto = PhotoServiceJson.fromPhotoServiceJson(photoService.addPhoto(photo), kazakhstan);
 
         final List<PhotoServiceJson> usersPhotos = photoService.getPhotosForUser(username);
         final PhotoJson uploadedPhoto = PhotoServiceJson.fromPhotoServiceJson(usersPhotos.get(0), kazakhstan);
 
         step("Validated created photo", () -> {
             assertEquals(1, usersPhotos.size());
-            ResponsePhotoValidator.validatePhoto(photo, uploadedPhoto);
+            assertEquals(createdPhoto, uploadedPhoto);
         });
     }
 }

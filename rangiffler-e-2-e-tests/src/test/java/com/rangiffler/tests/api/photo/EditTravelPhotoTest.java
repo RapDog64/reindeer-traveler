@@ -1,6 +1,5 @@
 package com.rangiffler.tests.api.photo;
 
-import com.rangiffler.api.validator.ResponsePhotoValidator;
 import com.rangiffler.jupiter.annotation.GenerateUser;
 import com.rangiffler.jupiter.annotation.ReceiverCountry;
 import com.rangiffler.jupiter.annotation.TravelPhotos;
@@ -56,7 +55,7 @@ public class EditTravelPhotoTest extends BaseRestTest {
         PhotoJson photoJson = PhotoServiceJson.fromPhotoServiceJson(Objects.requireNonNull(updatePhoto), germany);
 
         step("Verify the photo has been updated", () ->
-                ResponsePhotoValidator.validatePhoto(newPhoto, photoJson)
+                assertEquals(newPhoto, photoJson)
         );
     }
 
@@ -90,7 +89,6 @@ public class EditTravelPhotoTest extends BaseRestTest {
     void shouldReturnErrorPhotoNotFound(@User(selector = Selector.METHOD) UserJson user) throws IOException {
         final UUID id = UUID.randomUUID();
         final PhotoJson newPhoto = generatePhoto(id, germany, user.getUsername());
-
         final String expectedMessage = String.format(PHOTO_NOT_FOUND, id);
 
         final String actualMessage = photoService.editPhoto(id, newPhoto)
