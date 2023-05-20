@@ -3,6 +3,7 @@ package com.rangiffler.service;
 
 import com.rangiffler.model.*;
 import com.rangiffler.service.configuration.PhotoServiceClient;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,20 +12,13 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class PhotoService {
 
     private final UserService userService;
     private final CountryService countryService;
     private final PhotoServiceClient photoService;
 
-    @Autowired
-    public PhotoService(UserService userService, CountryService countryService, PhotoServiceClient photoService) {
-        this.userService = userService;
-        this.countryService = countryService;
-        this.photoService = photoService;
-    }
-
-    List<PhotoJson> mainUserPhotoList = new ArrayList<>();
     public PhotoJson addPhoto(PhotoJson photoJson) {
         photoService.addPhoto(photoJson);
         return photoJson;

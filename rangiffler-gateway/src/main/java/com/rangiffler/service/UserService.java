@@ -2,18 +2,16 @@ package com.rangiffler.service;
 
 import com.rangiffler.model.UserJson;
 import com.rangiffler.service.configuration.UserServiceClient;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserServiceClient userService;
-
-    public UserService(UserServiceClient userService) {
-        this.userService = userService;
-    }
 
     public List<UserJson> receivePeopleAround(String username) {
         return userService.receivePeopleAround(username);

@@ -2,13 +2,15 @@ package com.rangiffler.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rangiffler.data.CountryEntity;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Data
-@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 public class CountryJson {
 
     @JsonProperty("id")
