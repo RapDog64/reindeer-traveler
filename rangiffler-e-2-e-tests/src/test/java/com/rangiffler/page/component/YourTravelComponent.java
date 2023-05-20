@@ -11,6 +11,8 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.rangiffler.page.BasePage.dataTestId;
+import static com.rangiffler.page.BasePage.testId;
 import static com.rangiffler.page.component.TabItem.YOUR_TRAVELS;
 
 public class YourTravelComponent extends BaseComponent<YourTravelComponent> {

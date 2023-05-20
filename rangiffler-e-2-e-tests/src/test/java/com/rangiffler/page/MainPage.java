@@ -1,6 +1,7 @@
 package com.rangiffler.page;
 
 import com.codeborne.selenide.SelenideElement;
+import com.rangiffler.page.component.BaseComponent;
 import com.rangiffler.page.component.Header;
 import com.rangiffler.page.component.TabItem;
 import io.qameta.allure.Step;
@@ -40,7 +41,7 @@ public class MainPage extends BasePage<MainPage> {
     }
 
     @Step("Open '{0}' tab")
-    public <T extends BasePage> T openTab(TabItem tab, T expectedPage) {
+    public <T extends BaseComponent> T openTab(TabItem tab, T expectedPage) {
         $(testId(tab.name)).click();
         return expectedPage;
     }
