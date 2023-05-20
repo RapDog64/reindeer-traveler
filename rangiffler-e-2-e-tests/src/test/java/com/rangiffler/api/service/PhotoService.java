@@ -17,7 +17,7 @@ import java.util.UUID;
 public interface PhotoService {
 
     @POST("/photos")
-    Call<Void> addPhoto(@Body PhotoJson photoJson);
+    Call<PhotoServiceJson> addPhoto(@Body PhotoJson photoJson);
 
     @GET("/photos")
     Call<List<PhotoServiceJson>> getPhotosForUser(@Query("username") String username);

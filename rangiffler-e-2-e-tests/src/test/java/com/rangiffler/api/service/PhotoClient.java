@@ -20,8 +20,8 @@ public class PhotoClient extends RestService {
     private final PhotoService photoService = retrofit.create(PhotoService.class);
 
     @Step("Send REST POST('/photos') request to photo service")
-    public void addPhoto(PhotoJson photo) throws IOException {
-        photoService.addPhoto(photo)
+    public PhotoServiceJson addPhoto(PhotoJson photo) throws IOException {
+        return photoService.addPhoto(photo)
                 .execute()
                 .body();
     }
@@ -36,13 +36,6 @@ public class PhotoClient extends RestService {
     @Step("Send REST PUT('/photos/{id}') request to photo service")
     public Response<PhotoServiceJson> editPhoto(UUID id, PhotoJson photo) throws IOException {
        return photoService.editTravelPhoto(id, photo)
-                .execute();
-    }
-
-
-    @Step("Send REST PUT('/photos/{id}') request to photo service")
-    public Response<PhotoServiceJson> editPhoto(UUID id, String body) throws IOException {
-       return photoService.editTravelPhoto(id, body)
                 .execute();
     }
 

@@ -37,8 +37,8 @@ public class PhotoController {
 
     @PostMapping("/photos")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addPhoto(@RequestBody PhotoJson photoJson) {
-        photoService.addPhoto(photoJson);
+    public PhotoServiceJson addPhoto(@RequestBody PhotoJson photoJson) {
+       return photoService.addPhoto(photoJson);
     }
 
     @PutMapping("/photos/{id}")

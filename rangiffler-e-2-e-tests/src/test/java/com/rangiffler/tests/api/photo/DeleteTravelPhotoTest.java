@@ -61,9 +61,13 @@ public class DeleteTravelPhotoTest extends BaseRestTest {
         final UUID id = UUID.randomUUID();
         final String expectedMessage = String.format(PHOTO_NOT_FOUND, id);
 
-        final String message = photoService.deleteTravelPhoto(id).errorBody().string().substring(10, 74);
+        final String message = photoService.deleteTravelPhoto(id)
+                .errorBody()
+                .string()
+                .substring(10, 74);
 
         step("Validate 'Photo is not found' message is displayed", () ->
-                assertEquals(expectedMessage, message));
+                assertEquals(expectedMessage, message)
+        );
     }
 }

@@ -4,23 +4,24 @@ package com.rangiffler.controller;
 import com.rangiffler.model.FriendJson;
 import com.rangiffler.model.UserJson;
 import com.rangiffler.service.FriendService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class FriendsController {
 
-    private FriendService friendService;
-
-    @Autowired
-    public FriendsController(FriendService friendService) {
-        this.friendService = friendService;
-    }
+    private final FriendService friendService;
 
     @GetMapping("/friends")
     @ResponseStatus(HttpStatus.OK)

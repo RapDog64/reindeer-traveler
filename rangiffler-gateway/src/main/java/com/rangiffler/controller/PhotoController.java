@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.rangiffler.model.PhotoJson;
 import com.rangiffler.service.PhotoService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -12,14 +13,10 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 public class PhotoController {
 
   private final PhotoService photoService;
-
-  @Autowired
-  public PhotoController(PhotoService photoService) {
-    this.photoService = photoService;
-  }
 
   @GetMapping("/photos")
   @ResponseStatus(HttpStatus.OK)

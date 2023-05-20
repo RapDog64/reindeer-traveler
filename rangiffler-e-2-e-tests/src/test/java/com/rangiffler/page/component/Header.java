@@ -9,6 +9,7 @@ import java.time.Duration;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.rangiffler.page.BasePage.testId;
 
 public class Header extends BaseComponent<Header> {
 
@@ -20,7 +21,7 @@ public class Header extends BaseComponent<Header> {
     }
 
     @Step("Click on '{0}' button")
-    public <T extends BasePage> T clickOn(HeaderItem attribute, T expectedPage) {
+    public <T> T clickOn(HeaderItem attribute, T expectedPage) {
         $(testId(attribute.name)).click();
         return expectedPage;
     }

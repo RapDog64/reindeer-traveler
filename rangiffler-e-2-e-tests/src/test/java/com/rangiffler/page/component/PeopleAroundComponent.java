@@ -9,6 +9,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.rangiffler.model.enums.InvitationState.DECLINE_INVITATION;
+import static com.rangiffler.page.BasePage.testId;
 import static com.rangiffler.tests.message.Message.ACCEPT_FRIEND_INVITATION_MESSAGE;
 import static com.rangiffler.tests.message.Message.DECLINE_FRIEND_INVITATION_MESSAGE;
 import static com.rangiffler.tests.message.Message.INVITATION_SENT_MESSAGE;

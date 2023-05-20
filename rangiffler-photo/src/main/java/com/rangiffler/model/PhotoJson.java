@@ -5,6 +5,7 @@ import com.rangiffler.data.PhotoEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class PhotoJson {
 
     @JsonProperty("id")
