@@ -17,7 +17,7 @@ public class FriendsMismatch extends UIAssertionError {
                            String explanation, long timeoutMs) {
         super(
                 collection.driver(),
-                "Spending mismatch" +
+                "Friends mismatch" +
                         lineSeparator() + "Actual: " + actualFriends +
                         lineSeparator() + "Expected: " + expectedFriends +
                         (explanation == null ? "" : lineSeparator() + "Because: " + explanation) +

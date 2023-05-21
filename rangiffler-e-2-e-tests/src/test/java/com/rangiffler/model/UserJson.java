@@ -3,12 +3,19 @@ package com.rangiffler.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rangiffler.model.enums.FriendState;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(doNotUseGetters = true)
 public class UserJson {
 
     @JsonProperty("id")
@@ -44,9 +51,6 @@ public class UserJson {
 
     public void setInvitationsJsons(List<UserJson> invitationsJsons) {
         this.invitationsJsons = invitationsJsons;
-    }
-
-    public UserJson() {
     }
 
     public UUID getId() {
@@ -104,19 +108,4 @@ public class UserJson {
     public void setFriendState(FriendState friendState) {
         this.friendState = friendState;
     }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserJson userJson = (UserJson) o;
-        return Objects.equals(id, userJson.id) && Objects.equals(userName, userJson.userName) && Objects.equals(firstname, userJson.firstname) && Objects.equals(lastname, userJson.lastname) && Objects.equals(photo, userJson.photo) && friendState == userJson.friendState;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, userName, firstname, lastname, photo, friendState);
-    }
-
 }

@@ -6,6 +6,8 @@ import com.rangiffler.model.UserJson;
 import com.rangiffler.tests.message.Message;
 import io.qameta.allure.Step;
 
+import java.util.List;
+
 import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
@@ -32,8 +34,7 @@ public class FriendPage extends BasePage<FriendPage> {
     }
 
     @Step("Verify the friend is successfully added")
-    public FriendPage verifyFriendAdded(UserJson... expectedFriends) {
-        // TODO: Finished custom condition validation
+    public FriendPage verifyFriendAdded(List<UserJson> expectedFriends) {
         friendsList.should(friends(expectedFriends));
         return this;
     }
