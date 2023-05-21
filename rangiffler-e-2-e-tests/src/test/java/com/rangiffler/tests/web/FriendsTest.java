@@ -15,6 +15,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static com.codeborne.selenide.Selenide.open;
 import static io.qameta.allure.Allure.step;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
@@ -26,11 +28,28 @@ public class FriendsTest extends BaseWebTest {
 
     @Test
     @Tag("WEB")
+    @AllureId("500010")
+    @Severity(CRITICAL)
+    @ApiLogin(user = @GenerateUser(friends = @Friends(count = 1)))
+    @DisplayName("WEB: User should see the friend's username in the list.")
+    void userShouldSeeFriendsUsernamesI(@User UserJson user) {
+        final List<UserJson> friends = user.getFriendsList();
+
+        step("Open the browser", () -> open("", MainPage.class))
+                .getHeader()
+                .waitForPageLoaded()
+                .clickOn(HeaderItem.FRIENDS, new FriendPage())
+                .waitForPageLoaded()
+                .verifyFriendAdded(friends);
+    }
+
+    @Test
+    @Tag("WEB")
     @AllureId("500007")
     @Severity(CRITICAL)
-    @ApiLogin(user = @GenerateUser(friends = @Friends(count = 3)))
+    @ApiLogin(user = @GenerateUser(friends = @Friends(count = 1)))
     @DisplayName("WEB: User should see the list of his friends")
-    void userShouldSeeTListOfFriends(@User UserJson user) {
+    void userShouldSeeListOfFriends(@User UserJson user) {
         step("Open the browser", () -> open("", MainPage.class))
                 .getHeader()
                 .waitForPageLoaded()
@@ -44,7 +63,7 @@ public class FriendsTest extends BaseWebTest {
     @Severity(CRITICAL)
     @AllureId("500008")
     @ApiLogin(user = @GenerateUser)
-    @DisplayName("WEB: User should see an empty list of friends if the user does not any.")
+    @DisplayName("WEB: User should see an empty list of friends if the user doesn't have any")
     void userShouldSeeEmptyListOfFriends(@User UserJson user) {
         step("Open the browser", () -> open("", MainPage.class))
                 .getHeader()
