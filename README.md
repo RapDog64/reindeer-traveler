@@ -31,6 +31,30 @@
 - [Gradle 7.6](https://docs.gradle.org/7.6/release-notes.html)
 - [Docker-compose](https://docs.docker.com/compose/)
 
+
+# **Architecture of the application**
+
+The Rangiffler application has been built based on microservices architecture which contains the following service
+- Auth - responsible for authentication and authorization 
+- Gateway - the proxy service that the frontend uses to communicate with the backend services  
+- User data - responsible for providing user data and users' friends information
+- Photo - responsible for providing user photo information
+- Geo - contains the countries
+- Client - front-end interface of the application
+
+![Application Schema](./images/Application_schema.png)
+
+#### The list of the component and ports:
+| Component | Port |
+|-----------|------|
+| Database  | 5432 |
+| Auth      | 9000 |
+| User data | 8089 |
+| Gateway   | 8080 |
+| Photo     | 8086 |
+| Geo       | 8088 |
+| Frontend  | 3001 |
+
 **Preconditions for working with the Rangiffler project**
 
 #### 1. Pull the postgres container version 15.1
@@ -39,7 +63,7 @@
 docker pull postgres:15.1
 ```
 
-#### 2. Create volume for  saving data from the database in the docker
+#### 2. Create volume for saving data from the database in the docker
 
 ```posh
 docker volume create pgdata
@@ -111,7 +135,14 @@ MacBook-Pro rangiffler % cd rangiffler-client
 ```posh
 ./gradlew clean test
 ```
-**By default, it starts 4 threads; however, it can be changed in the ```junit-platform.properties``` file.**
+#### or
+
+#### use the 'run-tests-locally.sh' script
+```bash
+bash run-tests-locally.sh
+```
+
+**By default, it starts in headless and uses 3 threads; however, it's possible to change the number of threads in the ```junit-platform.properties``` file as well as disable the headless ```Configuration.headless = false;```**
 
 ```posh
 junit.jupiter.execution.parallel.config.fixed.parallelism={threads}
@@ -125,10 +156,8 @@ junit.jupiter.execution.parallel.config.fixed.max-pool-size={threads}
 ./gradlew allureServe
 ```
 
-### Allure report example #1
+### Examples of the test report
 ![Allure](./images/Screenshot_1.png)
-
-### Allure report example #2
 
 ![Allure2](./images/Screenshot_2.png)
 
