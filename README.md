@@ -44,7 +44,7 @@ The Rangiffler application has been built based on microservices architecture wh
 
 ![Application Schema](./images/Application_schema.png)
 
-#### The list of the component and ports:
+#### The list of the components and ports:
 | Component | Port |
 |-----------|------|
 | Database  | 5432 |
@@ -150,7 +150,9 @@ junit.jupiter.execution.parallel.config.fixed.max-pool-size={threads}
 ```
 
 #### 3. Generate Allure report
-**The result of the tests can be viewed through Allure**
+**Note: If you run the tests by the bash script the report will be generated and opened automatically.**
+
+**The result of the tests can be viewed through Allure report.**
 
 ```posh
 ./gradlew allureServe
