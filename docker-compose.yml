@@ -1,0 +1,117 @@
+version: '3.9'
+
+services:
+  rangiffler-all-db:
+    container_name: rangiffler-all-db
+    image: postgres:15.1
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=secret
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+    expose:
+      - "5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - rangiffler-network
+    dns_search: .
+
+  rangiffler-auth:
+    container_name: rangiffler-auth
+    image: rapdog64/rangiffler-auth:1.0.0
+    ports:
+      - "9000:9000"
+    healthcheck:
+      test: "wget --spider http://localhost:9000/actuator/health || exit 1"
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: always
+    depends_on:
+      rangiffler-all-db:
+        condition: service_healthy
+    networks:
+      - rangiffler-network
+    dns_search: .
+
+  rangiffler-geo:
+    container_name: rangiffler-geo
+    image: rapdog64/rangiffler-geo:1.0.0
+    ports:
+      - "8088:8088"
+    restart: always
+    depends_on:
+      rangiffler-all-db:
+        condition: service_healthy
+    networks:
+      - rangiffler-network
+    dns_search: .
+
+  rangiffler-gateway:
+    container_name: rangiffler-gateway
+    image: rapdog64/rangiffler-gateway:1.0.0
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: "wget --spider http://localhost:8080/actuator/health || exit 1"
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: always
+    depends_on:
+      - rangiffler-auth
+    networks:
+      - rangiffler-network
+    dns_search: .
+
+  rangiffler-photo:
+    container_name: rangiffler-photo
+    image: rapdog64/rangiffler-photo:1.0.0
+    ports:
+      - "8086:8086"
+    restart: always
+    depends_on:
+      rangiffler-all-db:
+        condition: service_healthy
+    networks:
+      - rangiffler-network
+    dns_search: .
+
+  rangiffler-userdata:
+    container_name: rangiffler-userdata
+    image: rapdog64/rangiffler-userdata:1.0.0
+    ports:
+      - "8089:8089"
+    restart: always
+    depends_on:
+      rangiffler-all-db:
+        condition: service_healthy
+    networks:
+      - rangiffler-network
+    dns_search: .
+
+  rangiffler-client:
+    container_name: rangiffler-client
+    image: rapdog64/rangiffler-client:1.0.0
+    ports:
+      - "80:80"
+    restart: always
+    depends_on:
+      rangiffler-gateway:
+        condition: service_healthy
+    networks:
+      - rangiffler-network
+    dns_search: .
+
+volumes:
+  pgdata:
+    external: true
+
+networks:
+  rangiffler-network:
+    driver: bridge

@@ -1,7 +1,6 @@
 package com.rangiffler.page.component;
 
 import com.codeborne.selenide.SelenideElement;
-import com.rangiffler.page.BasePage;
 import io.qameta.allure.Step;
 
 import java.time.Duration;

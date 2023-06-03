@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.0.1'
     id 'io.spring.dependency-management' version '1.1.0'
-
+    id 'com.palantir.docker' version '0.34.0'
 }
 
 group = 'com.rangiffler'
@@ -25,6 +25,15 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter:5.9.2"
     compileOnly 'org.projectlombok:lombok:1.18.26'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
+}
+
+docker {
+    dependsOn build
+    name "rapdog64/rangiffler-gateway:${project.version}"
+    tag 'latest', 'rapdog64/rangiffler-gateway:latest'
+    files bootJar.archiveFile
+    buildArgs([APP_VER: project.version, DOCKER: project.ext.dockerImage])
+    noCache true
 }
 
 test {
