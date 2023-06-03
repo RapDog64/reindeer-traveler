@@ -14,7 +14,7 @@ public class CorsCustomizer {
 
     private final String rangifflerFrontUri;
 
-    public CorsCustomizer(@Value("${rangiffler-front.base-uri}") String rangifflerFrontUri) {
+    public CorsCustomizer(@Value("${rangiffler-client.base-uri}") String rangifflerFrontUri) {
         this.rangifflerFrontUri = rangifflerFrontUri;
     }
 

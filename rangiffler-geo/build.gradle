@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.0.5'
     id 'io.spring.dependency-management' version '1.1.0'
+    id 'com.palantir.docker' version '0.34.0'
 }
 
 group = 'com.rangiffler'
@@ -25,6 +26,15 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+docker {
+    dependsOn build
+    name "rapdog64/rangiffler-geo:${project.version}"
+    tag 'latest', 'rapdog64/rangiffler-geo:latest'
+    files bootJar.archiveFile
+    buildArgs([APP_VER: project.version, DOCKER: project.ext.dockerImage])
+    noCache true
 }
 
 tasks.named('test') {

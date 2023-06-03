@@ -2,10 +2,11 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.0.1'
     id 'io.spring.dependency-management' version '1.1.0'
+    id 'com.palantir.docker' version '0.34.0'
 }
 
 group = 'com.rangiffler'
-version '0.0.1-SNAPSHOT'
+version '1.0.0'
 
 repositories {
     mavenCentral()
@@ -22,11 +23,19 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-
     compileOnly 'org.projectlombok:lombok:1.18.26'
     annotationProcessor 'org.projectlombok:lombok:1.18.26'
 }
 
-test {
+docker {
+    dependsOn build
+    name "rapdog64/rangiffler-auth:${project.version}"
+    tag 'latest', 'rapdog64/rangiffler-auth:latest'
+    files bootJar.archiveFile
+    buildArgs([APP_VER: project.version, DOCKER: project.ext.dockerImage])
+    noCache true
+}
+
+tasks.named('test') {
     useJUnitPlatform()
 }

@@ -39,8 +39,8 @@ rangiffler-userdata:
   base-uri: 'http://127.0.0.1:8089'
 rangiffler-photo:
   base-uri: 'http://127.0.0.1:8086'
-rangiffler-front:
-  base-uri: 'http://127.0.0.1:3001'
+rangiffler-client:
+  base-uri: 'http://127.0.0.1'
 
 ---
 spring:
@@ -65,6 +65,6 @@ rangiffler-userdata:
   base-uri: 'http://rangiffler-userdata:8089'
 rangiffler-photo:
   base-uri: 'http://rangiffler-photo:8086'
-rangiffler-front:
-  base-uri: 'http://rangiffler-frontend'
+rangiffler-client:
+  base-uri: 'http://127.0.0.1'
 ---
