@@ -60,7 +60,7 @@ grpc:
       negotiationType: PLAINTEXT
 
 rangiffler-geo:
-  base-uri: 'http:/rangiffler-geo:8088'
+  base-uri: 'http://rangiffler-geo:8088'
 rangiffler-userdata:
   base-uri: 'http://rangiffler-userdata:8089'
 rangiffler-photo:

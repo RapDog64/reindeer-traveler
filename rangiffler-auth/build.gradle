@@ -6,7 +6,8 @@ plugins {
 }
 
 group = 'com.rangiffler'
-version '1.0.0'
+version = '1.0.0'
+sourceCompatibility = '17'
 
 repositories {
     mavenCentral()
