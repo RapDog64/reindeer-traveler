@@ -101,9 +101,6 @@ services:
     ports:
       - "80:80"
     restart: always
-    depends_on:
-      rangiffler-gateway:
-        condition: service_healthy
     networks:
       - rangiffler-network
     dns_search: .

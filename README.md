@@ -123,14 +123,14 @@ MacBook-Pro rangiffler-auth % gradle bootRun --args='--spring.profiles.active=lo
 #### 5. Run the other services: rangiffler-geo, rangiffler-photo, rangiffler-gateway, rangiffler-userdata
 
 # Run with Docker compose
-There is the ability to run the application with the help of docker compose. 
-Note: It is important to have sql/create-db.sql file.
-
+There is the ability to run the application with the help of docker compose. It's important to have sql/create-db.sql file in order to run the application use
 ```posh
 docker-compose up -d
 ```
-
-
+The application url
+```posh
+http://127.0.0.1/landing
+```
 # Run End-to-End tests of the project
 
 #### 1. Change directory to rangiffler-e-2-e-tests
