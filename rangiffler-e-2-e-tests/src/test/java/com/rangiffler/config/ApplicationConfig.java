@@ -2,19 +2,20 @@ package com.rangiffler.config;
 
 import org.aeonbits.owner.Config;
 
-@Config.LoadPolicy(Config.LoadType.MERGE)
-@Config.Sources({
+import static org.aeonbits.owner.Config.LoadPolicy;
+import static org.aeonbits.owner.Config.LoadType;
+import static org.aeonbits.owner.Config.Sources;
+
+@LoadPolicy(LoadType.MERGE)
+@Sources({
         "system:properties",
         "classpath:config/${env}-config.properties"
 })
 public interface ApplicationConfig extends Config {
 
-    String PROJECT_NAME = "rangiffler";
-
     @Key("front.url")
     @DefaultValue("http://127.0.0.1:3001/")
     String frontUrl();
-
 
     @Key("auth.url")
     @DefaultValue("http://127.0.0.1:9000/")
