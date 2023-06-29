@@ -31,7 +31,6 @@
 - [Gradle 7.6](https://docs.gradle.org/7.6/release-notes.html)
 - [Docker-compose](https://docs.docker.com/compose/)
 
-
 # **Architecture of the application**
 
 The Rangiffler application has been built based on microservices architecture which contains the following service
@@ -122,6 +121,15 @@ MacBook-Pro rangiffler-auth % gradle bootRun --args='--spring.profiles.active=lo
 ```
 
 #### 5. Run the other services: rangiffler-geo, rangiffler-photo, rangiffler-gateway, rangiffler-userdata
+
+# Run with Docker compose
+There is the ability to run the application with the help of docker compose. 
+Note: It is important to have sql/create-db.sql file.
+
+```posh
+docker-compose up -d
+```
+
 
 # Run End-to-End tests of the project
 
