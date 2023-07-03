@@ -40,7 +40,7 @@ rangiffler-userdata:
 rangiffler-photo:
   base-uri: 'http://127.0.0.1:8086'
 rangiffler-client:
-  base-uri: 'http://127.0.0.1'
+  base-uri: 'http://127.0.0.1:3001'
 
 ---
 spring:

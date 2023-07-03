@@ -16,7 +16,6 @@ services:
       - "5432"
     volumes:
       - ./sql/create-db.sql:/docker-entrypoint-initdb.d/create-db.sql
-#      - pgdata:/var/lib/postgresql/data
     restart: always
     networks:
       - rangiffler-network
@@ -102,9 +101,6 @@ services:
     ports:
       - "80:80"
     restart: always
-    depends_on:
-      rangiffler-gateway:
-        condition: service_healthy
     networks:
       - rangiffler-network
     dns_search: .
