@@ -11,6 +11,7 @@ buildscript {
         jupiterVersion = '5.9.2'
         hibernateVersion = '6.1.7.Final'
         lombokVersion = '1.18.26'
+        kafkaVersion = '3.5.0'
     }
 }
 
@@ -53,6 +54,7 @@ dependencies {
             "com.github.vertical-blank:sql-formatter:2.0.3",
             "io.qameta.allure:allure-okhttp3:${allureVersion}",
             "com.codeborne:selenide:${selenideVersion}",
+            "org.apache.kafka:kafka-clients:${kafkaVersion}",
             "com.github.javafaker:javafaker:${javaFakerVersion}",
             "com.google.code.findbugs:jsr305:3.0.2",
             "io.grpc:grpc-protobuf:${grpcVersion}",
@@ -86,5 +88,8 @@ tasks.withType(JavaCompile) {
 
 tasks.withType(Test) {
     systemProperties += System.properties
+    // Kafka logs
+    testLogging.showStandardStreams = true
+    testLogging.exceptionFormat = 'full'
     useJUnitPlatform()
 }
