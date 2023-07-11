@@ -48,6 +48,8 @@ spring:
   config:
     activate:
       on-profile: 'local'
+  kafka:
+    bootstrap-servers: 'localhost:9092'
   datasource:
     url: 'jdbc:postgresql://localhost:5432/rangiffler-auth'
   jpa:
@@ -62,6 +64,8 @@ spring:
   config:
     activate:
       on-profile: 'docker'
+  kafka:
+    bootstrap-servers: 'kafka:9092'
   datasource:
     url: 'jdbc:postgresql://rangiffler-all-db:5432/rangiffler-auth'
   jpa:
