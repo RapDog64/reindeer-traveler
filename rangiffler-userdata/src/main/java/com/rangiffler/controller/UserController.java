@@ -33,7 +33,7 @@ public class UserController {
     @GetMapping("/currentUser")
     @ResponseStatus(HttpStatus.OK)
     public UserJson currentUser(@RequestParam String username) {
-        return userService.getCurrentUserOrCreateIfAbsent(username);
+        return userService.getCurrentUser(username);
     }
 
     @GetMapping("/allUsers")
