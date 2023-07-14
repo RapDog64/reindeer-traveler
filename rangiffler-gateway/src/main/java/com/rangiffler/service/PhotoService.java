@@ -27,15 +27,17 @@ public class PhotoService {
     }
 
     public List<PhotoJson> getAllUserPhotos(String username) {
-        List<PhotoJson> usersPhoto = new ArrayList<>();
         List<PhotoServiceJson> photos = photoService.getPhotosForUser(username);
-        if (!photos.isEmpty()) {
-            for (PhotoServiceJson photo : photos) {
-                CountryJson country = countryService.findById(photo.getCountryId());
-                usersPhoto.add(PhotoServiceJson.fromPhotoServiceJson(photo, country));
-            }
+        if (photos.isEmpty()) {
+            return new ArrayList<>();
         }
-        return usersPhoto;
+
+        return photos.stream()
+                .map(photo -> {
+                    CountryJson country = countryService.findById(photo.getCountryId());
+                    return PhotoServiceJson.fromPhotoServiceJson(photo, country);
+                })
+                .toList();
     }
 
     public PhotoJson editPhoto(PhotoJson photoJson, UUID id) {
