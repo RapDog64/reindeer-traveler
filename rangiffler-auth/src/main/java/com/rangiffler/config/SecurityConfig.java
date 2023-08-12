@@ -17,6 +17,17 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class SecurityConfig {
 
+    private static final String[] SWAGGER_ENDPOINTS = {
+            "/swagger-ui/**",
+            "/swagger-resources/**",
+            "/authenticate",
+            "/v3/api-docs",
+            "/v3/api-docs/swagger-config/**",
+            "/configuration/security",
+            "/webjars/**",
+            "/swagger-ui-index.html",
+    };
+
     private final CorsCustomizer corsCustomizer;
 
     @Autowired
