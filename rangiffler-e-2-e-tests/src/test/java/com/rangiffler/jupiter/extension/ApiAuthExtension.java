@@ -24,13 +24,9 @@ public class ApiAuthExtension implements BeforeEachCallback {
 
     private final AuthenticationClient authClient = new AuthenticationClient();
 
-
-    public static final ExtensionContext.Namespace AUTH_EXTENSION_NAMESPACE
-            = ExtensionContext.Namespace.create(ApiAuthExtension.class);
-
     @Step("Login to rangiffler using api")
     @Override
-    public void beforeEach(ExtensionContext context) throws Exception {
+    public void beforeEach(final ExtensionContext context) throws Exception {
         ApiLogin apiLoginAnnotation = context.getRequiredTestMethod().getAnnotation(ApiLogin.class);
         GenerateUser generateUserAnnotation = apiLoginAnnotation.user();
         if ((!generateUserAnnotation.handleAnnotation() && "".equals(apiLoginAnnotation.username()) && "".equals(apiLoginAnnotation.password()))) {
@@ -64,7 +60,7 @@ public class ApiAuthExtension implements BeforeEachCallback {
         SessionStorageHandler.getInstance().addToken(token.get("id_token").asText());
     }
 
-    private String getTestId(ExtensionContext context) {
+    private String getTestId(final ExtensionContext context) {
         return Objects.requireNonNull(
                 context.getRequiredTestMethod().getAnnotation(AllureId.class)
         ).value();
