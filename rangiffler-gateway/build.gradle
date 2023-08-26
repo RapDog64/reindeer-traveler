@@ -23,8 +23,8 @@ dependencies {
             "org.springframework.cloud:spring-cloud-starter-openfeign:4.0.2"
     )
     testImplementation "org.junit.jupiter:junit-jupiter:5.9.2"
-    compileOnly 'org.projectlombok:lombok:1.18.26'
-    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
 }
 
 docker {

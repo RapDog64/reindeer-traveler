@@ -122,7 +122,13 @@ MacBook-Pro rangiffler-auth % gradle bootRun --args='--spring.profiles.active=lo
 
 #### 5. Run the other services: rangiffler-geo, rangiffler-photo, rangiffler-gateway, rangiffler-userdata
 
-# Run with Docker compose
+#### 6. Run the tests using the bash script
+
+```bash
+bash run-tests.sh
+```
+
+# Run Rangiffler with docker compose
 There is the ability to run the application with the help of docker compose. It's important to have sql/create-db.sql file in order to run the application use
 ```posh
 docker-compose up -d
@@ -131,23 +137,12 @@ The application url
 ```posh
 http://127.0.0.1/landing
 ```
-# Run End-to-End tests of the project
+# Run the end-to-end tests of the project
 
-#### 1. Change directory to rangiffler-e-2-e-tests
+#### Run the tests using the bash script
 
-```posh
-MacBook-Pro rangiffler % cd rangiffler-client
-```
-
-#### 2. Run the test using Gradle wrapper
-```posh
-./gradlew clean test
-```
-#### or
-
-#### use the 'run-tests-locally.sh' script
 ```bash
-bash run-tests-locally.sh
+bash run-tests.sh docker
 ```
 
 **By default, it starts in headless and uses 3 threads; however, it's possible to change the number of threads in the ```junit-platform.properties``` file as well as disable the headless ```Configuration.headless = false;```**

@@ -3,7 +3,7 @@ buildscript {
         protobufVersion = '3.21.12'
         grpcVersion = '1.52.1'
         allureVersion = '2.22.0'
-        selenideVersion = '6.13.1'
+        selenideVersion = '6.17.2'
         springJDBCVersion = '6.0.8'
         ownerVersion = '1.0.12'
         javaFakerVersion = '1.0.2'
@@ -77,8 +77,14 @@ dependencies {
 }
 
 test {
-    options {
-        systemProperties(System.getProperties())
-    }
+    useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Test) {
+    systemProperties += System.properties
     useJUnitPlatform()
 }
