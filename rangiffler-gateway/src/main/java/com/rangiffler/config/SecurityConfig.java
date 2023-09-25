@@ -12,6 +12,17 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
+  private static final String[] SWAGGER_ENDPOINTS = {
+          "/swagger-ui/**",
+          "/swagger-resources/**",
+          "/authenticate",
+          "/v3/api-docs",
+          "/v3/api-docs/swagger-config/**",
+          "/configuration/security",
+          "/webjars/**",
+          "/swagger-ui-index.html",
+  };
+
   private final CorsCustomizer corsCustomizer;
 
   public SecurityConfig(CorsCustomizer corsCustomizer) {
@@ -24,6 +35,7 @@ public class SecurityConfig {
 
     http.authorizeHttpRequests()
             .requestMatchers("/actuator/health").permitAll()
+            .requestMatchers(SWAGGER_ENDPOINTS).permitAll()
             .anyRequest()
             .authenticated().and()
             .oauth2ResourceServer()
