@@ -4,6 +4,12 @@ server:
     include:
       message: true
 
+grpc:
+  client:
+    grpcGeoClient:
+      address: 'static://localhost:9099'
+      negotiationType: PLAINTEXT
+
 spring:
   application:
     name: rangiffler-gateway
@@ -15,7 +21,6 @@ logging:
     org.springframework.security: DEBUG
     org.springframework.security.oauth2: DEBUG
 
-
 ---
 spring:
   config:
@@ -26,12 +31,6 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: 'http://127.0.0.1:9000'
-
-grpc:
-  client:
-    grpcCurrencyClient:
-      address: 'static://localhost:8092'
-      negotiationType: PLAINTEXT
 
 rangiffler-geo:
   base-uri: 'http://127.0.0.1:8088'
@@ -52,12 +51,6 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: 'http://rangiffler-auth:9000'
-
-grpc:
-  client:
-    grpcCurrencyClient:
-      address: 'static://rangiffler-geo:8092'
-      negotiationType: PLAINTEXT
 
 rangiffler-geo:
   base-uri: 'http://rangiffler-geo:8088'

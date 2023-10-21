@@ -6,7 +6,7 @@ server:
 
 spring:
   application:
-    name: rangiffler-photo
+    name: rangiffler-geo
   datasource:
     hikari:
       connection-timeout: 20000
@@ -48,6 +48,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+
+grpc:
+  server:
+    port: 9099
+
 ---
 spring:
   config:
@@ -58,4 +63,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+
+grpc:
+  server:
+    port: 9099
 ---

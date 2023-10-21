@@ -20,7 +20,9 @@ dependencies {
             "org.springframework.boot:spring-boot-starter-oauth2-resource-server",
             "org.springframework.boot:spring-boot-starter-security",
             "org.springframework.boot:spring-boot-starter-validation",
-            "org.springframework.cloud:spring-cloud-starter-openfeign:4.0.2"
+            "org.springframework.cloud:spring-cloud-starter-openfeign:4.0.2",
+            "net.devh:grpc-client-spring-boot-starter:2.14.0.RELEASE",
+            "io.projectreactor.netty:reactor-netty"
     )
     testImplementation "org.junit.jupiter:junit-jupiter:5.9.2"
     annotationProcessor 'org.projectlombok:lombok'

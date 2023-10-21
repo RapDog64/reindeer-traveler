@@ -1,1 +1,2 @@
 rootProject.name = 'rangiffler-e-2-e-tests'
+include ('rangiffler-common')

@@ -1,5 +1,5 @@
 rootProject.name = 'rangiffler'
-include'rangiffler-e-2-e-tests'
+include 'rangiffler-e-2-e-tests'
 include 'rangiffler-gateway'
 include 'rangiffler-auth'
 include 'rangiffler-geo'
