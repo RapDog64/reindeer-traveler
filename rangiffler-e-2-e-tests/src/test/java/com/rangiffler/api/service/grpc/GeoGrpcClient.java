@@ -18,8 +18,7 @@ public class GeoGrpcClient extends BaseGrpcClient {
 
     private final GeoServiceGrpc.GeoServiceBlockingStub geoService = GeoServiceGrpc.newBlockingStub(CHANNEL);
 
-
-    @Step("Send REST GET('/countries/{id}') request to geo service")
+    @Step("Send GRPC('/countries/{id}') request to geo service")
     public CountryJson getCountryBy(UUID id) {
         CountryResponse response = geoService.findCountryById(CountryRequest.newBuilder()
                 .setId(String.valueOf(id))
@@ -28,7 +27,7 @@ public class GeoGrpcClient extends BaseGrpcClient {
         return CountryJson.fromGrpcMessage(response.getCountry());
     }
 
-    @Step("Send REST GET('/countries}') request to geo service")
+    @Step("Send GRPC('/countries}') request to geo service")
     public List<CountryJson> getAllCountries() {
         return geoService.getAllCountries(Empty.getDefaultInstance())
                 .getCountriesList()
@@ -36,5 +35,4 @@ public class GeoGrpcClient extends BaseGrpcClient {
                 .map(CountryJson::fromGrpcMessage)
                 .toList();
     }
-
 }

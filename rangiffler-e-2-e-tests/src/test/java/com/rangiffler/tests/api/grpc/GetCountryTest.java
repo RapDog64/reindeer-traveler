@@ -1,6 +1,5 @@
 package com.rangiffler.tests.api.grpc;
 
-import com.rangiffler.api.service.grpc.GeoGrpcClient;
 import com.rangiffler.jupiter.annotation.GenerateUser;
 import com.rangiffler.jupiter.annotation.ReceiveCountry;
 import com.rangiffler.jupiter.annotation.User;
@@ -8,6 +7,7 @@ import com.rangiffler.jupiter.extension.ReceiverCountryTestInstancePostProcessor
 import com.rangiffler.model.CountryJson;
 import com.rangiffler.model.UserJson;
 import com.rangiffler.tests.api.BaseGrpcTest;
+import io.grpc.StatusRuntimeException;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
@@ -27,6 +27,7 @@ import static io.qameta.allure.Allure.step;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Epic("[API][rangiffler-geo]: Receive countries")
 @DisplayName("[API][rangiffler-geo]: Get countries")
@@ -74,24 +75,21 @@ public class GetCountryTest extends BaseGrpcTest {
                 ));
     }
 
+    @Test
+    @AllureId("500024")
+    @DisplayName("API: Geo service should return the error message country is not found")
+    @Tag("API")
+    @Severity(BLOCKER)
+    @GenerateUser
+    void shouldReturnErrorMessage(@User UserJson user) {
+        final UUID countryId = UUID.randomUUID();
+        final String expectedMessage = String.format("NOT_FOUND: County with id: %s is not found", countryId);
 
-//    @Test
-//    @AllureId("500024")
-//    @DisplayName("API: Geo service should return the error message country is not found")
-//    @Tag("API")
-//    @Severity(BLOCKER)
-//    @GenerateUser
-//    void shouldReturnErrorMessage(@User UserJson user) throws Exception {
-//        final UUID countryId = UUID.randomUUID();
-//        final String expectedMessage = String.format("County with id: %s is not found", countryId);
-//
-//        final String actualMessage = Objects.requireNonNull(countryService
-//                        .getCountryBy(countryId).errorBody())
-//                .string().substring(10, 75);
-//
-//        step(String.format("Verify the '%s' message is present", expectedMessage), () ->
-//                assertEquals(expectedMessage, actualMessage));
-//    }
-
-
+        var message = step(String.format("Verify the '%s' message is present", expectedMessage),
+                () -> assertThrows(StatusRuntimeException.class, () -> countryService.getCountryBy(countryId))
+        );
+        step("Verify the error message is present", ()-> {
+            assertEquals(expectedMessage, message.getMessage());
+        });
+    }
 }

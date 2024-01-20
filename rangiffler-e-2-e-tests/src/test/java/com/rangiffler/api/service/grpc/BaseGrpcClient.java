@@ -1,8 +1,8 @@
 package com.rangiffler.api.service.grpc;
 
-import com.rangiffler.api.listener.grpc.CustomAllureGrpc;
 import io.grpc.Channel;
 import io.grpc.ManagedChannelBuilder;
+import io.qameta.allure.grpc.AllureGrpc;
 
 public abstract class BaseGrpcClient {
 
@@ -16,8 +16,7 @@ public abstract class BaseGrpcClient {
         this.servicePort = servicePort;
         CHANNEL = ManagedChannelBuilder
                 .forAddress(this.serviceUrl, this.servicePort)
-                .intercept(new CustomAllureGrpc().setRequestTemplate("grpc-request.ftl")
-                        .setResponseTemplate("grpc-response.ftl"))
+                .intercept(new AllureGrpc())
                 .usePlaintext()
                 .build();
     }
