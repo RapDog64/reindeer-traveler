@@ -1,6 +1,7 @@
 package com.rangiffler.controller;
 
 import com.rangiffler.model.RegistrationModel;
+import com.rangiffler.model.UserJson;
 import com.rangiffler.service.UserService;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -29,14 +31,17 @@ public class RegisterController {
     private static final String MODEL_REG_FORM_ATTR = "registrationModel";
     private static final String MODEL_FRONT_URI_ATTR = "frontUri";
     private static final String REG_MODEL_ERROR_BEAN_NAME = "org.springframework.validation.BindingResult.registrationModel";
+    private static final String KAFKA_TOPIC_USERS = "users";
 
     private final UserService userService;
     private final String rangifflerFrontUri;
+    private final KafkaTemplate<String, UserJson> kafkaTemplate;
 
     @Autowired
-    public RegisterController(UserService userService, @Value("${rangiffler-client.base-uri}") String rangifflerFrontUri) {
+    public RegisterController(UserService userService, @Value("${rangiffler-client.base-uri}") String rangifflerFrontUri, KafkaTemplate<String, UserJson> kafkaTemplate) {
         this.userService = userService;
         this.rangifflerFrontUri = rangifflerFrontUri;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     @GetMapping("/register")
@@ -60,6 +65,11 @@ public class RegisterController {
                 );
                 response.setStatus(HttpServletResponse.SC_CREATED);
                 model.addAttribute(MODEL_USERNAME_ATTR, registeredUserName);
+
+                UserJson user = new UserJson();
+                user.setUsername(registrationModel.getUsername());
+                kafkaTemplate.send(KAFKA_TOPIC_USERS, user);
+                LOG.info("### Kafka topic [users] sent message: " + user.getUsername());
             } catch (DataIntegrityViolationException e) {
                 LOG.error("### Error while registration user: " + e.getMessage());
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);

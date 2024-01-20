@@ -1,10 +1,12 @@
 package com.rangiffler.service;
 
 
-import com.rangiffler.model.*;
+import com.rangiffler.model.CountryJson;
+import com.rangiffler.model.FriendStatus;
+import com.rangiffler.model.PhotoJson;
+import com.rangiffler.model.PhotoServiceJson;
 import com.rangiffler.service.configuration.PhotoServiceClient;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,15 +27,17 @@ public class PhotoService {
     }
 
     public List<PhotoJson> getAllUserPhotos(String username) {
-        List<PhotoJson> usersPhoto = new ArrayList<>();
         List<PhotoServiceJson> photos = photoService.getPhotosForUser(username);
-        if (!photos.isEmpty()) {
-            for (PhotoServiceJson photo : photos) {
-                CountryJson country = countryService.findById(photo.getCountryId());
-                usersPhoto.add(PhotoServiceJson.fromPhotoServiceJson(photo, country));
-            }
+        if (photos.isEmpty()) {
+            return new ArrayList<>();
         }
-        return usersPhoto;
+
+        return photos.stream()
+                .map(photo -> {
+                    CountryJson country = countryService.findById(photo.getCountryId());
+                    return PhotoServiceJson.fromPhotoServiceJson(photo, country);
+                })
+                .toList();
     }
 
     public PhotoJson editPhoto(PhotoJson photoJson, UUID id) {
@@ -42,17 +46,12 @@ public class PhotoService {
     }
 
     public List<PhotoJson> getAllFriendsPhotos(String username) {
-        List<PhotoJson> friendsPhoto = new ArrayList<>();
-        List<UserJson> friends = userService.receivePeopleAround(username)
+        return userService.receivePeopleAround(username)
                 .stream()
                 .filter(userJson -> userJson.getFriendStatus() == FriendStatus.FRIEND)
-                .toList();
-
-        for (UserJson userJson : friends) {
-            friendsPhoto.addAll(getAllUserPhotos(userJson.getUsername()));
-        }
-
-        return friendsPhoto;
+                .map(userJson -> getAllUserPhotos(userJson.getUsername()))
+                .findFirst()
+                .orElseGet(ArrayList::new);
     }
 
     public void deletePhoto(UUID photoId) {
