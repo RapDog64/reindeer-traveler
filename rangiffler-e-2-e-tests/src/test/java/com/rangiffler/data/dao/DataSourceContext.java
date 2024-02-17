@@ -1,4 +1,4 @@
-package com.rangiffler.data.jdbc;
+package com.rangiffler.data.dao;
 
 import com.p6spy.engine.spy.P6DataSource;
 import com.rangiffler.data.DataBase;
@@ -11,7 +11,7 @@ import java.util.Map;
 public enum DataSourceContext {
     INSTANCE;
 
-    private Map<DataBase, DataSource> dsContext = new HashMap<>();
+    private final Map<DataBase, DataSource> dsContext = new HashMap<>();
 
     public synchronized DataSource getDataSource(DataBase dataBase) {
         if (dsContext.get(dataBase) == null) {

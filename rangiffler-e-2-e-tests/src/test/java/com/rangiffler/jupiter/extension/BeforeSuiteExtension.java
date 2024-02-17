@@ -1,17 +1,22 @@
 package com.rangiffler.jupiter.extension;
 
-import com.rangiffler.api.service.CountryClient;
+import com.rangiffler.data.dao.entities.CountryEntity;
+import com.rangiffler.data.dao.repositories.CountryRepository;
 import com.rangiffler.model.CountryJson;
 
 import java.util.List;
 
 public class BeforeSuiteExtension implements SuiteCallbacks {
 
-    private final CountryClient countryService = new CountryClient();
     public static List<CountryJson> ALL_COUNTRIES = null;
+    private final CountryRepository countryRepository = new CountryRepository();
 
     @Override
     public void beforeSuiteCallback() {
-        ALL_COUNTRIES = countryService.getAllCountries();
+        List<CountryEntity> countryEntities = countryRepository.getAllCountries()
+                .orElseThrow(() -> new RuntimeException("Countries list doesn't exist"));
+        ALL_COUNTRIES = countryEntities.stream()
+                .map(CountryJson::fromEntity)
+                .toList();
     }
 }

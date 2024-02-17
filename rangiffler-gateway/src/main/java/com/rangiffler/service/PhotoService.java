@@ -4,7 +4,6 @@ package com.rangiffler.service;
 import com.rangiffler.model.*;
 import com.rangiffler.service.configuration.PhotoServiceClient;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ import java.util.UUID;
 public class PhotoService {
 
     private final UserService userService;
-    private final CountryService countryService;
+    private final GrpcGeoClient grpcGeoClient;
     private final PhotoServiceClient photoService;
 
     public PhotoJson addPhoto(PhotoJson photoJson) {
@@ -29,7 +28,7 @@ public class PhotoService {
         List<PhotoServiceJson> photos = photoService.getPhotosForUser(username);
         if (!photos.isEmpty()) {
             for (PhotoServiceJson photo : photos) {
-                CountryJson country = countryService.findById(photo.getCountryId());
+                CountryJson country = grpcGeoClient.findById(photo.getCountryId());
                 usersPhoto.add(PhotoServiceJson.fromPhotoServiceJson(photo, country));
             }
         }

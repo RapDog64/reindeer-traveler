@@ -1,7 +1,7 @@
 package com.rangiffler.tests.api.photo;
 
 import com.rangiffler.jupiter.annotation.GenerateUser;
-import com.rangiffler.jupiter.annotation.ReceiverCountry;
+import com.rangiffler.jupiter.annotation.ReceiveCountry;
 import com.rangiffler.jupiter.annotation.TravelPhotos;
 import com.rangiffler.jupiter.annotation.User;
 import com.rangiffler.jupiter.extension.ReceiverCountryTestInstancePostProcessor;
@@ -38,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith({ReceiverCountryTestInstancePostProcessor.class})
 public class EditTravelPhotoTest extends BaseRestTest {
 
-    @ReceiverCountry(country = GERMANY)
+    @ReceiveCountry(country = GERMANY)
     private CountryJson germany;
 
     @Test
