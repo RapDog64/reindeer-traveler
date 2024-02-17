@@ -34,10 +34,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ExtendWith({ReceiverCountryTestInstancePostProcessor.class})
 public class GetCountryTest extends BaseGrpcTest {
 
-
     @ReceiveCountry(country = RUSSIA)
     private CountryJson russia;
-
 
     @Test
     @AllureId("500022")
@@ -78,18 +76,17 @@ public class GetCountryTest extends BaseGrpcTest {
     @Test
     @AllureId("500024")
     @DisplayName("API: Geo service should return the error message country is not found")
-    @Tag("API")
+    @Tags({@Tag("API"), @Tag("gRPC")})
     @Severity(BLOCKER)
     @GenerateUser
     void shouldReturnErrorMessage(@User UserJson user) {
         final UUID countryId = UUID.randomUUID();
         final String expectedMessage = String.format("NOT_FOUND: County with id: %s is not found", countryId);
 
-        var message = step(String.format("Verify the '%s' message is present", expectedMessage),
+        final var message = step(String.format("Verify the '%s' message is present", expectedMessage),
                 () -> assertThrows(StatusRuntimeException.class, () -> countryService.getCountryBy(countryId))
         );
-        step("Verify the error message is present", ()-> {
-            assertEquals(expectedMessage, message.getMessage());
-        });
+        step("Verify the error message is present", ()->
+                assertEquals(expectedMessage, message.getMessage()));
     }
 }

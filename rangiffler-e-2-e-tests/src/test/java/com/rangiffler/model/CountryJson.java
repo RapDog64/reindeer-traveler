@@ -2,6 +2,7 @@ package com.rangiffler.model;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.rangiffler.data.dao.entities.CountryEntity;
 import com.rangiffler.grpc.Country;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,4 +34,11 @@ public class CountryJson {
                 .build();
     }
 
+    public static CountryJson fromEntity(CountryEntity country) {
+        return CountryJson.builder()
+                .id(country.getId())
+                .name(country.getName())
+                .code(country.getCode())
+                .build();
+    }
 }
