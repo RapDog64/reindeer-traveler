@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package com.grpc.rangiffler;
+
+option java_multiple_files = true;
+option java_package = "com.rangiffler.grpc";
+option java_outer_classname = "UsernameProto";
+
+message UsernameRequest {
+  string username = 1;
+}

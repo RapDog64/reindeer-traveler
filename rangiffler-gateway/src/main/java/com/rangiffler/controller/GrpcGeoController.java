@@ -25,5 +25,4 @@ public class GrpcGeoController {
     public List<CountryJson> getAllCountries() {
         return grpcGeoClient.getCountries();
     }
-
 }

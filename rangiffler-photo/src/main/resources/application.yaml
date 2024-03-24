@@ -48,6 +48,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+
+grpc:
+  server:
+    port: 9089
+
 ---
 spring:
   config:
@@ -58,4 +63,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
----
+
+grpc:
+  server:
+    port: 9089
