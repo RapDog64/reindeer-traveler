@@ -4,7 +4,6 @@ import com.rangiffler.model.FriendJson;
 import com.rangiffler.model.UserJson;
 import com.rangiffler.service.configuration.FriendServiceClient;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +17,6 @@ public class FriendService {
     public List<UserJson> declineInvitation(String username, FriendJson friendInvitation) {
         return friendService.declineInvitation(username, friendInvitation);
     }
-
 
     public List<UserJson> removeUserFromFriends(String username, String friendUsername) {
         return friendService.removeFriend(username, friendUsername);

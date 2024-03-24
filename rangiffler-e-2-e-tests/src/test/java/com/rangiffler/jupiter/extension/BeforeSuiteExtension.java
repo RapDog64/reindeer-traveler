@@ -5,6 +5,7 @@ import com.rangiffler.data.dao.repositories.CountryRepository;
 import com.rangiffler.model.CountryJson;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BeforeSuiteExtension implements SuiteCallbacks {
 

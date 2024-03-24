@@ -5,10 +5,17 @@ server:
       message: true
 
 grpc:
+  server:
+    max-inbound-message-size: 9155241000
   client:
     grpcGeoClient:
       address: 'static://localhost:9099'
       negotiationType: PLAINTEXT
+    grpcPhotoClient:
+      address: 'static://localhost:9089'
+      negotiationType: PLAINTEXT
+      max-inbound-message-size: 9155241000
+      package-max-inbound-message-size: 9155241000
 
 spring:
   application:

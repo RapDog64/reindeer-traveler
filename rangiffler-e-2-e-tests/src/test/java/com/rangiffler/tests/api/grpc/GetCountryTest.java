@@ -11,7 +11,6 @@ import io.grpc.StatusRuntimeException;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
@@ -46,10 +45,11 @@ public class GetCountryTest extends BaseGrpcTest {
     void receiveCountries(@User UserJson user) {
         final int expectedSize = 175;
 
-        final List<CountryJson> countries = countryService.getAllCountries();
-
-        step("Verify all the countries are present" + expectedSize, () ->
-                Assertions.assertAll(
+        final List<CountryJson> countries = step("Receiving all counties",
+                countryService::getAllCountries
+        );
+        step(String.format("Verify all the  %s countries are present", expectedSize), () ->
+                assertAll(
                         () -> assertEquals(expectedSize, countries.size()),
                         () -> assertEquals(countries.containsAll(ALL_COUNTRIES), ALL_COUNTRIES.containsAll(countries))
                 ));
@@ -64,8 +64,9 @@ public class GetCountryTest extends BaseGrpcTest {
     void shouldReturnOneCountry(@User UserJson user) {
         final UUID countryId = russia.getId();
 
-        final CountryJson receivedCountry = countryService.getCountryBy(countryId);
-
+        final CountryJson receivedCountry = step("Receiving the country by ID", () ->
+                countryService.getCountryBy(countryId)
+        );
         step("Verify that the received country is " + russia.getName(), () ->
                 assertAll(
                         () -> assertEquals(russia.getName(), receivedCountry.getName()),
@@ -81,12 +82,13 @@ public class GetCountryTest extends BaseGrpcTest {
     @GenerateUser
     void shouldReturnErrorMessage(@User UserJson user) {
         final UUID countryId = UUID.randomUUID();
-        final String expectedMessage = String.format("NOT_FOUND: County with id: %s is not found", countryId);
+        final String expectedMessage = String.format("NOT_FOUND: County with id %s is not found.", countryId);
 
-        final var message = step(String.format("Verify the '%s' message is present", expectedMessage),
-                () -> assertThrows(StatusRuntimeException.class, () -> countryService.getCountryBy(countryId))
+        final var message = step("Receiving the country by incorrect ID", () ->
+                assertThrows(StatusRuntimeException.class, () -> countryService.getCountryBy(countryId))
         );
-        step("Verify the error message is present", ()->
-                assertEquals(expectedMessage, message.getMessage()));
+        step("Verify the error message is present", () ->
+                assertEquals(expectedMessage, message.getMessage())
+        );
     }
 }

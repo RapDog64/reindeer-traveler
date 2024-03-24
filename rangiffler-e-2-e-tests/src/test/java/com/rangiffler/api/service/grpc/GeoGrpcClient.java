@@ -20,7 +20,7 @@ public class GeoGrpcClient extends BaseGrpcClient {
 
     @Step("Send GRPC('/countries/{id}') request to geo service")
     public CountryJson getCountryBy(UUID id) {
-        CountryResponse response = geoService.findCountryById(CountryRequest.newBuilder()
+        final CountryResponse response = geoService.findCountryById(CountryRequest.newBuilder()
                 .setId(String.valueOf(id))
                 .build());
 

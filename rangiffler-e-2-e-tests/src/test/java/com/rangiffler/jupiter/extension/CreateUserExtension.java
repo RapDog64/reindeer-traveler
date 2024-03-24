@@ -4,6 +4,10 @@ import com.rangiffler.api.service.AuthenticationClient;
 import com.rangiffler.api.service.CountryClient;
 import com.rangiffler.api.service.PhotoClient;
 import com.rangiffler.api.service.UserdataClient;
+import com.rangiffler.api.service.grpc.GeoGrpcClient;
+import com.rangiffler.api.service.grpc.PhotoGrpcClient;
+import com.rangiffler.grpc.Photo;
+import com.rangiffler.grpc.PhotoRequest;
 import com.rangiffler.jupiter.annotation.ApiLogin;
 import com.rangiffler.jupiter.annotation.Friends;
 import com.rangiffler.jupiter.annotation.GenerateUser;
@@ -31,7 +35,9 @@ import java.util.Map;
 import java.util.Objects;
 
 import static com.rangiffler.jupiter.extension.BeforeSuiteExtension.ALL_COUNTRIES;
+import static com.rangiffler.utility.DataGenerator.generateGrpcPhoto;
 import static com.rangiffler.utility.DataGenerator.generatePhoto;
+import static com.rangiffler.utility.DataGenerator.generateRandomDescription;
 import static com.rangiffler.utility.DataGenerator.generateRandomPassword;
 import static com.rangiffler.utility.DataGenerator.generateRandomSentence;
 import static com.rangiffler.utility.DataGenerator.generateRandomUsername;
@@ -40,8 +46,8 @@ public class CreateUserExtension implements BeforeEachCallback, ParameterResolve
 
     private final AuthenticationClient authClient = new AuthenticationClient();
     private final UserdataClient userdataClient = new UserdataClient();
-    private final CountryClient countryClient = new CountryClient();
-    private final PhotoClient photoClient = new PhotoClient();
+    private final GeoGrpcClient countryClient = new GeoGrpcClient();
+    private final PhotoGrpcClient photoClient = new PhotoGrpcClient();
 
     public static final ExtensionContext.Namespace
             ON_METHOD_USERS_NAMESPACE = ExtensionContext.Namespace.create(CreateUserExtension.class, Selector.METHOD),
@@ -99,8 +105,9 @@ public class CreateUserExtension implements BeforeEachCallback, ParameterResolve
                 }
                 String pathToImage = travels.imgPath();
                 CountryJson country = getCountry(travels.country());
-                PhotoJson photoJson = generatePhoto(country, userJson.getUsername(), description, pathToImage);
-                photoClient.addPhoto(photoJson);
+                Photo photo = generateGrpcPhoto(country, userJson.getUsername(), description, pathToImage);
+
+                photoClient.addPhoto(PhotoRequest.newBuilder().setPhoto(photo).build());
             }
         }
     }
@@ -110,7 +117,8 @@ public class CreateUserExtension implements BeforeEachCallback, ParameterResolve
                 .filter(countryJson -> countryJson.getCode().equals(country.code))
                 .findFirst()
                 .orElseThrow();
-        return countryClient.findCountryById(selectedCountry.getId());
+
+        return countryClient.getCountryBy(selectedCountry.getId());
     }
 
     private void createFriendsIfPresent(GenerateUser generateUser, UserJson createdUser) throws Exception {

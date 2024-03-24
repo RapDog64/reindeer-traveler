@@ -1,6 +1,7 @@
 package com.rangiffler.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.rangiffler.grpc.Photo;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -26,13 +27,13 @@ public class PhotoServiceJson {
     private String username;
 
 
-    public static PhotoJson fromPhotoServiceJson(PhotoServiceJson json, CountryJson countryJson) {
+    public static PhotoJson fromPhotoServiceJson(Photo json, CountryJson countryJson) {
         PhotoJson photoJson = new PhotoJson();
-        photoJson.setId(json.getId());
+        photoJson.setId(UUID.fromString(json.getId().getId()));
         photoJson.setCountryJson(countryJson);
-        photoJson.setDescription(json.getDescription());
+        photoJson.setDescription(json.getDescription().getDescription());
         photoJson.setUsername(json.getUsername());
-        photoJson.setPhoto(json.getPhoto());
+        photoJson.setPhoto(json.getImage());
         return photoJson;
     }
 }
