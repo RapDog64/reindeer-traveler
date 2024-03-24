@@ -1,6 +1,8 @@
 package com.rangiffler.utility;
 
 import com.github.javafaker.Faker;
+import com.rangiffler.grpc.NullableDescription;
+import com.rangiffler.grpc.Photo;
 import com.rangiffler.model.CountryJson;
 import com.rangiffler.model.PhotoJson;
 import lombok.SneakyThrows;
@@ -37,12 +39,35 @@ public class DataGenerator {
         return faker.lorem().sentence(wordsCount);
     }
 
+    public static NullableDescription generateRandomDescription(int wordsCount) {
+        return NullableDescription.newBuilder().setDescription(faker.lorem().sentence(wordsCount)).build();
+    }
+
     public static PhotoJson generatePhoto(CountryJson country, String username) {
         return PhotoJson.builder()
                 .username(username)
                 .description(generateRandomSentence(5))
                 .countryJson(country)
                 .photo(IMAGE_BASE64_PREFIX + getImageBytes("src/test/resources/photos/berlin.jpeg"))
+                .build();
+    }
+
+
+    public static Photo generateGrpcPhoto(CountryJson country, String username) {
+        return Photo.newBuilder()
+                .setUsername(username)
+                .setDescription(generateRandomDescription(5))
+                .setCountryId(String.valueOf(country.getId()))
+                .setImage(IMAGE_BASE64_PREFIX + getImageBytes("src/test/resources/photos/berlin.jpeg"))
+                .build();
+    }
+
+    public static Photo generateGrpcPhoto(CountryJson country, String username, String description, String path) {
+        return Photo.newBuilder()
+                .setUsername(username)
+                .setDescription(NullableDescription.newBuilder().setDescription(description).build())
+                .setCountryId(String.valueOf(country.getId()))
+                .setImage(IMAGE_BASE64_PREFIX + getImageBytes(path))
                 .build();
     }
 

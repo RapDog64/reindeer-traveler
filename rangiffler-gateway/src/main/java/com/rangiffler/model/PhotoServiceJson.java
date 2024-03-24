@@ -33,7 +33,7 @@ public class PhotoServiceJson {
         photoJson.setCountryJson(countryJson);
         photoJson.setDescription(json.getDescription().getDescription());
         photoJson.setUsername(json.getUsername());
-        photoJson.setPhoto(json.getPhoto());
+        photoJson.setPhoto(json.getImage());
         return photoJson;
     }
 }

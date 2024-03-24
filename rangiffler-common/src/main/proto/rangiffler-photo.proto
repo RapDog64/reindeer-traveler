@@ -23,7 +23,7 @@ message Photo {
   string countryId = 2;
   string username = 3;
   NullableDescription description = 4;
-  string photo = 5;
+  string image = 5;
 }
 
 message NullableDescription {

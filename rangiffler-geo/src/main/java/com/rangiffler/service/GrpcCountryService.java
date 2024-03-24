@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.rangiffler.exception.ErrorMessage.COUNTRIES_NOT_FOUND;
 import static com.rangiffler.exception.ErrorMessage.COUNTY_NOT_FOUND;
 import static io.grpc.Status.NOT_FOUND;
 
@@ -32,7 +33,7 @@ public class GrpcCountryService extends GeoServiceGrpc.GeoServiceImplBase {
         List<CountryEntity> entities = countryRepository.findAll();
 
         if (entities.isEmpty()) {
-            responseObserver.onError(NOT_FOUND.withDescription("Countries are not found").asRuntimeException());
+            responseObserver.onError(NOT_FOUND.withDescription(COUNTRIES_NOT_FOUND).asRuntimeException());
         }
 
         final CountriesResponse response = CountriesResponse.newBuilder()

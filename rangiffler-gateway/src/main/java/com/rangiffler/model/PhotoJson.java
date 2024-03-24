@@ -38,7 +38,7 @@ public class PhotoJson {
     return Photo.newBuilder()
             .setId(checkIdValue(photoJson))
             .setCountryId(String.valueOf(photoJson.getCountryJson().getId()))
-            .setPhoto(photoJson.getPhoto())
+            .setImage(photoJson.getPhoto())
             .setDescription(checkDescriptionValue(photoJson))
             .setUsername(photoJson.getUsername())
             .build();
@@ -47,7 +47,7 @@ public class PhotoJson {
   public static PhotoJson toPhotoJson(Photo photo, CountryJson countryJson) {
     return PhotoJson.builder()
             .id(UUID.fromString(photo.getId().getId()))
-            .photo(photo.getPhoto())
+            .photo(photo.getImage())
             .countryJson(countryJson)
             .description(photo.getDescription().getDescription())
             .username(photo.getUsername())

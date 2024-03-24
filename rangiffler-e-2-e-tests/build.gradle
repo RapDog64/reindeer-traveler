@@ -2,7 +2,7 @@ buildscript {
     ext {
         protobufVersion = '3.24.4'
         grpcVersion = '1.52.1'
-        allureVersion = '2.22.0'
+        allureVersion = '2.26.0'
         selenideVersion = '6.17.2'
         springJDBCVersion = '6.0.8'
         ownerVersion = '1.0.12'

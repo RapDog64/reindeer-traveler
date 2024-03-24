@@ -44,7 +44,7 @@ public class PhotoEntity {
         byte[] photo = entity.getPhoto();
         return Photo.newBuilder()
                 .setId(NullableId.newBuilder().setId(String.valueOf(entity.getId())).build())
-                .setPhoto(photo != null && photo.length > 0 ? new String(entity.getPhoto(), StandardCharsets.UTF_8) : null)
+                .setImage(photo != null && photo.length > 0 ? new String(entity.getPhoto(), StandardCharsets.UTF_8) : null)
                 .setCountryId(String.valueOf(entity.getCountryId()))
                 .setUsername(entity.getUsername())
                 .setDescription(checkDescriptionValue(entity))
@@ -54,7 +54,7 @@ public class PhotoEntity {
     public static PhotoEntity toPhotoEntity(Photo photo) {
         PhotoEntity photoEntity = new PhotoEntity();
         photoEntity.setUsername(photo.getUsername());
-        photoEntity.setPhoto(photo.getPhoto().getBytes(StandardCharsets.UTF_8));
+        photoEntity.setPhoto(photo.getImage().getBytes(StandardCharsets.UTF_8));
         photoEntity.setCountryId(UUID.fromString(photo.getCountryId()));
         return photoEntity;
     }
