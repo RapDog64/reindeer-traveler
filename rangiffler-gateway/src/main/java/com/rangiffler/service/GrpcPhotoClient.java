@@ -1,16 +1,17 @@
 package com.rangiffler.service;
 
-import com.google.protobuf.Empty;
 import com.rangiffler.grpc.DeletePhotoRequest;
-import com.rangiffler.grpc.GetPhotosForUserResponse;
 import com.rangiffler.grpc.Photo;
 import com.rangiffler.grpc.PhotoRequest;
 import com.rangiffler.grpc.PhotoResponse;
 import com.rangiffler.grpc.PhotoServiceGrpc;
+import com.rangiffler.grpc.UserPhotoResponse;
 import com.rangiffler.grpc.UsernameRequest;
 import com.rangiffler.model.CountryJson;
+import com.rangiffler.model.FriendStatus;
 import com.rangiffler.model.PhotoJson;
 import com.rangiffler.model.PhotoServiceJson;
+import com.rangiffler.model.UserJson;
 import io.grpc.StatusRuntimeException;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.slf4j.Logger;
@@ -32,13 +33,20 @@ public class GrpcPhotoClient {
     @Autowired
     private GrpcGeoClient grpcGeoClient;
 
+    private final FriendService friendService;
+
     @GrpcClient("grpcPhotoClient")
     private PhotoServiceGrpc.PhotoServiceBlockingStub photoServiceBlockingStub;
+
+    @Autowired
+    public GrpcPhotoClient(final FriendService userService) {
+        this.friendService = userService;
+    }
 
     public List<PhotoJson> getAllUserPhotos(String usernameFromJWT) {
         try {
             List<PhotoJson> usersPhoto = new ArrayList<>();
-            final GetPhotosForUserResponse response = photoServiceBlockingStub.getPhotosForUser(UsernameRequest
+            final UserPhotoResponse response = photoServiceBlockingStub.getPhotosForUser(UsernameRequest
                     .newBuilder()
                     .setUsername(usernameFromJWT)
                     .build());
@@ -87,5 +95,19 @@ public class GrpcPhotoClient {
 
     public void deletePhoto(UUID photoId) {
         photoServiceBlockingStub.deletePhoto(DeletePhotoRequest.newBuilder().setId(String.valueOf(photoId)).build());
+    }
+
+    public List<PhotoJson> getFriendsPhotos(String usernameFromJWT) {
+        List<PhotoJson> friendsPhoto = new ArrayList<>();
+        final List<UserJson> friends = friendService.getFriends(usernameFromJWT, false)
+                .stream()
+                .filter(userJson -> userJson.getFriendStatus() == FriendStatus.FRIEND)
+                .toList();
+
+        for (UserJson friend : friends) {
+            friendsPhoto.addAll(getAllUserPhotos(friend.getUsername()));
+        }
+
+        return friendsPhoto;
     }
 }

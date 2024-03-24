@@ -31,14 +31,14 @@ public class GrpcPhotoController {
     @GetMapping("/photos")
     @ResponseStatus(HttpStatus.OK)
     public List<PhotoJson> getPhotosForUser(@AuthenticationPrincipal Jwt principal) {
-        String usernameFromJWT = principal.getClaim("sub");
+        final String usernameFromJWT = principal.getClaim("sub");
         return photoClient.getAllUserPhotos(usernameFromJWT);
     }
 
     @PostMapping("/photos")
     @ResponseStatus(HttpStatus.CREATED)
     public PhotoJson addPhoto(@AuthenticationPrincipal Jwt principal, @RequestBody PhotoJson photoJson) {
-        String usernameFromJWT = principal.getClaim("sub");
+        final String usernameFromJWT = principal.getClaim("sub");
         photoJson.setUsername(usernameFromJWT);
         return photoClient.addPhoto(photoJson);
     }
@@ -46,7 +46,7 @@ public class GrpcPhotoController {
     @PutMapping("/photos/{id}")
     @ResponseStatus(HttpStatus.OK)
     public PhotoJson editPhoto(@AuthenticationPrincipal Jwt principal, @RequestBody PhotoJson photoJson) {
-        String usernameFromJWT = principal.getClaim("sub");
+        final String usernameFromJWT = principal.getClaim("sub");
         photoJson.setUsername(usernameFromJWT);
         return photoClient.editPhoto(photoJson);
     }
@@ -54,8 +54,8 @@ public class GrpcPhotoController {
     @GetMapping("/friends/photos")
     @ResponseStatus(HttpStatus.OK)
     public List<PhotoJson> getAllFriendsPhotos(@AuthenticationPrincipal Jwt principal) {
-        String usernameFromJWT = principal.getClaim("sub");
-        return photoClient.getAllUserPhotos(usernameFromJWT);
+        final String usernameFromJWT = principal.getClaim("sub");
+        return photoClient.getFriendsPhotos(usernameFromJWT);
     }
 
     @DeleteMapping("/photos")

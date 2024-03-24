@@ -1,7 +1,8 @@
 package com.rangiffler.data;
 
 import com.google.protobuf.NullValue;
-import com.rangiffler.grpc.NullableString;
+import com.rangiffler.grpc.NullableDescription;
+import com.rangiffler.grpc.NullableId;
 import com.rangiffler.grpc.Photo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,7 +43,7 @@ public class PhotoEntity {
     public static Photo toGrpcPhoto(PhotoEntity entity) {
         byte[] photo = entity.getPhoto();
         return Photo.newBuilder()
-                .setId(String.valueOf(entity.getId()))
+                .setId(NullableId.newBuilder().setId(String.valueOf(entity.getId())).build())
                 .setPhoto(photo != null && photo.length > 0 ? new String(entity.getPhoto(), StandardCharsets.UTF_8) : null)
                 .setCountryId(String.valueOf(entity.getCountryId()))
                 .setUsername(entity.getUsername())
@@ -52,15 +53,14 @@ public class PhotoEntity {
 
     public static PhotoEntity toPhotoEntity(Photo photo) {
         PhotoEntity photoEntity = new PhotoEntity();
-        photoEntity.setId(UUID.fromString(photo.getId()));
         photoEntity.setUsername(photo.getUsername());
         photoEntity.setPhoto(photo.getPhoto().getBytes(StandardCharsets.UTF_8));
         photoEntity.setCountryId(UUID.fromString(photo.getCountryId()));
         return photoEntity;
     }
 
-    private static NullableString checkDescriptionValue(PhotoEntity entity) {
-        return entity.getDescription() == null ? NullableString.newBuilder().setNull(NullValue.NULL_VALUE).build()
-                : NullableString.newBuilder().setDescription(entity.getDescription()).build();
+    private static NullableDescription checkDescriptionValue(PhotoEntity entity) {
+        return entity.getDescription() == null ? NullableDescription.newBuilder().setNull(NullValue.NULL_VALUE).build()
+                : NullableDescription.newBuilder().setDescription(entity.getDescription()).build();
     }
 }

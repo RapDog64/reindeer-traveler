@@ -12,28 +12,35 @@ option java_package = "com.rangiffler.grpc";
 option java_outer_classname = "PhotoProto";
 
 service PhotoService {
-  rpc GetPhotosForUser (UsernameRequest) returns (GetPhotosForUserResponse) {}
+  rpc GetPhotosForUser (UsernameRequest) returns (UserPhotoResponse) {}
   rpc AddPhoto (PhotoRequest) returns (PhotoResponse) {}
   rpc EditPhoto (PhotoRequest) returns (PhotoResponse) {}
   rpc DeletePhoto (DeletePhotoRequest) returns (google.protobuf.Empty) {}
 }
 
 message Photo {
-  string id = 1;
+  NullableId id = 1;
   string countryId = 2;
   string username = 3;
-  optional NullableString description = 4;
+  NullableDescription description = 4;
   string photo = 5;
 }
 
-message NullableString {
+message NullableDescription {
   oneof kind {
     google.protobuf.NullValue null = 1;
     string description = 2;
   }
 }
 
-message GetPhotosForUserResponse {
+message NullableId {
+  oneof kind {
+    google.protobuf.NullValue null = 1;
+    string id = 2;
+  }
+}
+
+message UserPhotoResponse {
   repeated Photo photo = 1;
 }
 

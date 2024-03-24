@@ -6,11 +6,11 @@ import com.rangiffler.data.repository.PhotoRepository;
 import com.rangiffler.exception.InvalidRequestBodyException;
 import com.rangiffler.exception.InvalidUsernameException;
 import com.rangiffler.grpc.DeletePhotoRequest;
-import com.rangiffler.grpc.GetPhotosForUserResponse;
 import com.rangiffler.grpc.Photo;
 import com.rangiffler.grpc.PhotoRequest;
 import com.rangiffler.grpc.PhotoResponse;
 import com.rangiffler.grpc.PhotoServiceGrpc;
+import com.rangiffler.grpc.UserPhotoResponse;
 import com.rangiffler.grpc.UsernameRequest;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -37,7 +37,7 @@ public class GrpcPhotoService extends PhotoServiceGrpc.PhotoServiceImplBase {
 
     @Override
     public void getPhotosForUser(final UsernameRequest request,
-                                 final StreamObserver<GetPhotosForUserResponse> responseObserver) {
+                                 final StreamObserver<UserPhotoResponse> responseObserver) {
         final String username = Optional.of(request.getUsername())
                 .orElseThrow(() -> new InvalidUsernameException(INVALID_USERNAME));
 
@@ -46,10 +46,11 @@ public class GrpcPhotoService extends PhotoServiceGrpc.PhotoServiceImplBase {
                 .map(PhotoEntity::toGrpcPhoto)
                 .toList();
 
-        responseObserver.onNext(GetPhotosForUserResponse.newBuilder().addAllPhoto(photoList)
+        responseObserver.onNext(UserPhotoResponse.newBuilder().addAllPhoto(photoList)
                 .build());
         responseObserver.onCompleted();
     }
+
 
     @Override
     public void addPhoto(final PhotoRequest request, final StreamObserver<PhotoResponse> responseObserver) {
@@ -66,7 +67,7 @@ public class GrpcPhotoService extends PhotoServiceGrpc.PhotoServiceImplBase {
     @Override
     public void editPhoto(final PhotoRequest request, final StreamObserver<PhotoResponse> responseObserver) {
         final Photo grpcPhoto = request.getPhoto();
-        Optional<PhotoEntity> photoEntity = photoRepository.findById(UUID.fromString(grpcPhoto.getId()));
+        Optional<PhotoEntity> photoEntity = photoRepository.findById(UUID.fromString(grpcPhoto.getId().getId()));
 
         if (photoEntity.isPresent()) {
             photoEntity.get().setDescription(grpcPhoto.getDescription().getDescription());

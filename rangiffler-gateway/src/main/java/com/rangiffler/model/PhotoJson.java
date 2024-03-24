@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.UUID;
 
 import com.google.protobuf.NullValue;
-import com.rangiffler.grpc.NullableString;
+import com.rangiffler.grpc.NullableDescription;
+import com.rangiffler.grpc.NullableId;
 import com.rangiffler.grpc.Photo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,7 +36,7 @@ public class PhotoJson {
 
   public static Photo toPhotoGrpc(PhotoJson photoJson) {
     return Photo.newBuilder()
-            .setId(String.valueOf(photoJson.getId()))
+            .setId(checkIdValue(photoJson))
             .setCountryId(String.valueOf(photoJson.getCountryJson().getId()))
             .setPhoto(photoJson.getPhoto())
             .setDescription(checkDescriptionValue(photoJson))
@@ -45,7 +46,7 @@ public class PhotoJson {
 
   public static PhotoJson toPhotoJson(Photo photo, CountryJson countryJson) {
     return PhotoJson.builder()
-            .id(UUID.fromString(photo.getId()))
+            .id(UUID.fromString(photo.getId().getId()))
             .photo(photo.getPhoto())
             .countryJson(countryJson)
             .description(photo.getDescription().getDescription())
@@ -53,8 +54,14 @@ public class PhotoJson {
             .build();
   }
 
-  private static NullableString checkDescriptionValue(PhotoJson entity) {
-    return entity.getDescription() == null ? NullableString.newBuilder().setNull(NullValue.NULL_VALUE).build()
-            : NullableString.newBuilder().setDescription(entity.getDescription()).build();
+  private static NullableDescription checkDescriptionValue(PhotoJson entity) {
+    return entity.getDescription() == null ? NullableDescription.newBuilder().setNull(NullValue.NULL_VALUE).build()
+            : NullableDescription.newBuilder().setDescription(entity.getDescription()).build();
   }
+
+  private static NullableId checkIdValue(PhotoJson entity) {
+    return entity.getId() == null ? NullableId.newBuilder().setNull(NullValue.NULL_VALUE).build()
+            : NullableId.newBuilder().setId(String.valueOf(entity.getId())).build();
+  }
+
 }

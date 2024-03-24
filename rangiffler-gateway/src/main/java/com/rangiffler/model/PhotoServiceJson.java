@@ -29,7 +29,7 @@ public class PhotoServiceJson {
 
     public static PhotoJson fromPhotoServiceJson(Photo json, CountryJson countryJson) {
         PhotoJson photoJson = new PhotoJson();
-        photoJson.setId(UUID.fromString(json.getId()));
+        photoJson.setId(UUID.fromString(json.getId().getId()));
         photoJson.setCountryJson(countryJson);
         photoJson.setDescription(json.getDescription().getDescription());
         photoJson.setUsername(json.getUsername());
